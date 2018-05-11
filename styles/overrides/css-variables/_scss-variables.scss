@@ -1,0 +1,137 @@
+$darkest: #000;
+$darker: #222;
+$dark: #333;
+$dark-grey: #444;
+$grey: #565656;
+$medium-grey: #777;
+$light-grey: #ccc;
+$lighter-grey: #ddd;
+$light: #eee;
+$lighter: #fafafa;
+$lightest: #fff;
+
+// colors
+$red: #ca1e34;
+$red-film: rgba(#ca1e34, .5);
+$red-film-light: rgba(#ca1e34, .15);
+$red-film-lighter: rgba(#ca1e34, .05);
+$orange: #ff7042;
+$orange-lighter: #f5a623;
+$orange-film: rgba(#ff7042, .5);
+$yellow: #ffc929;
+$yellow-film: rgba(#ffc929, .5);
+$green: #9ccc66;
+$green-lighter: #bfd98c;
+$green-film: rgba(#9ccc66, .5);
+$aqua: #00c1d9;
+$aqua-film: rgba(#00c1d9, .5);
+$blue: #4a93b9;
+$blue-lighter: #96b3cb;
+$blue-film: rgba(#4a93b9, .5);
+$blue-film-light: rgba(#4a93b9, .15);
+$blue-film-heavy: rgba(14, 103, 150, .9);
+$purple: #ab47bd;
+$purple-film: rgba(#ab47bd, .5);
+$accent: $medium-grey;
+$action: $blue;
+$active: $blue-film-heavy;
+$focus: $aqua;
+$success: $green;
+$danger: $red;
+$warnign: $orange;
+$alert: $yellow;
+$royal: $purple;
+
+$shadow: rgba(#000, .8);
+$twilight: rgba(#000, .5);
+$dusk: rgba(#000, .3);
+$shade: rgba(#000, .05);
+$dust: rgba(#777, .05);
+$edge: rgba(#777, .15);
+$line: rgba(#777, .5);
+$ghost: rgba(#808080, .5); // middle grey, middle opacity
+$mist: rgba(#fff, .2);
+$fog: rgba(#fff, .5);
+$frost: rgba(#fff, .8);
+
+$default-ms: 350ms;
+
+$icon-font-family: 'FontAwesome';
+$icon-check: '\f00c';
+$icon-check-circle: '\f058';
+$icon-check-square: '\f14a';
+$icon-check-square-o: '\f046';
+$icon-circle-thin: '\f1db';
+$icon-minus-circle: '\f056';
+
+// alternate spellings
+$dark-gray: $dark-grey;
+$gray: $grey;
+$medium-gray: $medium-grey;
+$light-gray: $light-grey;
+$lighter-gray: $lighter-grey;
+
+$base-font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$serif-font-family: 'Garamond', 'Cambria', Georgia, serif;
+
+.text {
+  &--red {
+    color: $red;
+  }
+
+  &--orange {
+    color: $orange;
+
+    &--lighter {
+      color: $orange-lighter;
+    }
+  }
+
+  &--yellow {
+    color: $yellow;
+  }
+
+  &--green {
+    color: $green;
+  }
+
+  &--aqua {
+    color: $aqua;
+  }
+
+  &--blue {
+    color: $blue;
+
+    &--lighter {
+      color: $blue-lighter;
+    }
+  }
+
+  &--purple {
+    color: $purple;
+  }
+
+  &--grey {
+    color: $grey;
+  }
+
+  &--gray {
+    color: $gray;
+  }
+
+  &--light {
+    color: $light;
+  }
+
+  &--dark {
+    color: $dark;
+  }
+
+  &--ghost {
+    color: $ghost;
+  }
+}
+
+.ghost {
+  opacity: .5;
+}

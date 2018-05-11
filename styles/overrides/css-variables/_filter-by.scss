@@ -1,0 +1,30 @@
+.sim-filter {
+
+  .sim-selection {
+
+    input:checked {
+      color: $green;
+    }
+  }
+
+  &.active {
+
+    .sim-filter--header {
+      color: $green;
+    }
+  }
+}
+
+.sim-accordion {
+
+  &--label {
+
+    &::before {
+      transition: transform calc(300ms / 2) ease-out;
+    }
+
+    + .sim-accordion--items {
+      transition: 300ms linear;
+    }
+  }
+}

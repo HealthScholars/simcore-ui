@@ -1,0 +1,26 @@
+.override-css-variables {
+  @import 'overrides/css-variables/scss-variables';
+  @import 'overrides/css-variables/autocomplete';
+  @import 'overrides/css-variables/autofinder';
+  @import 'overrides/css-variables/badge';
+  @import 'overrides/css-variables/bubble';
+  @import 'overrides/css-variables/bulkcheck';
+  @import 'overrides/css-variables/calendar-day';
+  @import 'overrides/css-variables/calendar';
+  @import 'overrides/css-variables/datalist';
+  @import 'overrides/css-variables/datepicker';
+  @import 'overrides/css-variables/filter-by';
+  @import 'overrides/css-variables/icontext';
+  @import 'overrides/css-variables/loader';
+  @import 'overrides/css-variables/modal';
+  @import 'overrides/css-variables/overlay';
+  @import 'overrides/css-variables/panel';
+  @import 'overrides/css-variables/progress';
+  @import 'overrides/css-variables/selection';
+  @import 'overrides/css-variables/slide-presenter';
+  @import 'overrides/css-variables/switch';
+  @import 'overrides/css-variables/tag';
+  @import 'overrides/css-variables/timeblock';
+  @import 'overrides/css-variables/timepicker';
+  @import 'overrides/css-variables/tooltip';
+}

@@ -1,0 +1,35 @@
+.sim-overlay {
+  transform: translateY(-100%);
+  
+  &.active {
+    transform: translateY(0%);
+  }
+
+  &__dismiss {
+    transition: all $default-ms ease-out;
+    transition-delay: calc($default-ms / 2);
+  }
+}
+
+// opinions
+.sim-overlay {
+  color: $dark;
+  background: $lightest;
+  max-width: 100vw;
+  margin: 0 auto;
+
+  // overlay parts
+  &__dismiss {
+    color: $lightest;
+    background: $accent;
+
+    &:hover {
+      color: $lightest;
+      background: $action;
+    }
+  }
+
+  &.active .sim-overlay__dismiss {
+    transition-duration: calc($default-ms / 2);
+  }
+}

@@ -1,0 +1,14 @@
+.sim-loader {
+  box-shadow: 0 0 0 .1em $shade inset;
+  
+  circle {
+    stroke: $action;
+    animation:
+      1656ms loader-arc ease-in-out infinite,
+      1329ms loader-rotate ease-in-out infinite;
+  }
+}
+
+.sim-loader--shield {
+  background: $fog;
+}
