@@ -1,4 +1,3 @@
-// opinions
 .sim-tooltip {
 
   &__bubble {
@@ -20,18 +19,16 @@
     }
   }
 
-  &:hover {
-    .sim-tooltip__bubble {
+  &:hover .sim-tooltip__bubble {
 
-      &--up,
-      &--down {
-        animation: tooltipsVert calc($default-ms / 2) ease-out forwards;
-      }
+    &--up,
+    &--down {
+      animation: tooltipsVert calc($default-ms / 2) ease-out forwards;
+    }
 
-      &--up--left,
-      &--down--left {
-        animation: tooltipsVertLeft calc($default-ms / 2) ease-out forwards;
-      }
+    &--up--left,
+    &--down--left {
+      animation: tooltipsVertLeft calc($default-ms / 2) ease-out forwards;
     }
   }
 }
