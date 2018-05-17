@@ -1,7 +1,3 @@
-// ------------------------------------------
-// calendar grid mechanics
-// ------------------------------------------
-
 $lines: -1px -1px 0px 0px $medium-grey, -1px -1px 0px 0px $medium-grey inset;
 
 .sim-calendar {
@@ -40,7 +36,7 @@ $lines: -1px -1px 0px 0px $medium-grey, -1px -1px 0px 0px $medium-grey inset;
   }
 
   &--grid {
-    
+
     &--day {
       box-shadow: $lines;
     }
@@ -64,19 +60,15 @@ $lines: -1px -1px 0px 0px $medium-grey, -1px -1px 0px 0px $medium-grey inset;
   // calendar day states
   &--grid--days {
 
-    .is-today {
-      .sim-calendar--grid--date {
-        background: $medium-grey;
-      }
+    .is-today .sim-calendar--grid--date {
+      background: $medium-grey;
     }
 
     .is-before-today {
       background-color: $lighter;
 
-      &.is-selected {
-        .sim-calendar--grid--date {
-          color: $medium-grey;
-        }
+      &.is-selected .sim-calendar--grid--date {
+        color: $medium-grey;
       }
     }
 

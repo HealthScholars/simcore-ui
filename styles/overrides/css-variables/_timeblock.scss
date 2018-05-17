@@ -19,6 +19,7 @@
   }
 
   &.is-stretching {
+
     &--up,
     &--down {
       cursor: row-resize;
@@ -33,6 +34,7 @@
   &:hover {
 
     &:not(.is-moving):not(.is-stretching) {
+
       .sim-timeblock--remover {
         transform: translate(50%, 50%);
       }
@@ -96,7 +98,6 @@
     top: calc(8 * 4.1667 * 1%);
     height: calc(8 * 4.1667 * 1%);
 
-
     .sim-timeblock--info {
       color: $dark;
     }
@@ -111,6 +112,7 @@
 
 // block themes
 .sim-timeblock--theme {
+
   &--default,
   &--available,
   &--blue {
@@ -175,12 +177,14 @@
 
 // context overrides
 .sim-timepicker--y {
+  
   .sim-timeblock {
     box-shadow: $twilight;
   }
 }
 
 .sim-calendar-day .sim-timeblock--y {
+
   &.is-moving,
   &.is-stretching {
     .sim-timeblock--info--time {
