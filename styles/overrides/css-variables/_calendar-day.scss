@@ -1,0 +1,10 @@
+.local--day {
+  transition: $default-ms linear;
+
+  &--aggregate-blocks {
+
+    &.active {
+      box-shadow: 0 0 0 .2em $aqua;
+    }
+  }
+}

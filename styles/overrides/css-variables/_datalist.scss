@@ -1,0 +1,16 @@
+.sim-datalist {
+
+  li {
+    transition: all $default-ms cubic-bezier(1, .02, 0, 1.05), background 0ms;
+    // TODO: resolve dynamic css variable: --delay (Eric)
+    //transition-delay: calc(var(--delay, 0) * 5ms); // placeholder for inline --delay
+
+    &:hover {
+      background: $shade;
+    }
+
+    + li {
+      border-top: 1px solid $edge;
+    }
+  }
+}

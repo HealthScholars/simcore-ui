@@ -1,0 +1,16 @@
+.sim-switch {
+
+  input {
+    background: $light-grey;
+    transition: all $default-ms ease-out;
+
+    &::before {
+      background: $lightest;
+      transition: transform $default-ms ease-out;
+    }
+
+    &:checked {
+      background: $action;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+$lines: -1px -1px 0px 0px $medium-grey, -1px -1px 0px 0px $medium-grey inset;
+
+.sim-calendar {
+
+  // TODO: resolve dynamic css variable: --fg (Eric)
+  // color: var(--fg);
+
+  &--body {
+    background-color: $dark;
+    background-image: linear-gradient(135deg, $shade, $mist);
+    box-shadow: $lines;
+    color: $lightest;
+  }
+
+  &--filters {
+    $ms-lodestar: 600ms;
+    color: $green;
+  }
+
+  &--grid {
+
+    &--before {
+      // TODO: resolve dynamic css variable: --offset (Eric)
+      // flex: 0 0 calc(14.285% * var(--offset, 0)); // 0 = sunday, 6 = saturday
+    }
+  }
+
+  // borders & colors
+  &--header--controls {
+    // TODO: resolve dynamic css variable: --fg (Eric)
+    // background: var(--fg);
+
+    > * {
+      color: $action;
+    }
+  }
+
+  &--grid {
+
+    &--day {
+      box-shadow: $lines;
+    }
+
+    &--before,
+    &--after {
+      box-shadow: $lines;
+      background: $lighter;
+      background-image: repeating-linear-gradient(-45deg, transparent 0px, transparent 5px, $light 5px, $light 7px);
+    }
+
+    &--date {
+      color: $medium-grey;
+    }
+
+    &--header {
+      color: $medium-grey;
+    }
+  }
+
+  // calendar day states
+  &--grid--days {
+
+    .is-today .sim-calendar--grid--date {
+      background: $medium-grey;
+    }
+
+    .is-before-today {
+      background-color: $lighter;
+
+      &.is-selected .sim-calendar--grid--date {
+        color: $medium-grey;
+      }
+    }
+
+    .is-weekend {
+      background-color: $light;
+    }
+
+    .is-selected {
+      background-color: $blue-film-light;
+    }
+  }
+}

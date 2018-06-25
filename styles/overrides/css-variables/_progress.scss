@@ -1,0 +1,9 @@
+.sim-progress {
+  background: $edge;
+
+  &__completed {
+    // TODO: resolve dynamic css variable: --percent (Eric)
+    // width: var(--percent);
+    background: $purple;
+  }
+}

@@ -1,0 +1,14 @@
+.sim-modal {
+  transition: opacity $default-ms linear;
+
+  &__wrapper {
+    background: $lightest;
+    color: $darker;
+    transition: transform $default-ms linear;
+  }
+
+  &__dismiss {
+    transition: all $default-ms ease-out;
+    transition-delay: calc($default-ms / 2);
+  }
+}

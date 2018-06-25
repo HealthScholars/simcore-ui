@@ -1,0 +1,34 @@
+.sim-tooltip {
+
+  &__bubble {
+
+    background: $darker;
+    box-shadow: 0 .5em 2em -.5em $shadow;
+    color: $lightest;
+    transition: all $default-ms ease-out;
+    width: 12em;
+
+    &--up::after,
+    &--up--left::after {
+      border-top-color: $darker;
+    }
+
+    &--down::after,
+    &--down--left::after {
+      border-bottom-color: $darker;
+    }
+  }
+
+  &:hover .sim-tooltip__bubble {
+
+    &--up,
+    &--down {
+      animation: tooltipsVert calc($default-ms / 2) ease-out forwards;
+    }
+
+    &--up--left,
+    &--down--left {
+      animation: tooltipsVertLeft calc($default-ms / 2) ease-out forwards;
+    }
+  }
+}

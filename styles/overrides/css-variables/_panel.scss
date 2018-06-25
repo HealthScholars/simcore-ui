@@ -1,0 +1,37 @@
+.sim-panel {
+  width: 30em;
+  transform: translateX(100vw);
+
+  &.active {
+    transform: translateX(calc(100vw - 30em));
+  }
+
+  // panel parts
+  &__dismiss {
+    transition: all $default-ms ease-out;
+    transition-delay: calc($default-ms / 2);
+  }
+}
+
+// opinions
+.sim-panel {
+  background: $darker;
+  border-left: .2em solid $accent;
+  box-shadow: .2em 0 0 0 $accent inset;
+  color: $lightest;
+
+  // panel parts
+  &__dismiss {
+    background: $accent;
+    color: $lightest;
+
+    &:hover {
+      background: $action;
+      color: $lightest;
+    }
+  }
+
+  &.active .sim-panel__dismiss {
+    transition-duration: calc($default-ms / 2);
+  }
+}

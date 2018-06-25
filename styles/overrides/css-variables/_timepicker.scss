@@ -1,0 +1,13 @@
+.sim-timepicker {
+  
+  &--inner {
+
+    &.is-at-block-limit {
+      cursor: default;
+    }
+  }
+
+  ul {
+    cursor: cell;
+  }
+}

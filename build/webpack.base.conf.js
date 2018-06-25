@@ -12,7 +12,8 @@ module.exports = {
     app: './docs/main.js',
     theme: './styles/theme.scss',
     animations: './styles/animations.scss',
-    'form-elements': './styles/form-elements.scss'
+    'form-elements': './styles/form-elements.scss',
+    'override-css-variables': './styles/override-css-variables.scss'
   },
   output: {
     path: config.build.assetsRoot,

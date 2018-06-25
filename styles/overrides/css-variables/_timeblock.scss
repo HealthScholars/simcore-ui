@@ -1,0 +1,204 @@
+@keyframes timeblockTooltips {
+  to {
+    opacity: 1;
+    transform: translate(-50%, -100%) scale(1);
+  }
+}
+
+.sim-timeblock {
+  background: $dark;
+  cursor: default;
+
+  // states
+  &.is-moveable {
+    cursor: move;
+  }
+
+  &.is-moving {
+    box-shadow: 0 .3em 1em -.2em $shadow;
+  }
+
+  &.is-stretching {
+
+    &--up,
+    &--down {
+      cursor: row-resize;
+    }
+
+    &--left,
+    &--right {
+      cursor: col-resize;
+    }
+  }
+
+  &:hover {
+
+    &:not(.is-moving):not(.is-stretching) {
+
+      .sim-timeblock--remover {
+        transform: translate(50%, 50%);
+      }
+
+      .sim-timeblock--tooltip {
+        transform: translate(-50% , calc(-100% - .5em)) scale(1);
+        transition-delay: 300ms;
+      }
+    }
+  }
+
+  // parts
+
+
+  &--handle {
+    background: $dusk;
+    cursor: default;
+
+    &--right {
+      border-left: 4px solid $dark;
+    }
+
+    &--left {
+      border-right: 4px solid $dark;
+    }
+
+    &--up {
+      border-right: 4px solid $dark;
+    }
+
+    &--down {
+      border-right: 4px solid $dark;
+    }
+  }
+
+  &--tooltip {
+    color: $lighter;
+    background: $dark;
+    transform: translate(-50%, calc(0% - .5em)) scale(.5);
+    transition: calc($default-ms / 2) ease-out 0ms;
+
+    &::after {
+      border-top-color: $dark;
+    }
+  }
+
+
+  // contexts
+  &--x {
+    left: calc(8 * 4.1667 * 1%);
+    width: calc(8 * 4.1667 * 1%);
+
+    .sim-timeblock--remover {
+      color: $lightest;
+      background: $dark;
+      box-shadow: 0 .2em 1.3em -.3em $shadow;
+    }
+  }
+
+  &--y {
+    top: calc(8 * 4.1667 * 1%);
+    height: calc(8 * 4.1667 * 1%);
+
+    .sim-timeblock--info {
+      color: $dark;
+    }
+
+    .sim-timeblock--remover {
+      color: $lightest;
+      background: $dark;
+      box-shadow: 0 .2em 1.3em -.3em $shadow;
+    }
+  }
+}
+
+// block themes
+.sim-timeblock--theme {
+
+  &--default,
+  &--available,
+  &--blue {
+    background: $aqua radial-gradient(ellipse at 0% -100%, $aqua-film 0%, $blue 90%);
+  }
+
+  &--aggregate,
+  &--alt-blue {
+    background: $blue-lighter;
+    cursor: pointer;
+  }
+
+  &--specific,
+  &--alt-green {
+    background: $green-lighter;
+    cursor: pointer;
+  }
+
+  &--green {
+    background: $green radial-gradient(ellipse at 0% -100%, $yellow-film 0%, $green 90%);
+    cursor: pointer;
+  }
+
+  &--pending-event,
+  &--orange {
+    background: $orange;
+  }
+
+  &--duration,
+  &--alt-orange {
+    background: $orange radial-gradient(ellipse at 0% -100%, $yellow-film 0%, $orange-lighter 90%);
+  }
+
+  &--event,
+  &--purple {
+    background: $aqua radial-gradient(ellipse at 0% -100%, $red-film 0%, $purple 90%);
+  }
+
+  &--empty,
+  &--none,
+  &--grey,
+  &--gray {
+    background: $mist radial-gradient(ellipse at 0% -100%, $dust 0%, $shade 90%);
+    box-shadow: 0 0 0 1px $shade inset;
+  }
+
+  &--null,
+  &--red {
+    background: $red-film-lighter repeating-linear-gradient(45deg, transparent 0px, transparent 5px, $red-film-light 5px, $red-film-light 7px);
+    box-shadow: 0 0 0 1px $red-film-light inset;
+  }
+}
+
+// outset states affect blocks
+.is-moving {
+  cursor: move;
+}
+
+.is-stretching {
+  cursor: row-resize;
+}
+
+// context overrides
+.sim-timepicker--y {
+  
+  .sim-timeblock {
+    box-shadow: $twilight;
+  }
+}
+
+.sim-calendar-day .sim-timeblock--y {
+
+  &.is-moving,
+  &.is-stretching {
+    .sim-timeblock--info--time {
+      background: $shadow;
+    }
+  }
+}
+
+// tooltip override for timeblocks in a far-right calendar day
+.day-6 {
+  .sim-timeblock {
+    // TODO: resolve dynamic css variable: --tooltip-shift-x (Eric)
+    // --tooltip-shift-x: -85%;
+    // TODO: resolve dynamic css variable: --tooltip-dink-x (Eric)
+    // --tooltip-dink-x: 85%;
+  }
+}

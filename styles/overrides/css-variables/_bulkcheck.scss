@@ -1,0 +1,33 @@
+.sim-bulkcheck {
+  padding: 0;
+  background: transparent;
+  color: var(--bulkcheck-color, $action);
+  box-shadow: none;
+  white-space: nowrap;
+
+  &[tooltip] {
+    position: relative;
+  }
+
+  &:active,
+  &:focus {
+    box-shadow: none;
+  }
+
+  &.active {
+    color: inherit;
+  }
+
+  .sim-icontext {
+    opacity: .4;
+    text-shadow: -1px 0 1px $shadow;
+    position: relative;
+    ~ * {
+      opacity: .7;
+      margin-left: -1.25em;
+      + * {
+          opacity: 1;
+      }
+    }
+  }
+}

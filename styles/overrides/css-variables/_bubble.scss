@@ -1,0 +1,60 @@
+.sim-bubble {
+
+  &--content {
+    color: $lightest;
+    background: $dark;
+    box-shadow: 0 0 0 1px $fog, 0 .5em 2em -.3em rgba(0, 0, 0, .5);
+  }
+
+  &--left {
+    // TODO: resolve dynamic css variable: --x (Eric)
+    // left: calc(var(--x) * 1px);
+
+    &::before {
+      left: 0;
+      border-color: $fog;
+    }
+
+    &::after {
+      left: 1px;
+      border-color: $dark;
+    }
+
+    &::before,
+    &::after {
+      border-right-color: $fog;
+    }
+  }
+
+  &--right {
+    // TODO: resolve dynamic css variable: --x (Eric)
+    // right: calc(var(--x) * 1px);
+
+    &::before {
+      left: 100%;
+      border-color: $fog;
+    }
+
+    &::after {
+      left: calc(100% - 1px);
+      border-color: $dark;
+    }
+
+    &::before,
+    &::after {
+      border-left-color: $fog;
+    }
+  }
+
+  &--dismiss {
+    transition: all $default-ms ease-out;
+    transition-delay: calc($default-ms / 2);
+    color: $lightest;
+    background: $accent;
+
+    &:hover {
+      color: $lightest;
+      background: $action;
+    }
+  }
+}

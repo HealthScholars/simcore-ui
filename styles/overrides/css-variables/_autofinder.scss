@@ -1,0 +1,20 @@
+.sim-autofinder {
+
+  .sim-autofinder--search {
+
+    &--input[type="text"] {
+      color: $light;
+    }
+  }
+
+  &--options {
+    color: $dark;
+    background: $lighter;
+    box-shadow: 0 0 0 1px $fog, 0 .3em 1em -.3em $shadow;
+
+    li.highlighted {
+      color: $blue;
+      background: $shade;
+    }
+  }
+}

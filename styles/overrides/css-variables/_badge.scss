@@ -1,0 +1,12 @@
+.sim-badge {
+
+  &-enter-active,
+  &-leave-active {
+    transition: all $default-ms cubic-bezier(.6,-0.4,.6,1.4);
+  }
+}
+
+.sim-badge__content {
+  background: $dark-grey;
+  color: $lightest;
+}
