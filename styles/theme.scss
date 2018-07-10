@@ -17,7 +17,7 @@
   --calc-pt5: calc(1vw + .5em);
   --calc-pt75: calc(1vw + .75em);
   --calc-1: calc(1vw + 1em);
-  
+
   // colors
   --darkest: #000;
   --darker: #222;
@@ -33,18 +33,30 @@
 
   --blue: #4A93B9;
   --blue-light: #76BADF;
+  --blue-lighter: #96b3cb;
+  --blue-film-light: rgba(74, 147, 185, .15);
   --blue-film: rgba(74, 147, 185, .5);
   --blue-film-heavy: rgba(14, 103, 150, .9);
+
   --red: #CA1E34;
   --red-film: rgba(202, 30, 52, .5);
+  --red-film-light: rgba(202, 30, 52, .15);
+  --red-film-lighter: rgba(202, 30, 52, .05);
+
   --orange: #FF7042;
   --orange-film: rgba(255, 112, 66, .5);
+  --orange-lighter: #f5a623;
+
   --yellow: #FFC929;
   --yellow-film: rgba(255, 201, 41, .5);
+
   --green: #9CCC66;
+  --green-lighter: #bfd98c;
   --green-film: rgba(156, 204, 102, .5);
+
   --aqua: #00C1D9;
   --aqua-film: rgba(0, 193, 217, .5);
+
   --purple: #AB47BD;
   --purple-film: rgba(171, 71, 189, .5);
 
