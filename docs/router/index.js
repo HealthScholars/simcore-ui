@@ -16,6 +16,7 @@ import DocCalendar from '../pages/components/Calendar'
 import DocDatalist from '../pages/components/Datalist'
 import DocDatepicker from '../pages/components/Datepicker'
 import DocFilterBy from '../pages/components/FilterBy'
+import DocForm from '../pages/components/Form'
 import DocIconText from '../pages/components/IconText'
 import DocLoader from '../pages/components/Loader'
 import DocModal from '../pages/components/Modal'
@@ -23,6 +24,7 @@ import DocOverlay from '../pages/components/Overlay'
 import DocPanel from '../pages/components/Panel'
 import DocProgress from '../pages/components/Progress'
 import DocSelection from '../pages/components/Selection'
+import DocSummaryBlock from '../pages/components/SummaryBlock'
 import DocSwitch from '../pages/components/Switch'
 import DocTag from '../pages/components/Tag'
 import DocTimePicker from '../pages/components/TimePicker'
@@ -125,6 +127,14 @@ export default new Router({
           },
         },
         {
+          path: 'form',
+          name: 'form',
+          label: 'Form',
+          components: {
+            details: DocForm,
+          },
+        },
+        {
           path: 'icon-text',
           name: 'icon-text',
           label: 'Icon + Text',
@@ -178,6 +188,14 @@ export default new Router({
           label: 'Selection',
           components: {
             details: DocSelection,
+          },
+        },
+        {
+          path: 'SummaryBlock',
+          name: 'SummaryBlock',
+          label: 'SummaryBlock',
+          components: {
+            details: DocSummaryBlock,
           },
         },
         {

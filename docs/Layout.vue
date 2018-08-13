@@ -4,15 +4,15 @@
     <SimOverlay
       class="animator parallax in-from-top"
       :should-show-dismiss="true"
-      :dismiss-to="overlayDismissTo"      
+      :dismiss-to="overlayDismissTo"
       :should-be-open="shouldOverlayBeOpen"
       >
       <button @click="$root.togglePanel">panelize</button>
       </SimOverlay>
-    <SimPanel 
-      class="animator parallax in-from-right" 
+    <SimPanel
+      class="animator parallax in-from-right"
       :should-be-open="shouldPanelBeOpen"
-      :should-show-dismiss="true" 
+      :should-show-dismiss="true"
       :dismiss-to="panelDismissTo"
       ></SimPanel>
     <header class="app-header animatable" role="banner">
@@ -37,7 +37,7 @@
         class="app-nav"
         :class="{'is-visible': appNavIsOpen}"
         app-menu="main-menu"
-        >        
+        >
         <nav>
           <ul>
             <li>
@@ -75,7 +75,7 @@
       </div>
     </header>
     <div class="app-content animatable">
-      <button 
+      <button
         toggle-button="sidebar"
         class="toggle-button toggle-button--sidebar"
         :class="{'target-is-visible': appSidebarIsOpen}"
@@ -143,8 +143,8 @@
       this.menu = {
         children: this.routes,
       }
-      const _caller = (callback) => {
-        if(callback && typeof callback === 'function') {
+      const caller = (callback) => {
+        if (callback && typeof callback === 'function') {
           callback.call()
         }
       }
@@ -174,21 +174,21 @@
       })
       this.$root.$on('toggle-modal', (callback) => {
         this.shouldModalBeOpen = !this.shouldModalBeOpen
-        _caller(callback)
+        caller(callback)
       })
       this.$root.$on('open-modal', (callback) => {
         this.shouldModalBeOpen = true
-        _caller(callback)
+        caller(callback)
       })
       this.$root.$on('close-modal', (callback) => {
         this.shouldModalBeOpen = false
-        _caller(callback)
+        caller(callback)
       })
     },
     methods: {
-      setMenuButtonClasses(){
-        let classes = []
-        if(this.appSidebarIsOpen) {
+      setMenuButtonClasses() {
+        const classes = []
+        if (this.appSidebarIsOpen) {
           classes.push('target-is-visible')
         }
         // if(this.someOtherThingIsTrue) {
@@ -205,9 +205,9 @@
         //   var hidden = sidebarNav.getAttribute("aria-hidden") === "true"
         //   var expanded = toggleButton.getAttribute("aria-expanded") === "true"
         //   sidebarNav.setAttribute("aria-hidden", String(!hidden))
-        //   sidebarNav.classList.toggle('is--visible')          
+        //   sidebarNav.classList.toggle('is--visible')
         //   toggleButton.setAttribute("aria-expanded", String(!expanded))
-        //   toggleButton.classList.toggle('is--active')            
+        //   toggleButton.classList.toggle('is--active')
         // })();
       },
       toggleAppNavVisibility() {
@@ -218,11 +218,11 @@
         //   var hidden = appNav.getAttribute('aria-hidden') === 'true'
         //   var expanded = toggleButton.getAttribute('aria-expanded') === 'true'
         //   appNav.setAttribute('aria-hidden', String(!hidden))
-        //   appNav.classList.toggle('is--visible')          
+        //   appNav.classList.toggle('is--visible')
         //   toggleButton.setAttribute('aria-expanded', String(!expanded))
-        //   toggleButton.classList.toggle('is--active')            
+        //   toggleButton.classList.toggle('is--active')
         // })();
-      }
+      },
     },
   }
 </script>
