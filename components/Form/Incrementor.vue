@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="mentor" @click="this.decrement">-</button>
-    <input class="number" v-model.number="this.number" type="number" size="3" min="0">
+    <input class="number" :value="this.number" @input="change" type="number" size="3" min="0">
     <button class="mentor" @click="this.increment">+</button>
   </div>
 </template>
@@ -25,8 +25,11 @@ export default {
   },
   data() {
     return {
-      number: this.value,
+      number: 0,
     }
+  },
+  created() {
+    this.number = this.value
   },
   watch: {
     number() {
@@ -34,6 +37,9 @@ export default {
     },
   },
   methods: {
+    change(input) {
+      this.number = Number(input.target.value)
+    },
     increment() {
       this.number = this.number + this.step
     },
