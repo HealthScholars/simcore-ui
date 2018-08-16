@@ -18,18 +18,28 @@ export default {
       type: Number,
       default: 0,
     },
-    number: {
+    value: {
       type: Number,
       default: 0,
     },
   },
+  data() {
+    return {
+      number: this.value,
+    }
+  },
+  watch: {
+    number() {
+      this.$emit('input', this.number)
+    },
+  },
   methods: {
     increment() {
-      this.number = this.number + 1
+      this.number = this.number + this.step
     },
     decrement() {
       if (this.number - this.step >= this.minimum) {
-        this.number = this.number - 1
+        this.number = this.number - this.step
       }
     },
   },

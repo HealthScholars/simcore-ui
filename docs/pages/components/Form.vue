@@ -12,7 +12,7 @@ export default {
   components: { SimcoreIncrementor },
   data() {
     return {
-      number: 2,
+      number: 8,
     }
   },
 }
