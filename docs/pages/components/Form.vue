@@ -1,6 +1,6 @@
 <template>
   <simcore-incrementor
-    :initial-value="0"
+    v-model="number"
   >
   </simcore-incrementor>
 </template>
@@ -10,5 +10,10 @@ import SimcoreIncrementor from '../../../components/Form/Incrementor'
 
 export default {
   components: { SimcoreIncrementor },
+  data() {
+    return {
+      number: 2,
+    }
+  },
 }
 </script>

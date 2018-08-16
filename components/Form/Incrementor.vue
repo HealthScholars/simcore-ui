@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="mentor" @click="this.decrement">-</button>
-    <input class="number" v-model.number="number" type="number" size="3" min="0">
+    <input class="number" v-model.number="this.number" type="number" size="3" min="0">
     <button class="mentor" @click="this.increment">+</button>
   </div>
 </template>
@@ -10,30 +10,25 @@
 export default {
   name: 'simcore-incrementor',
   props: {
-    model: String,
-    initialValue: {
-      type: Number,
-      default: 0,
-    },
     step: {
       type: Number,
       default: 1,
     },
-  },
-  data() {
-    return {
-      number: 0,
-    }
-  },
-  created() {
-    this.number = this.initialValue
+    minimum: {
+      type: Number,
+      default: 0,
+    },
+    number: {
+      type: Number,
+      default: 0,
+    },
   },
   methods: {
     increment() {
       this.number = this.number + 1
     },
     decrement() {
-      if (this.number - this.step >= 0) {
+      if (this.number - this.step >= this.minimum) {
         this.number = this.number - 1
       }
     },
@@ -43,7 +38,7 @@ export default {
 
 <style lang="scss">
 .mentor {
-  border: 0;
+  border: none;
   background-color: transparent;
   font-weight: bold;
   font-size: 1.3em;
