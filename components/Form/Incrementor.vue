@@ -55,6 +55,7 @@ export default {
 <style lang="scss">
 .mentor {
   border: none;
+  box-shadow: none;
   background-color: transparent;
   font-weight: bold;
   font-size: 1.3em;
