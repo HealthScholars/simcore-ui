@@ -67,7 +67,8 @@ export default {
           background-color: white;
           padding: 0.075rem 0.2rem;
           border-radius: 50%;
-          color: indianred;
+          color: indianred !important; // important because of Bootstrap
+          opacity: 1; // because of Bootstrap
           font-size: 1.2em;
         }
       }
