@@ -1,6 +1,6 @@
 <template>
   <section>
-    <h3>{{ this.title }}</h3>
+    <div class="title">{{ this.title }}</div>
     <ul v-if="Array.isArray(this.content)">
       <template v-if="this.content.length > 0">
         <li v-for="item in this.content">
@@ -32,7 +32,7 @@
 
 <style lang="scss">
   section {
-    h3 {
+    .title {
       margin: 0.75em 0 0.2em 0;
       font-size: 0.9em;
       color: #a5a5a5;
@@ -40,8 +40,10 @@
 
     ul {
       margin: 0;
+      padding: 0;
 
       li {
+        list-style: none;
         margin: 0;
         padding: 0;
       }

@@ -75,7 +75,7 @@ export default {
 
 input[type="number"].number {
   display: inline-block;
-  width: 3rem;
+  width: 4rem;
   text-align: center;
 
   &::-webkit-outer-spin-button,
