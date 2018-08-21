@@ -70,6 +70,10 @@ export default {
           color: indianred !important; // important because of Bootstrap
           opacity: 1; // because of Bootstrap
           font-size: 1.2em;
+
+          i.fa {
+            color: indianred !important; // important because of Bootstrap
+          }
         }
       }
     }
