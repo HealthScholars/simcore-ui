@@ -59,7 +59,6 @@ export default {
   background-color: transparent;
   font-weight: bold;
   font-size: 1.3em;
-  color: #333;
   padding: .25em 0.5em;
   outline: none;
 

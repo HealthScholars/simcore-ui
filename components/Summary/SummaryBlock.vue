@@ -27,11 +27,10 @@ export default {
     'index',
     'title',
     'sections',
-    'closeAction',
   ],
   methods: {
     close() {
-      this.closeAction(this.index)
+      this.$emit('close', this.index)
     },
   },
 }
