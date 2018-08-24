@@ -10,10 +10,7 @@
     </div>
 
     <div class="body">
-      <summary-list v-for="section in this.sections"
-        :title="section.title"
-        :content="section.content"
-      ></summary-list>
+      <slot/>
     </div>
   </div>
 </template>

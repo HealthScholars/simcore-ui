@@ -3,18 +3,26 @@
     <SummaryBlock v-for="summary in this.summaries"
       :index="summary.index"
       :title="summary.title"
-      :sections="summary.sections"
       :closeAction="close"
-    ></SummaryBlock>
+    >
+      <SummaryList v-for="section in summary.sections"
+                      :title="section.title"
+                      :content="section.content"
+      />
+    </SummaryBlock>
   </div>
 </template>
 
 <script>
 import SummaryBlock from '../../../components/Summary/SummaryBlock'
+import SummaryList from '../../../components/Summary/SummaryList'
 
 export default {
   name: 'summaryblock-doc',
-  components: { SummaryBlock },
+  components: {
+    SummaryBlock,
+    SummaryList,
+  },
   data() {
     return {
       summaries: [
