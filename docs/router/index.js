@@ -10,6 +10,7 @@ import Extras from '../Extras'
 
 // Docs: Components
 import DocAutocomplete from '../pages/components/Autocomplete'
+import DocSingleSelector from '../pages/components/SingleSelector'
 import DocBadges from '../pages/components/Badge'
 import DocBulkCheck from '../pages/components/BulkCheck'
 import DocCalendar from '../pages/components/Calendar'
@@ -188,6 +189,14 @@ export default new Router({
           label: 'Selection',
           components: {
             details: DocSelection,
+          },
+        },
+        {
+          path: 'single-selector',
+          name: 'single-selector',
+          label: 'SingleSelector',
+          components: {
+            details: DocSingleSelector,
           },
         },
         {
