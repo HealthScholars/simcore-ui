@@ -10,27 +10,34 @@
     </div>
 
     <div class="body">
-      <slot/>
+      <slot name="sections" :resetSections="resetSections" :setSections="setSections" :sections="sections"/>
     </div>
   </div>
 </template>
 
 <script>
-import SummaryList from './SummaryList'
-
-export default {
-  components: { SummaryList },
-  props: [
-    'index',
-    'title',
-    'sections',
-  ],
-  methods: {
-    close() {
-      this.$emit('close', this.index)
+  export default {
+    props: [
+      'index',
+      'title',
+    ],
+    data() {
+      return {
+        sections: [],
+      }
     },
-  },
-}
+    methods: {
+      close() {
+        this.$emit('close', this.index)
+      },
+      setSections(item) {
+        this.sections = [...item.sections]
+      },
+      resetSections() {
+        this.sections = [...[]]
+      },
+    },
+  }
 </script>
 
 <style lang="scss">

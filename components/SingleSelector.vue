@@ -56,12 +56,6 @@ export default {
       type: Array,
       required: true,
     },
-    template: {
-      type: Function,
-      default: (item) => {
-        return `${item.name}`
-      },
-    },
     filter: {
       type: Function,
       default: (item, search) => {
@@ -75,6 +69,12 @@ export default {
     isAlone: {
       type: Boolean,
       default: true,
+    },
+    didSelect: {
+      type: Function,
+      default: (item) => {
+        return item
+      },
     },
   },
   data() {
@@ -130,15 +130,14 @@ export default {
     select() {
       if (this.isOpen && this.foundItems.length) {
         this.foundItem = this.foundItems[this.position]
-        this.$emit('select', this.foundItem, this.index)
-        this.search = this.template(this.foundItem)
+        this.didSelect(this.foundItem)
         this.previousValueLength = this.search.length
 
         this.isOpen = false
       }
     },
     selectAndAddAnother() {
-      if (this.isOpen && this.foundOptions.length) {
+      if (this.isOpen && this.foundItems.length) {
         this.$emit('add-another')
         this.select()
       }
