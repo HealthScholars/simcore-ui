@@ -20,21 +20,17 @@
     props: [
       'index',
       'title',
+      'sections',
     ],
-    data() {
-      return {
-        sections: [],
-      }
-    },
     methods: {
       close() {
         this.$emit('close', this.index)
       },
       setSections(item) {
-        this.sections = [...item.sections]
+        this.$emit('setSections', [...item.sections])
       },
       resetSections() {
-        this.sections = [...[]]
+        this.$emit('setSections', [...[]])
       },
     },
   }

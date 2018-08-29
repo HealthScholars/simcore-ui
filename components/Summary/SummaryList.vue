@@ -32,6 +32,10 @@
 
 <style lang="scss">
   section {
+    display: flex;
+    padding: 0.1em;
+    border-radius: 0.2em;
+
     .title {
       margin: 0.75em 0 0.2em 0;
       font-size: 0.9em;
@@ -47,6 +51,31 @@
         margin: 0;
         padding: 0;
       }
+    }
+
+    .section-content {
+      flex: 1;
+    }
+
+    .section-meta {
+      flex: none;
+    }
+
+    .section:hover {
+      background-color: #222;
+    }
+
+    .section-content:hover ~ .section-meta .close-section,
+    .section-meta:hover .close-section {
+      display: block;
+    }
+
+    button.close-section {
+      display: none;
+      background: transparent;
+      border: 0;
+      border-radius: 50%;
+      padding: 0.2em 0.6em;
     }
   }
 </style>
