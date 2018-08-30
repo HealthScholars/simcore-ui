@@ -10,18 +10,29 @@
     </div>
 
     <div class="body">
-      <slot name="sections" :resetSections="resetSections" :setSections="setSections" :sections="sections"/>
+      <slot v-if="this.sections.length > 0" name="sections" :sections="sections" :resetSections="resetSections"/>
+      <div v-else>
+        <slot name="empty" :setSections="setSections"/>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
   export default {
-    props: [
-      'index',
-      'title',
-      'sections',
-    ],
+    props: {
+      index: {
+        required: true,
+      },
+      title: {
+        type: String,
+        required: true,
+      },
+      sections: {
+        type: Array,
+        default: [],
+      },
+    },
     methods: {
       close() {
         this.$emit('close', this.index)
