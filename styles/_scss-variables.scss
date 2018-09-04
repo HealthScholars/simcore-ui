@@ -33,15 +33,8 @@ $blue-film-heavy: rgba(14, 103, 150, .9);
 $purple: #ab47bd;
 $purple-film: rgba(#ab47bd, .5);
 $accent: $medium-grey;
-$action: $blue;
-$active: $blue-film-heavy;
-$focus: $aqua;
-$success: $green;
-$danger: $red;
-$warnign: $orange;
-$alert: $yellow;
-$royal: $purple;
 
+// accent colors
 $shadow: rgba(#000, .8);
 $twilight: rgba(#000, .5);
 $dusk: rgba(#000, .3);
@@ -54,8 +47,32 @@ $mist: rgba(#fff, .2);
 $fog: rgba(#fff, .5);
 $frost: rgba(#fff, .8);
 
-$default-ms: 350ms;
+// state colors
+$action: $blue;
+$active: $blue-film-heavy;
+$focus: $aqua;
+$success: $green;
+$danger: $red;
+$warning: $orange;
+$alert: $yellow;
+$royal: $purple;
 
+
+// alternate color spellings
+$dark-gray: $dark-grey;
+$gray: $grey;
+$medium-gray: $medium-grey;
+$light-gray: $light-grey;
+$lighter-gray: $lighter-grey;
+
+// animation
+$default-ms: 350ms;
+$ms: 350ms;
+$ms-quick: 200ms;
+$ms-lodestar: 600ms;
+$parallax-amount: 15vh;
+
+// font icons
 $icon-font-family: 'FontAwesome';
 $icon-check: '\f00c';
 $icon-check-circle: '\f058';
@@ -64,16 +81,11 @@ $icon-check-square-o: '\f046';
 $icon-circle-thin: '\f1db';
 $icon-minus-circle: '\f056';
 
-// alternate spellings
-$dark-gray: $dark-grey;
-$gray: $grey;
-$medium-gray: $medium-grey;
-$light-gray: $light-grey;
-$lighter-gray: $lighter-grey;
-
+// font stacks
 $base-font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 $serif-font-family: 'Garamond', 'Cambria', Georgia, serif;
 
+// text modifiers
 .text {
   &--red {
     color: $red;
@@ -130,8 +142,4 @@ $serif-font-family: 'Garamond', 'Cambria', Georgia, serif;
   &--ghost {
     color: $ghost;
   }
-}
-
-.ghost {
-  opacity: .5;
 }

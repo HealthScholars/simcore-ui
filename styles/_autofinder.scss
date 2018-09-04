@@ -4,16 +4,17 @@
 
   .sim-autofinder--search {
     display: flex;
+
     &--input[type="text"] {
-      flex: 1;
       background: transparent;
-      color: var(--light);
-      box-shadow: none;
       border: 0;
       border-radius: 0;
-      padding: .2em;
-      margin: -.2em .2em;
+      box-shadow: none;
+      color: var(--light);
+      flex: 1;
       font-weight: normal;
+      margin: -.2em .2em;
+      padding: .2em;
 
       &::placeholder {
         font-style: italic;
@@ -31,6 +32,7 @@
   }
 
   &:hover {
+
     .sim-autofinder--remove-item  {
       .sim-icontext {
         opacity: .5;
@@ -42,8 +44,13 @@
   }
 
   &--options {
+    color: var(--autofinder-items-fg, var(--dark));
+    background: var(--autofinder-items-bg, var(--lighter));
+    border-radius: .2rem;
+    box-shadow: 0 0 0 1px var(--fog), 0 .3em 1em -.3em var(--shadow);
+    max-height: 15em;
+    overflow: auto;
     position: absolute;
-    z-index: 1;
     top: calc(100% + 1px);
     left: 1em;
     right: 1em;
@@ -56,6 +63,7 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    z-index: 1;
 
     .heading {
       font-weight: 500;
@@ -72,12 +80,18 @@
       display: block;
     }
 
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
     li {
       padding: .5em;
 
       &.highlighted {
-        color: var(--autofinder-highlight-fg, var(--blue));
         background: var(--autofinder-highlight-bg, var(--shade));
+        color: var(--autofinder-highlight-fg, var(--blue));
       }
     }
   }

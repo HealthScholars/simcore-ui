@@ -1,5 +1,7 @@
+@import 'scss-variables';
+
 .override-css-variables {
-  @import 'overrides/css-variables/scss-variables';
+  @import 'overrides/css-variables/animations';
   @import 'overrides/css-variables/autocomplete';
   @import 'overrides/css-variables/autofinder';
   @import 'overrides/css-variables/badge';
@@ -10,6 +12,7 @@
   @import 'overrides/css-variables/datalist';
   @import 'overrides/css-variables/datepicker';
   @import 'overrides/css-variables/filter-by';
+  @import 'overrides/css-variables/form-elements';
   @import 'overrides/css-variables/icontext';
   @import 'overrides/css-variables/loader';
   @import 'overrides/css-variables/modal';

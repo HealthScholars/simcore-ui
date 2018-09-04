@@ -1,0 +1,52 @@
+// text inputs
+input {
+  &[type='text'],
+  &[type='password'],
+  &[type='number'],
+  &[type='date'],
+  &[type='tel'],
+  &[type='url'],
+  &[type='search'] {
+    background-color: $lightest;
+    color: $dark;
+    box-shadow: 0 0 0 1px $dusk inset;
+    transition: all $ms ease-out;
+
+    &:active,
+    &:focus {
+      box-shadow: 0 0 0 1px $dusk inset, 0 0 2px 1px $action;
+    }
+  }
+}
+
+select,
+textarea {
+  background-color: $lightest;
+  color: $dark;
+  box-shadow: 0 0 0 1px $dusk inset;
+  transition: $ms ease-out;
+
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 1px $dusk inset, 0 0 2px 1px $action;
+  }
+}
+
+// file input
+input[type='file'] {
+
+  + label {
+    color: $light;
+    background-color: $aqua;
+  }
+
+  &:focus + label {
+    box-shadow: 0 0 0 1px $fog inset, 0 0 2px 1px $action;
+  }
+}
+
+// range slider
+input[type='range'] {
+  color: $aqua;
+  background:  $frost;
+}

@@ -3,7 +3,7 @@
   transform: translateX(100vw);
 
   &.active {
-    transform: translateX(calc(100vw - 30em));
+    transform: translateX(100vw) translateX(-30em);
   }
 
   // panel parts

@@ -25,15 +25,15 @@
   --dark-grey: #444;
   --grey: #565656;
   --medium-grey: #777;
-  --light-grey: #ccc;
-  --lighter-grey: #ddd;
-  --light: #eee;
-  --lighter: #fafafa;
-  --lightest: #fff;
+  --light-grey: #CCC;
+  --lighter-grey: #DDD;
+  --light: #EEE;
+  --lighter: #FAFAFA;
+  --lightest: #FFF;
 
   --blue: #4A93B9;
   --blue-light: #76BADF;
-  --blue-lighter: #96b3cb;
+  --blue-lighter: #96B3CB;
   --blue-film-light: rgba(74, 147, 185, .15);
   --blue-film: rgba(74, 147, 185, .5);
   --blue-film-heavy: rgba(14, 103, 150, .9);
@@ -51,7 +51,7 @@
   --yellow-film: rgba(255, 201, 41, .5);
 
   --green: #9CCC66;
-  --green-lighter: #bfd98c;
+  --green-lighter: #BFD98C;
   --green-film: rgba(156, 204, 102, .5);
 
   --aqua: #00C1D9;
@@ -61,7 +61,7 @@
   --purple-film: rgba(171, 71, 189, .5);
 
   --accent: var(--medium-grey);
-  --accent-text: #fff;
+  --accent-text: #FFF;
   --action: var(--blue);
   --action-light: var(--blue-light);
   --active: var(--blue-film-heavy);
@@ -72,11 +72,11 @@
   --warning: var(--orange);
   --alert: var(--yellow);
   --royal: var(--purple);
-  --helper: #ff6300;
+  --helper: #FF6300;
 
   --base: #257AA5;
-  --snow: #fafafa;
-  --cloud: #dadadc;
+  --snow: #FAFAFA;
+  --cloud: #DADADC;
   --shadow: rgba(0,0,0, .8);
   --twilight: rgba(0,0,0, .5);
   --dusk: rgba(0,0,0, .3);
@@ -104,10 +104,10 @@
   --light-gray: var(--light-grey);
   --lighter-gray: var(--lighter-grey);
 
-  --color-brand-grey: #53565a;
+  --color-brand-grey: #53565A;
   --color-brand-grey-dark: #403C3D;
-  --color-brand-green: #78d64b;
-  --color-brand-green-faded: #91d6ac;
+  --color-brand-green: #78D64B;
+  --color-brand-green-faded: #91D6AC;
   --color-brand-green-dark: #007377;
 
   // base fonts
@@ -119,7 +119,6 @@
   --primary-font-light: 'montserrat-300', var(--base-font);
   --primary-font-regular: 'montserrat-400', var(--base-font);
   --primary-font-medium: 'montserrat-500', var(--base-font);
-
 }
 
 .text {
@@ -187,3 +186,6 @@
 .ghost {
   opacity: .5;
 }
+
+// use this import once we move from CSS Custom Variables
+// @import 'scss-variables';

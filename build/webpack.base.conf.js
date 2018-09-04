@@ -9,7 +9,7 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './docs/main.js',
+    app: ['babel-polyfill','./docs/main.js'],
     theme: './styles/theme.scss',
     animations: './styles/animations.scss',
     'form-elements': './styles/form-elements.scss',

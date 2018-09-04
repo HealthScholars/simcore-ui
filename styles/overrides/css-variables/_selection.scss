@@ -2,18 +2,8 @@
 
   input {
 
-    &::before {
-      content: '\f1db';
-      font-family: 'FontAwesome';
-      transition: transform 350ms ease-out;
-    }
-
     &:checked {
-      color: $action;
-      
-      &::before {
-        content: '\f058';
-      }
+      color: $yellow;
     }
   }
 }

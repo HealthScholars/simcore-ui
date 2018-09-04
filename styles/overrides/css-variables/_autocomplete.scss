@@ -3,11 +3,9 @@
   .sim-autocomplete--search {
     background: $lighter;
     box-shadow: 0 0 0 1px $dusk inset;
-    color: $dark;
 
     .sim-autocomplete--search--input {
       background: transparent;
-      color: $dark;
     }
 
     &--icon {
@@ -22,7 +20,6 @@
   }
 
   &--items {
-    color: $dark;
     background: $lighter;
     box-shadow: 0 0 0 1px $fog, 0 .3em 1em -.3em $shadow;
   }

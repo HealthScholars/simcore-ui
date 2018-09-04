@@ -21,3 +21,5 @@ selenium-debug.log
 docs/assets/sass/_temp\.scss
 
 coverage/
+
+*.codekit3

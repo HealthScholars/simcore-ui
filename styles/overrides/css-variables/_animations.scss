@@ -1,0 +1,95 @@
+.animatable,
+.animator {
+  transition: all $default-ms ease-out;
+}
+
+.animator {
+  &.in-from-bottom {
+    transform: translateY(100vh);
+  }
+
+  &.in-from-top {
+    transform: translateY(-100vh);
+  }
+
+  &.in-from-left {
+    transform: translateX(-100vw);
+  }
+
+  &.in-from-right {
+    transform: translateX(100vw);
+  }
+}
+
+.animator.active {
+  &.in-from-bottom,
+  &.in-from-top {
+    transform: translateY(100vh) translateY(-100vh);
+  }
+
+  &.in-from-left,
+  &.in-from-right {
+    transform: translateX(100vw) translateX(-100vw);
+  }
+
+  // effect on animator's animatable sibling elements
+  &.shift.in-from-bottom ~ .animatable {
+    transform: translateX(calc(0vh * -1));
+  }
+
+  &.shift.in-from-top ~ .animatable {
+    transform: translateX(0vh);
+  }
+
+  &.shift.in-from-left ~ .animatable {
+    transform: translateX(0vw);
+  }
+  
+  &.shift.in-from-right ~ .animatable {
+    transform: translateX(calc(0vw * -1));
+  }
+
+  &.parallax.in-from-bottom ~ .animatable {
+    transform: translateY(calc(0vh * -1));
+    ~ .animatable {
+        transform: translateY(calc(7.5vh * -1));
+    }
+  }
+
+  &.parallax.in-from-top ~ .animatable {
+    transform: translateY(15vh);
+    ~ .animatable {
+        transform: translateY(7.5vh);
+    }
+  }
+
+  &.parallax.in-from-left ~ .animatable {
+    transform: translateX(15vw);
+    ~ .animatable {
+        transform: translateY(7.5vh);
+    }
+  }
+
+  &.parallax.in-from-right ~ .animatable {
+    transform: translateX(calc(0vw * -1));
+    ~ .animatable {
+        transform: translateY(calc(7.5vh * -1));
+    }
+  }
+}
+
+.lodestar {
+  animation: lodestar $ms-lodestar forwards 1 ease-in-out;
+}
+
+// assignment manager panel
+.assignment-manager {
+
+  .animator.active {
+
+    &.in-from-left,
+    &.in-from-right {
+      transform: translateX(100vw) translateX(-70em);
+    }
+  }
+}
