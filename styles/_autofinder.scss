@@ -54,7 +54,31 @@
     top: calc(100% + 1px);
     left: 1em;
     right: 1em;
+    max-height: 15em;
+    overflow: auto;
+    color: var(--autofinder-items-fg, var(--dark));
+    background: var(--autofinder-items-bg, var(--lighter));
+    border-radius: .2rem;
+    box-shadow: 0 0 0 1px var(--fog), 0 .3em 1em -.3em var(--shadow);
+    margin: 0;
+    padding: 0;
+    list-style: none;
     z-index: 1;
+
+    .heading {
+      font-weight: 500;
+      font-size: 1.2em;
+      padding: 0.3em;
+      border-top: 1px solid #bbb;
+      display: block;
+    }
+
+    .subheading {
+      font-weight: 600;
+      font-size: 0.85em;
+      padding: 0.3em;
+      display: block;
+    }
 
     ul {
       margin: 0;
