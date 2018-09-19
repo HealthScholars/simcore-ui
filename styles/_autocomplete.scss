@@ -56,7 +56,7 @@
     right: 1px;
     max-height: 15em;
     overflow: auto;
-    color: var(--autocomplete-items-fg);
+    color: var(--autocomplete-items-fg, var(--dark));
     background: var(--autocomplete-items-bg, var(--lighter));
     border-radius: 0 0 .2rem .2rem;
     box-shadow: 0 0 0 1px var(--fog), 0 .3em 1em -.3em var(--shadow);
