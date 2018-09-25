@@ -1,37 +1,38 @@
-<template lang="html">
-  <div class="sim-autofinder" :class="{'sim-autofinder--visible-options': isOpen}">
+<template>
+  <div class="sim-autofinder sim-autofinder--visible-options">
     <label class="sim-autofinder--search">
-      <SimIconText :icon="icon" icon-type="svg"></SimIconText>
-      <input type="text"
-            class="sim-autofinder--search--input"
-            v-model="search"
-            :placeholder="placeholder"
-            :disabled="isDisabled"
-            @blur="blur"
-            @focus="focus"
-            @keydown.down="moveDown"
-            @keydown.up="moveUp"
-            @keydown.enter="select"
-            @keydown.tab="selectAndAddAnother"
-            @keyup.esc="blur"
-            @input="onInput"
-            />
-      <div class="sim-autofinder--remove-item" @click="removeItem" v-if="shouldShowRemoveItemCue">
-        <SimIconText icon="#icon--control--x" icon-type="svg"></SimIconText>
-      </div>
+      <IconText :icon="icon" icon-type="svg" />
+      <input type="text" class="sim-autofinder--search--input"
+        ref="input"
+        :placeholder="placeholder"
+        :value="inputValue"
+        @input="updateInput"
+        @blur="blur"
+        @keydown.down="highlightNext"
+        @keydown.up="highlightPrevious"
+        @keydown.enter="selectHighlighted"
+        @keydown.tab.exact="selectHighlighted"
+        @keyup.esc="blur"
+      />
+      <IconText
+        v-if="canRemove"
+        class="sim-autofinder--remove-item"
+        @click.native="$emit('remove')"
+        icon="#icon--control--x" icon-type="svg"
+      />
     </label>
-    <div class="sim-autofinder--options" v-if="isOpen">
+    <div v-if="optionsOpen" class="sim-autofinder--options">
       <transition-group appear name="list" tag="ul" mode="in-out">
-        <li v-for="(option, optionIndex) in foundOptions"
-            :key="optionIndex"
-            :class="{highlighted: optionIndex === position}"
-            @mouseenter="position = optionIndex"
-            @mousedown="clickSelect"
-            >
-          <slot name="option" :option="option"></slot>
+        <li v-for="(option, index) in matchingOptions"
+          :key="index"
+          :class="{highlighted: index == highlightedIndex}"
+          @mouseenter="setHighlightedOption(index)"
+          @mousedown="select(option)"
+        >
+          <p>{{ option.label }}</p>
         </li>
-        <li key="no-results" v-if="noOptions">
-          <i class="ghost">No results for "{{search}}"</i>
+        <li key="no-results" v-if="!hasMatchingOptions">
+          <i class="ghost">No results for "{{searchTerm}}"</i>
         </li>
       </transition-group>
     </div>
@@ -39,24 +40,20 @@
 </template>
 
 <script>
-  import SimIconText from './IconText'
+  /* eslint no-unused-expressions: 0 */
+  import IconText from './IconText'
 
   export default {
-    name: 'sim-autofinder',
     components: {
-      SimIconText,
+      IconText,
+    },
+    data() {
+      return {
+        searchTerm: '',
+        highlightedIndex: 0,
+      }
     },
     props: {
-      item: {
-        type: Object,
-      },
-      index: {
-        type: Number,
-      },
-      isAlone: {
-        type: Boolean,
-        default: true,
-      },
       options: {
         type: Array,
         required: true,
@@ -65,111 +62,95 @@
         type: String,
         default: 'find...',
       },
-      shouldBeDisabled: {
-        type: Boolean,
-        default: false,
-      }
+      canRemove: Boolean,
+      isFocused: Boolean,
+      selectedItem: Object,
     },
-    data() {
-      return {
-        isOpen: false,
-        position: 0,
-        search: '',
-        foundItem: null,
-        previousValueLength: 0,
-      }
+    mounted(){
+      this.$watch('isFocused', () => {
+        if (this.isFocused) {
+          this.$refs.input.focus()
+        }
+      }, { immediate: true })
     },
     computed: {
+      inputValue() {
+        return this.foundItem
+          ? this.selectedItem.label
+          : this.searchTerm
+      },
+      matchingOptions() {
+        return this.options.filter((option) => {
+          return option.label.toLowerCase().includes(this.searchTerm.toLowerCase())
+        }).map(option => {
+          option.isHighlighted = +option.id === +this.highlightedId
+          return option
+        })
+      },
+      foundItem() {
+        return this.selectedItem.id > 0
+      },
       icon() {
         return this.foundItem ? '#icon--checkbox--checked' : '#icon--checkbox--available'
       },
-      foundOptions() {
-        return this.options.filter((option) => {
-          return `${option.lastname}, ${option.firstname}`.toLowerCase().includes(this.search.toLowerCase())
-        })
+      optionsOpen() {
+        return this.searchTerm.length > 0 && !this.foundItem
       },
-      noOptions() {
-        return !this.foundOptions.length
+      currentIndex() {
+        return this.matchingOptions.map(option => option.id).indexOf(this.highlightedId)
       },
-      isDisabled() {
-        return this.shouldBeDisabled
+      nextIndex() {
+        return this.currentIndex < this.matchingOptions.length - 1
+          ? this.currentIndex + 1
+          : this.currentIndex
       },
-      shouldShowRemoveItemCue() {
-        return !this.isAlone || this.search.length || this.foundItem
+      previousIndex() {
+        return this.currentIndex > 0
+          ? this.currentIndex - 1
+          : this.currentIndex
       },
-    },
-    mounted() {
-      if (this.item && this.item.lastname) {
-        this.foundItem = this.item
-        this.search = `${this.foundItem.lastname}, ${this.foundItem.firstname}`
-      }
+      hasMatchingOptions() {
+        return this.matchingOptions.length > 0
+      },
     },
     methods: {
-      onInput() {
-        this.isOpen = (this.search.length > 0)
-        this.position = 0
-
-        // @NOTE if we have an item in context AND subtract-altering the search string, reset the input - Jase
-        if (this.foundItem && this.search.length <= this.previousValueLength) {
-          this.$emit('clear', this.foundItem)
-          this.search = ''
-          this.previousValueLength = this.search.length
-          this.foundItem = null
-          this.isOpen = false
+      updateInput(event) {
+        if (this.foundItem) {
+          this.$emit('clear')
+          this.highlightedId = -1
         }
-
-        this.previousValueLength = this.search.length
-      },
-      moveDown() {
-        if (!this.isOpen) {
-          return
-        }
-
-        this.position = (this.position + 1) % this.foundOptions.length
-      },
-      moveUp() {
-        if (!this.isOpen) {
-          return
-        }
-
-        this.position = (this.position - 1 < 0 ? this.foundOptions.length - 1 : this.position - 1)
-      },
-      select() {
-        if (this.isOpen && this.foundOptions.length) {
-          this.foundItem = Object.assign(this.item, this.foundOptions[this.position])
-          this.$emit('select', this.foundItem, this.index)
-          this.search = `${this.foundItem.lastname}, ${this.foundItem.firstname}`
-          this.previousValueLength = this.search.length
-
-          this.isOpen = false
-        }
-      },
-      selectAndAddAnother() {
-        if (this.isOpen && this.foundOptions.length) {
-          this.$emit('add-another')
-          this.select()
-        }
-      },
-      clickSelect() {
-        this.select()
-      },
-      removeItem() {
-        if (this.isAlone) {
-          this.onInput()
-        } else {
-          this.$emit('remove', (this.foundItem ? this.foundItem : this.item))
-        }
+        this.searchTerm = event.target.value
       },
       blur() {
         if (!this.foundItem) {
-          this.search = ''
+          this.searchTerm = ''
         }
-
-        this.isOpen = false
       },
-      focus() {
-        this.isOpen = (!this.foundItem && this.foundOptions.length && this.search.length > 2 ? true : false)
-        this.previousValueLength = this.search.length
+      select(option) {
+        if (option) {
+          this.$emit('select', option)
+        }
+      },
+      selectHighlighted() {
+        this.optionsOpen
+          ? this.select(this.matchingOptions[this.highlightedIndex])
+          : this.$emit('next')
+      },
+      highlightPrevious() {
+        if (this.highlightedIndex > 0) {
+          this.highlightedIndex -= 1
+        }
+      },
+      highlightNext() {
+        if (this.highlightedIndex < this.matchingOptions.length - 1) {
+          this.highlightedIndex += 1
+        }
+      },
+      setHighlightedOption(index) {
+        this.highlightedIndex = index
+      },
+      isHighlighted(index) {
+        return index === this.highlightedIndex
       },
     },
   }

@@ -30,8 +30,6 @@
 </template>
 
 <script>
-  import moment from 'moment'
-
   import SimDatalist from './Datalist'
   import SimIconText from './IconText'
   import SimSlideHeader from './SlideHeader'
@@ -69,15 +67,17 @@
 
       this.$emit('theSlideHasAnUpdate', {
         nextSlide: null,
-        nextControl: {text: 'Next'},
+        nextControl: { text: 'Next' },
       })
     },
     methods: {
-      formatTimesForDisplay(start, duration) {
-        const day = moment().startOf('day')
+      formatTimesForDisplay(/* start, duration */) {
+        /*
+        const day = dayjs().startOf('day')
         const startTime = day.add(start, 'hours').format('h:mma')
         const endTime = day.add(duration, 'hours').format('h:mma')
         return `${startTime.replace(':00', '')} — ${endTime.replace(':00', '')}`
+        */
       },
       formatBlockHoursForDisplay(duration) {
         const output = duration.toString()
@@ -104,7 +104,7 @@
 
         this.$emit('theSlideHasAnUpdate', {
           nextSlide,
-          nextControl: {text: 'Next'},
+          nextControl: { text: 'Next' },
         })
       },
     },

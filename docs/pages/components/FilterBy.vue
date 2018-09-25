@@ -84,8 +84,6 @@
 </template>
 
 <script>
-  import dummyData from '../../../components/Filters/dumData'
-
   import Demobox from '../../utility/Demobox'
   import SimFilterBy from '../../../components/FilterBy'
 

@@ -102,9 +102,6 @@
             <div class="sim-form--molecule--field">
               <select v-model="eventFormData.scenario_id">
                 <option value="">Select...</option>
-                <option v-for="scenario in scenarios" :value="scenario.id">
-                  {{scenario.name}}
-                </option>
               </select>
             </div>
           </div>
@@ -228,9 +225,6 @@
 <script>
   import _ from 'lodash'
 
-  import currentUser from '../external/currentUser'
-  import scenarios from '../external/scenarios'
-
   import SimSlideHeader from './SlideHeader'
   import SimSlideIntro from './SlideIntro'
   import SimDatalist from './Datalist'
@@ -275,14 +269,10 @@
           scenario_id: '',
           otherr_ids: [],
           instructor_ids: [],
-          attachment: null
+          attachment: null,
         },
         attachedFileName: '',
 
-        facilities: currentUser.institutions(),
-        departments: currentUser.departments(),
-        scenarios: scenarios.scenarios(),
-        learners: [],
         departmentLearnerOptions: [],
       }
     },
@@ -307,7 +297,7 @@
 
       this.$emit('theSlideHasAnUpdate', {
         nextSlide: null,
-        nextControl: {text: 'Submit Event'},
+        nextControl: { text: 'Submit Event' },
       })
     },
     destroyed() {
@@ -349,8 +339,9 @@
       currentSelectedDepartment(value) {
         this.eventFormData.learner_ids = []
         // get learners by department
-        this.departmentLearnerOptions = this.learners.filter((learner) => learner.department_id === value)
-      }
+        this.departmentLearnerOptions = this.learners
+          .filter((learner) => learner.department_id === value)
+      },
     },
     methods: {
       manageSlideNavigator() {
@@ -379,7 +370,7 @@
             lastname: '',
           })
 
-        this.currentLearnerSeat++
+        this.currentLearnerSeat += 1
       },
 
       addItemToActiveLearnersList(item, index) {
@@ -413,7 +404,7 @@
           _.sortBy(this.activeOthers, ['lastname', 'firstname'])
           _.sortBy(this.inactiveOthers, ['lastname', 'firstname'])
         } else {
-          lodestar(this.$el, 'lodestar', `.learner-${item.id}`, 'value')
+          // lodestar(this.$el, 'lodestar', `.learner-${item.id}`, 'value')
         }
       },
       removeFromActiveOtherList(item) {
@@ -425,8 +416,6 @@
         _.sortBy(this.inactiveOthers, ['lastname', 'firstname'])
       },
       toggleItemInSelectedOthers(itemId, value) {
-        let selectedItemsWasUpdated = false
-
         const foundItem = this.activeOthers.find((item) => item.id === itemId)
 
         if (foundItem) {
@@ -436,7 +425,6 @@
           } else if (value === false) {
             this.selectedOthers.splice(this.selectedOthers.indexOf(foundItem), 1)
           }
-          selectedItemsWasUpdated = true
         }
       },
       resetInactiveOthers() {
@@ -447,11 +435,6 @@
         this.selectedOthers.splice(0, this.selectedOthers.length)
         this.resetInactiveOthers()
       },
-
-      resetInactiveOthers() {
-        this.inactiveOthers = _.sortBy([...this.learners], ['lastname', 'firstname'])
-      },
-
       addSlotToActiveOthersList() {
         this.activeOthers.push(
           {
@@ -460,7 +443,7 @@
             lastname: '',
           })
 
-        this.currentOtherSeat++
+        this.currentOtherSeat += 1
       },
 
       addItemToActiveOthersList(item, index) {
@@ -487,9 +470,9 @@
       // FORM STUFFS
       onFileChange(event) {
         const input = event.target
-        const label	 = input.nextElementSibling.querySelector('span')
+        const label = input.nextElementSibling.querySelector('span')
 
-        let files = input.files || event.dataTransfer.files
+        const files = input.files || event.dataTransfer.files
 
         if (files && files.length > 0) {
           this.eventFormData.attachment = files[0]
@@ -500,9 +483,9 @@
         }
       },
       removeFile(event) {
-        this.eventFormData.attachment = null;
+        this.eventFormData.attachment = null
         const trigger = event.target
-        const label	= trigger.previousElementSibling.querySelector('span')
+        const label = trigger.previousElementSibling.querySelector('span')
         label.innerHTML = 'Choose a file...'
       },
       swapper(event) {

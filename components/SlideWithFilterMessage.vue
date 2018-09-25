@@ -17,8 +17,6 @@
 </template>
 
 <script>
-  import _ from 'lodash'
-
   import SimIconText from './IconText'
   import SimSlideHeader from './SlideHeader'
   import SimSlideIntro from './SlideIntro'

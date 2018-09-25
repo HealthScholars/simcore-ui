@@ -8,7 +8,13 @@
       </template>
       <template slot="view">
 
-        <SimCalendar :can-schedule-events="shouldBeAbleToScheduleEvents"></SimCalendar>
+        <Calendar
+          :user="currentUser"
+          :instructors="instructors"
+          :equipment="equipment"
+          :totalAvailabilities="totalAvailabilities"
+          @updateAvailabilities="updateAvailabilities"
+        />
 
       </template>
       <template slot="html">
@@ -23,20 +29,48 @@
 </template>
 
 <script>
+  import { normalize } from '../../../utilities/filter-availabilities'
   import Demobox from '../../utility/Demobox'
-  import SimCalendar from '../../../components/Calendar'
+  import Calendar from '../../../components/Calendar'
 
   export default {
     name: 'calendar-doc',
     components: {
       Demobox,
-      SimCalendar,
+      Calendar,
     },
     data() {
       return {
         title: 'Calendar',
-        shouldBeAbleToScheduleEvents: true,
       }
+    },
+    created() {
+      this.$store.dispatch('fetchInstructorList')
+      this.$store.dispatch('fetchEquipmentList')
+      this.$store.dispatch('fetchCurrentUserAvailabilities')
+      this.$store.dispatch('fetchInstructorAvailabilities')
+    },
+    computed: {
+      currentUser() {
+        return this.$store.state.currentUser
+      },
+      instructors() {
+        return this.$store.getters.instructors
+      },
+      equipment() {
+        return this.$store.getters.equipment
+      },
+      totalAvailabilities() {
+        return normalize(this.$store.state.purviewAvailabilities)
+      },
+    },
+    methods: {
+      updateAvailabilities(date, availabilities) {
+        this.$store.dispatch('updateCurrentUserAvailabilities', {
+          date: date.format('YYYY-MM-DD'),
+          availabilities,
+        })
+      },
     },
   }
 </script>

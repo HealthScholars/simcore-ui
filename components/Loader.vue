@@ -1,23 +1,11 @@
-<template lang="html">
+<template>
   <transition name="loader" appear>
-    <svg viewBox="0 0 50 50" class="sim-loader" v-if="isLoading">
+    <svg viewBox="0 0 50 50" class="sim-loader">
       <circle cx="25" cy="25" r="22.5" />
     </svg>
   </transition>
 </template>
 
-<script>
-export default {
-  name: 'sim-loader',
-  props: {
-    isLoading: {
-        type: Boolean,
-        default: false
-    }
-  }
-}
-</script>
-
 <style lang="scss">
-  @import '../styles/loader';
+  @import '../styles/loader'
 </style>

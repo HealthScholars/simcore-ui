@@ -17,32 +17,32 @@
     props: {
       state: {
         type: Boolean,
-        default: false
+        default: false,
       },
       icon: {
         type: String,
-        default: 'fa-check'
+        default: 'fa-check',
       },
       text: {
         type: [String, Number],
-        default: ''
-      }
+        default: '',
+      },
     },
-    data () {
+    data() {
       return {
-        checkAll: this.state
+        checkAll: this.state,
       }
     },
     methods: {
-      toggleState () {
+      toggleState() {
         this.checkAll = !this.checkAll
         this.$emit('toggle', this.checkAll)
       },
     },
     watch: {
-      state (value) {
+      state(value) {
         this.checkAll = value
-      }
+      },
     },
   }
 </script>

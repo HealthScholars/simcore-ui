@@ -72,7 +72,7 @@
       }
     },
     watch: {
-      keyword: function(newKeyword) {
+      keyword(newKeyword) {
         if (this.filteredOptionsCount > 0) {
           const lowerKeyword = newKeyword.toLowerCase()
 
@@ -81,7 +81,7 @@
           })
         }
       },
-      options: function(newOptions) {
+      options(newOptions) {
         this.remainingItems = newOptions
       },
     },

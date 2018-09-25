@@ -20,7 +20,6 @@
 
 <script>
   export default {
-    name: 'sim-modal',
     props: {
       shouldBeOpen: {
         type: Boolean,
@@ -44,18 +43,18 @@
       },
     },
     methods: {
-      dismiss: function(){
+      dismiss() {
         if (this.$router && this.dismissTo && typeof this.dismissTo === 'string') {
           this.$router.push(this.dismissTo)
         } else {
           this.$root.closeModal()
         }
       },
-      clickMask: function(){
-        if(this.canClickMask) {
+      clickMask() {
+        if (this.canClickMask) {
           this.dismiss()
         }
-      }
+      },
     },
   }
 </script>

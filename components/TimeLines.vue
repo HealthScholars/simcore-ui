@@ -1,115 +1,76 @@
-<template lang="html">
+<template>
   <transition name="fade">
     <ul class="sim-timelines">
-      <li v-for="segment in totalSegments"
-        :class="setHourClasses(segment-1)"
-        @dblclick.stop="dblClickCreateTimeBlock($event, segment-1)"
-        @mousedown="mousedownCreateTimeBlock($event, segment-1)"
+      <li
+        v-for="segment in segments"
+        :class="getHourClasses(segment)"
+        @mousedown="createTimeBlock($event, segment)"
+      >
+        <div
+          v-if="isNoon(segment)"
+          class="sim-timeline--time sim-timeline--icon sim-timeline--icon--noon"
         >
-        <template v-if="showLineNumbersAsTime">
-          <div v-if="segment === 13" class="sim-timeline--time sim-timeline--icon sim-timeline--icon--noon">
-            <SimIconText icon="fa-sun-o"></SimIconText>
-          </div>
-          <div v-else-if="segment === 1 || segment === 25" class="sim-timeline--time sim-timeline--icon sim-timeline--icon--midnight">
-            <SimIconText icon="fa-moon-o"></SimIconText>
-          </div>
-          <div v-else-if="isWholeNumber(segment)" class="sim-timeline--time">
-            {{ displayHour(segment-1) }}
-          </div>
-        </template>
-        <template v-else-if="showLineNumbersAsNumbers">
-          <div v-if="isWholeNumber(segment)" class="sim-timeline--time">
-            {{ segment-1 }}
-          </div>
-        </template>
+          <IconText icon="fa-sun-o" />
+        </div>
+        <div
+          v-else-if="isMidnight(segment)"
+          class="sim-timeline--time sim-timeline--icon sim-timeline--icon--midnight"
+        >
+          <IconText icon="fa-moon-o" />
+        </div>
+        <div v-else-if="isWholeNumber(segment)" class="sim-timeline--time">{{ getDisplayHour(segment) }}</div>
       </li>
     </ul>
   </transition>
 </template>
 
 <script>
-  import moment from 'moment'
-  import SimIconText from './IconText'
+  import IconText from './IconText'
+  import { isWholeNumber, isDayTime, isMidnight, isNoon, isHour, formatHoursAsMeridians } from '../utilities/date'
 
   export default {
-    name: 'sim-timelines',
     components: {
-      SimIconText,
+      IconText,
     },
     props: {
-      mode: {
-        type: String,
-        default: 'hours',
-      },
-      action: {
-        type: String,
-        default: null
-      },
       showHalfHourTicks: {
         type: Boolean,
-        default: false,
-      },
-      start: {
-        type: Number,
-        default: 0,
-      },
-      end: {
-        type: Number,
-        default: 24,
+        default: true,
       },
     },
     computed: {
-      showLineNumbersAsTime() {
-        return this.mode === 'hours'
-      },
-      showLineNumbersAsNumbers() {
-        return this.mode === 'numbers'
-      },
-      segmentQuotient() {
-        return this.showHalfHourTicks ? 0.5 : 1
-      },
-      totalSegments() {
+      segments() {
         const segments = []
-        for (let index = this.start + 1; index <= this.end + 1; index += this.segmentQuotient) {
+        for (let index = 0; index <= 24; index += this.showHalfHourTicks ? 0.5 : 1) {
           segments.push(index)
         }
         return segments
       },
     },
     methods: {
-      isWholeNumber(value) {
-        return Math.ceil(parseFloat(value)) === parseInt(value)
+      isNoon,
+      isMidnight,
+      isWholeNumber,
+      getDisplayHour(hour) {
+        return formatHoursAsMeridians(hour)
       },
-      displayHour(hour) {
-        hour = hour === 0 || hour === 24 ? 'Midnight' : (hour === 12 ? 'Noon' : hour)
-
-        return hour > 12 ? `${hour - 12}p` : (parseInt(hour) ? `${hour}a` : hour)
-      },
-      setHourClasses(hour) {
-        const classes = []
-
-        if (this.mode === 'hours') {
-          classes.push((hour >= 6 && hour <= 17.5 ? 'is-daytime' : 'is-nighttime'))
+      getHourClasses(hour) {
+        const classes = {
+          'is-daytime': isDayTime(hour),
+          'is-nighttime': !isDayTime(hour),
+          'is-midnight': isMidnight(hour),
+          'is-noon': isNoon(hour),
+          'is-hour': isHour(hour),
+          'is-half-hour': !isHour(hour),
         }
-
-        classes.push((hour === 0 || hour === 24 ? 'is-midnight' : (hour === 12 ? 'is-noon' : '')))
-
-        if (this.isWholeNumber(hour)) {
-          classes.push(`is-hour is-hour-${hour}`)
-        } else {
-          classes.push(`is-half-hour is-hour-${Math.floor(hour)}-half`)
-        }
+        classes[`is-hour-${hour}`] = isHour(hour)
+        classes[`is-hour-${hour}-half`] = !isHour(hour)
 
         return classes
       },
-      dblClickCreateTimeBlock(event, hour) {
-        if (event.which === 1 && this.action === 'dblClick') {
-          this.$emit('create-time-block', hour)
-        }
-      },
-      mousedownCreateTimeBlock(event, hour) {
-        if (event.which === 1 && this.action === 'mousedown') {
-          this.$emit('create-time-block', hour)
+      createTimeBlock(event, hour) {
+        if (event.which === 1) {
+          this.$emit('createTimeBlock', hour)
         }
       },
     },
@@ -117,7 +78,6 @@
 </script>
 
 <style lang="scss">
-  // @import '../styles/timelines';
   .fade-enter-active, .fade-leave-active {
     transition: opacity 300ms ease-out;
   }

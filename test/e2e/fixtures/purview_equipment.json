@@ -1,0 +1,80 @@
+[
+  {
+    "id": 6,
+    "user_id": 43,
+    "institution_id": 5302,
+    "is_public": 1,
+    "is_multiinstitutional": 0,
+    "equipment_picture_id": null,
+    "name": "Heartcode adult manikin (2)",
+    "status": "ACLS, BLS",
+    "created_at": "2015-02-05 20:18:38",
+    "deleted_at": null,
+    "is_unavailable": 0
+  },
+  {
+    "id": 7,
+    "user_id": 47,
+    "institution_id": 5302,
+    "is_public": 0,
+    "is_multiinstitutional": 0,
+    "equipment_picture_id": null,
+    "name": "PALS Book Loan",
+    "status": "Pediatric Advanced Life Support Material",
+    "created_at": "2015-05-20 16:21:55",
+    "deleted_at": null,
+    "is_unavailable": 0
+  },
+  {
+    "id": 12,
+    "user_id": 47,
+    "institution_id": 5302,
+    "is_public": 1,
+    "is_multiinstitutional": 0,
+    "equipment_picture_id": null,
+    "name": "Heartcode baby manikin (2)",
+    "status": "BLS, PALS",
+    "created_at": "2016-02-03 15:52:17",
+    "deleted_at": null,
+    "is_unavailable": 0
+  },
+  {
+    "id": 13,
+    "user_id": 47,
+    "institution_id": 5302,
+    "is_public": 1,
+    "is_multiinstitutional": 0,
+    "equipment_picture_id": null,
+    "name": "SimMan 3G",
+    "status": null,
+    "created_at": "2016-02-03 15:52:45",
+    "deleted_at": null,
+    "is_unavailable": 0
+  },
+  {
+    "id": 14,
+    "user_id": 47,
+    "institution_id": 5302,
+    "is_public": 1,
+    "is_multiinstitutional": 0,
+    "equipment_picture_id": null,
+    "name": "SimBaby",
+    "status": null,
+    "created_at": "2016-02-03 15:52:56",
+    "deleted_at": null,
+    "is_unavailable": 0
+  },
+  {
+    "id": 15,
+    "user_id": 47,
+    "institution_id": 5302,
+    "is_public": 1,
+    "is_multiinstitutional": 0,
+    "equipment_picture_id": null,
+    "name": "Laptops (2)",
+    "status": "15420, 15418",
+    "created_at": "2016-02-03 17:00:16",
+    "deleted_at": null,
+    "is_unavailable": 0
+  }
+]

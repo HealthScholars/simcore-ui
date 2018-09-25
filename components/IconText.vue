@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <span class="sim-icontext" :class="bling">
     <span v-if="icon && iconIsFA" class="sim-icon fa" :class="icon"></span>
     <span v-if="icon && iconIsSVG" class="sim-icon svg"><svg><use :xlink:href="icon" /></svg></span>
@@ -8,7 +8,6 @@
 
 <script>
   export default {
-    name: 'sim-icontext',
     props: {
       icon: String,
       iconType: {
@@ -27,7 +26,7 @@
       iconIsSVG() {
         return this.iconType === 'svg'
       },
-      bling () {
+      bling() {
         if (this.circle) {
           return 'sim-icontext__circle'
         }
@@ -38,8 +37,8 @@
           return 'sim-icontext__square'
         }
         return 'sim-icontext__plain'
-      }
-    }
+      },
+    },
   }
 </script>
 

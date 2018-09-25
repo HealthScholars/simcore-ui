@@ -10,14 +10,14 @@
     name: 'sim-panel',
     props: ['should-be-open', 'should-show-dismiss', 'dismiss-to'],
     methods: {
-      dismiss () {
+      dismiss() {
         if (this.$router && this.dismissTo && typeof this.dismissTo === 'string') {
           this.$router.replace(this.dismissTo)
         } else {
           this.$root.closePanel()
         }
-      }
-    }
+      },
+    },
   }
 </script>
 

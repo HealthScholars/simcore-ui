@@ -37,9 +37,9 @@
   return {
     msg: 'TimePicker',
     dateFormat: 'YYYY-MM-DD',
-    date: moment()
+    date: dayjs()
       .format('YYYY-MM-DD'),
-    displayDate: moment()
+    displayDate: dayjs()
       .format('dddd, MMMM Do'),
     user_dates: {},
     blocks: [],
@@ -48,7 +48,7 @@
 },
 methods: {
   manageDayControlPanel(date) {
-    const dayMoment = moment(date)
+    const dayMoment = dayjs(date)
     dateObject.month-1, dateObject.day])
     this.displayDate = dayMoment.format('dddd, MMMM Do')
     this.date = dayMoment.format('YYYY-MM-DD')
@@ -74,7 +74,7 @@ methods: {
 </template>
 
 <script>
-  import moment from 'moment'
+  import dayjs from 'dayjs'
   import Demobox from '../../utility/Demobox'
   import SimTimePicker from '../../../components/TimePicker'
 
@@ -88,8 +88,8 @@ methods: {
       return {
         msg: 'TimePicker',
         dateFormat: 'YYYY-MM-DD',
-        date: moment().format('YYYY-MM-DD'),
-        displayDate: moment().format('dddd, MMMM Do'),
+        date: dayjs().format('YYYY-MM-DD'),
+        displayDate: dayjs().format('dddd, MMMM Do'),
         user_dates: {},
         blocks: [],
         block: {},
@@ -98,7 +98,7 @@ methods: {
     computed: {},
     methods: {
       manageDayControlPanel(date) {
-        const dayMoment = moment(date)
+        const dayMoment = dayjs(date)
         // let dayMoment = moment([dateObject.year, dateObject.month-1, dateObject.day])
         this.displayDate = dayMoment.format('dddd, MMMM Do')
         this.date = dayMoment.format('YYYY-MM-DD')

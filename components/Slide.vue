@@ -37,7 +37,7 @@
   import SimSelection from './Selection'
 
   // @FIXME should be using common.unique(...) | jase
-  const unique = function(array) {
+  const unique = (array) => {
     if (array && array.length) {
       const t = {}
       return array.filter((item) => {
@@ -103,7 +103,7 @@
       },
       foundUsers() {
         return sortByKey(this.users.filter(item => {
-            return `${item.firstname} ${item.lastname}`.toLowerCase().includes(this.itemSearch.toLowerCase().trim())
+          return `${item.firstname} ${item.lastname}`.toLowerCase().includes(this.itemSearch.toLowerCase().trim())
         }), 'lastname', 'asc')
       },
     },

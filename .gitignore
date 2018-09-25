@@ -22,4 +22,5 @@ docs/assets/sass/_temp\.scss
 
 coverage/
 
+test/e2e/screenshots
 *.codekit3

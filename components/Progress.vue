@@ -1,33 +1,32 @@
-<template lang="html">
+<template>
   <div
     class="sim-progress"
     :style="stylePercentComplete"
     :tooltip="bubbleText"
-    >
+  >
     <div class="sim-progress__completed"></div>
   </div>
 </template>
 
 <script>
   export default {
-    name: "sim-progress",
     props: {
-      percent: [Number, String]
+      percent: [Number, String],
     },
     computed: {
       percentComplete() {
-        return this.percent || 0;
+        return this.percent || 0
       },
       stylePercentComplete() {
-        return `--percent:${this.percentComplete}%`;
+        return `--percent:${this.percentComplete}%`
       },
       bubbleText() {
-        return `${this.percentComplete}% Complete`;
-      }
-    }
-  };
+        return `${this.percentComplete}% Complete`
+      },
+    },
+  }
 </script>
 
 <style lang="scss">
-  @import "../styles/progress";
+  @import "../styles/progress"
 </style>
