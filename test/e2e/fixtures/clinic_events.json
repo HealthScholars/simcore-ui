@@ -1,0 +1,773 @@
+[
+  {
+    "id": 5,
+    "title": "Title",
+    "description": "Description",
+    "note": "Note",
+    "date": "2018-07-13",
+    "start_time": 14,
+    "duration": 1.5,
+    "created_at": "2018-10-02 21:10:41",
+    "updated_at": "2018-10-02 21:10:41",
+    "category": "Category",
+    "department_id": 27,
+    "created_by": 73,
+    "osce_template_id": null,
+    "department": {
+      "id": 27,
+      "institution_id": 5302,
+      "department_label_id": 4,
+      "simstation_override": 0,
+      "simstation_active": 0,
+      "name": "Surgery",
+      "label": {
+        "id": 4,
+        "name": "Surgery",
+        "institution_id": null
+      }
+    },
+    "scenario": null,
+    "sessions": [
+      {
+        "id": 1648,
+        "user_id": 73,
+        "scenario_id": 6,
+        "created_at": "0000-00-00 00:00:00",
+        "run_at": null,
+        "session_key": null,
+        "short_key": "",
+        "cache_scenario_data": null,
+        "multi_session_id": null,
+        "institution_room_id": null,
+        "calendar_event_scenario_id": null,
+        "event_id": 5,
+        "rooms": [
+          {
+            "id": 2,
+            "institution_id": 110,
+            "name": "Alaska Room 1",
+            "is_multiinstitutional": 1,
+            "pivot": {
+              "session_id": 1648,
+              "room_id": 2
+            }
+          }
+        ],
+        "learners": [
+          {
+            "id": 12,
+            "username": "bgillett@email.com",
+            "firstname": "Brian",
+            "lastname": "Gillett",
+            "role": 50,
+            "learner_type_id": null,
+            "learner_experience": 0,
+            "phone": "917-593-9314",
+            "license_accepted": "2015-02-02 17:29:21",
+            "userstatus_id": 5,
+            "user_options": null,
+            "profile_title": null,
+            "profile_about_me": null,
+            "profile_is_public": 0,
+            "title": null,
+            "user_title_id": null,
+            "other": null,
+            "institution_unit_id": null,
+            "external_id": "",
+            "sync_id": 0,
+            "primaryInstitution": {
+              "id": 110,
+              "name": "Alaska Native Medical Center",
+              "address": "4315 Diplomacy Drive",
+              "city": "Anchorage",
+              "state_province": "AK",
+              "postal_code": "99508",
+              "latitude": "61.182700",
+              "longitude": "-149.800090",
+              "timezone": "America/Anchorage",
+              "simstation_active": 1,
+              "setting_add_video_to_session": 1,
+              "vle": 1,
+              "calendar_event_approval": 0,
+              "new_calendar": 1,
+              "primaryClient": {
+                "id": 16,
+                "name": "Alaska test group",
+                "pivot": {
+                  "institution_id": 110,
+                  "institutiongroup_id": 16
+                }
+              },
+              "pivot": {
+                "user_id": 12,
+                "institution_id": 110
+              }
+            },
+            "pivot": {
+              "scenario_session_id": 1648,
+              "user_id": 12
+            },
+            "institutions": [
+              {
+                "id": 110,
+                "name": "Alaska Native Medical Center",
+                "address": "4315 Diplomacy Drive",
+                "city": "Anchorage",
+                "state_province": "AK",
+                "postal_code": "99508",
+                "latitude": "61.182700",
+                "longitude": "-149.800090",
+                "timezone": "America/Anchorage",
+                "simstation_active": 1,
+                "setting_add_video_to_session": 1,
+                "vle": 1,
+                "calendar_event_approval": 0,
+                "new_calendar": 1,
+                "primaryClient": {
+                  "id": 16,
+                  "name": "Alaska test group",
+                  "pivot": {
+                    "institution_id": 110,
+                    "institutiongroup_id": 16
+                  }
+                },
+                "pivot": {
+                  "user_id": 12,
+                  "institution_id": 110
+                }
+              }
+            ]
+          }
+        ],
+        "instructors": [
+          {
+            "id": 4,
+            "username": "brian@simshare.org",
+            "firstname": "Brian",
+            "lastname": "Gillett",
+            "role": 100,
+            "learner_type_id": null,
+            "learner_experience": 0,
+            "phone": "",
+            "license_accepted": "2017-10-13 14:43:06",
+            "userstatus_id": 2,
+            "user_options": null,
+            "profile_title": "Founder, SimShare",
+            "profile_about_me": "Text, text, text",
+            "profile_is_public": 1,
+            "title": null,
+            "user_title_id": null,
+            "other": null,
+            "institution_unit_id": null,
+            "external_id": "",
+            "sync_id": 0,
+            "primaryInstitution": {
+              "id": 5299,
+              "name": "Maimonides Medical Center",
+              "address": "4802 Tenth Avenue",
+              "city": "Brooklyn",
+              "state_province": "NY",
+              "postal_code": "11219",
+              "latitude": "40.639710",
+              "longitude": "-73.999100",
+              "timezone": "America/New_York",
+              "simstation_active": 0,
+              "setting_add_video_to_session": 0,
+              "vle": 1,
+              "calendar_event_approval": 0,
+              "new_calendar": 0,
+              "primaryClient": {
+                "id": 13,
+                "name": "HIC Hospitals",
+                "pivot": {
+                  "institution_id": 5299,
+                  "institutiongroup_id": 13
+                }
+              },
+              "pivot": {
+                "user_id": 4,
+                "institution_id": 5299
+              }
+            },
+            "pivot": {
+              "scenario_session_id": 1648,
+              "user_id": 4
+            },
+            "institutions": [
+              {
+                "id": 5299,
+                "name": "Maimonides Medical Center",
+                "address": "4802 Tenth Avenue",
+                "city": "Brooklyn",
+                "state_province": "NY",
+                "postal_code": "11219",
+                "latitude": "40.639710",
+                "longitude": "-73.999100",
+                "timezone": "America/New_York",
+                "simstation_active": 0,
+                "setting_add_video_to_session": 0,
+                "vle": 1,
+                "calendar_event_approval": 0,
+                "new_calendar": 0,
+                "primaryClient": {
+                  "id": 13,
+                  "name": "HIC Hospitals",
+                  "pivot": {
+                    "institution_id": 5299,
+                    "institutiongroup_id": 13
+                  }
+                },
+                "pivot": {
+                  "user_id": 4,
+                  "institution_id": 5299
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "id": 5,
+        "user_id": 13,
+        "institution_id": 5299,
+        "is_public": 1,
+        "is_multiinstitutional": 0,
+        "equipment_picture_id": null,
+        "name": "Metiman",
+        "status": "PM in September",
+        "created_at": "2014-12-10 19:01:36",
+        "deleted_at": null,
+        "is_unavailable": 0,
+        "pivot": {
+          "event_id": 5,
+          "equipment_id": 5
+        }
+      }
+    ],
+    "attachments": [
+      {
+        "id": 20,
+        "calendar_event_id": 5,
+        "file_path": "https://www.google.com",
+        "file_display_name": "https://www.google.com",
+        "event_id": 5
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Title",
+    "description": "Description",
+    "note": "Note",
+    "date": "2018-07-14",
+    "start_time": 12,
+    "duration": 2,
+    "created_at": "2018-10-02 21:14:26",
+    "updated_at": "2018-10-02 21:14:26",
+    "category": "Category",
+    "department_id": 27,
+    "created_by": 73,
+    "osce_template_id": null,
+    "department": {
+      "id": 27,
+      "institution_id": 5302,
+      "department_label_id": 4,
+      "simstation_override": 0,
+      "simstation_active": 0,
+      "name": "Surgery",
+      "label": {
+        "id": 4,
+        "name": "Surgery",
+        "institution_id": null
+      }
+    },
+    "scenario": null,
+    "sessions": [
+      {
+        "id": 1649,
+        "user_id": 73,
+        "scenario_id": 6,
+        "created_at": "0000-00-00 00:00:00",
+        "run_at": null,
+        "session_key": null,
+        "short_key": "",
+        "cache_scenario_data": null,
+        "multi_session_id": null,
+        "institution_room_id": null,
+        "calendar_event_scenario_id": null,
+        "event_id": 6,
+        "rooms": [
+          {
+            "id": 2,
+            "institution_id": 110,
+            "name": "Alaska Room 1",
+            "is_multiinstitutional": 1,
+            "pivot": {
+              "session_id": 1649,
+              "room_id": 2
+            }
+          }
+        ],
+        "learners": [
+          {
+            "id": 12,
+            "username": "bgillett@email.com",
+            "firstname": "Brian",
+            "lastname": "Gillett",
+            "role": 50,
+            "learner_type_id": null,
+            "learner_experience": 0,
+            "phone": "917-593-9314",
+            "license_accepted": "2015-02-02 17:29:21",
+            "userstatus_id": 5,
+            "user_options": null,
+            "profile_title": null,
+            "profile_about_me": null,
+            "profile_is_public": 0,
+            "title": null,
+            "user_title_id": null,
+            "other": null,
+            "institution_unit_id": null,
+            "external_id": "",
+            "sync_id": 0,
+            "primaryInstitution": {
+              "id": 110,
+              "name": "Alaska Native Medical Center",
+              "address": "4315 Diplomacy Drive",
+              "city": "Anchorage",
+              "state_province": "AK",
+              "postal_code": "99508",
+              "latitude": "61.182700",
+              "longitude": "-149.800090",
+              "timezone": "America/Anchorage",
+              "simstation_active": 1,
+              "setting_add_video_to_session": 1,
+              "vle": 1,
+              "calendar_event_approval": 0,
+              "new_calendar": 1,
+              "primaryClient": {
+                "id": 16,
+                "name": "Alaska test group",
+                "pivot": {
+                  "institution_id": 110,
+                  "institutiongroup_id": 16
+                }
+              },
+              "pivot": {
+                "user_id": 12,
+                "institution_id": 110
+              }
+            },
+            "pivot": {
+              "scenario_session_id": 1649,
+              "user_id": 12
+            },
+            "institutions": [
+              {
+                "id": 110,
+                "name": "Alaska Native Medical Center",
+                "address": "4315 Diplomacy Drive",
+                "city": "Anchorage",
+                "state_province": "AK",
+                "postal_code": "99508",
+                "latitude": "61.182700",
+                "longitude": "-149.800090",
+                "timezone": "America/Anchorage",
+                "simstation_active": 1,
+                "setting_add_video_to_session": 1,
+                "vle": 1,
+                "calendar_event_approval": 0,
+                "new_calendar": 1,
+                "primaryClient": {
+                  "id": 16,
+                  "name": "Alaska test group",
+                  "pivot": {
+                    "institution_id": 110,
+                    "institutiongroup_id": 16
+                  }
+                },
+                "pivot": {
+                  "user_id": 12,
+                  "institution_id": 110
+                }
+              }
+            ]
+          }
+        ],
+        "instructors": [
+          {
+            "id": 4,
+            "username": "brian@simshare.org",
+            "firstname": "Brian",
+            "lastname": "Gillett",
+            "role": 100,
+            "learner_type_id": null,
+            "learner_experience": 0,
+            "phone": "",
+            "license_accepted": "2017-10-13 14:43:06",
+            "userstatus_id": 2,
+            "user_options": null,
+            "profile_title": "Founder, SimShare",
+            "profile_about_me": "Text, text, text",
+            "profile_is_public": 1,
+            "title": null,
+            "user_title_id": null,
+            "other": null,
+            "institution_unit_id": null,
+            "external_id": "",
+            "sync_id": 0,
+            "primaryInstitution": {
+              "id": 5299,
+              "name": "Maimonides Medical Center",
+              "address": "4802 Tenth Avenue",
+              "city": "Brooklyn",
+              "state_province": "NY",
+              "postal_code": "11219",
+              "latitude": "40.639710",
+              "longitude": "-73.999100",
+              "timezone": "America/New_York",
+              "simstation_active": 0,
+              "setting_add_video_to_session": 0,
+              "vle": 1,
+              "calendar_event_approval": 0,
+              "new_calendar": 0,
+              "primaryClient": {
+                "id": 13,
+                "name": "HIC Hospitals",
+                "pivot": {
+                  "institution_id": 5299,
+                  "institutiongroup_id": 13
+                }
+              },
+              "pivot": {
+                "user_id": 4,
+                "institution_id": 5299
+              }
+            },
+            "pivot": {
+              "scenario_session_id": 1649,
+              "user_id": 4
+            },
+            "institutions": [
+              {
+                "id": 5299,
+                "name": "Maimonides Medical Center",
+                "address": "4802 Tenth Avenue",
+                "city": "Brooklyn",
+                "state_province": "NY",
+                "postal_code": "11219",
+                "latitude": "40.639710",
+                "longitude": "-73.999100",
+                "timezone": "America/New_York",
+                "simstation_active": 0,
+                "setting_add_video_to_session": 0,
+                "vle": 1,
+                "calendar_event_approval": 0,
+                "new_calendar": 0,
+                "primaryClient": {
+                  "id": 13,
+                  "name": "HIC Hospitals",
+                  "pivot": {
+                    "institution_id": 5299,
+                    "institutiongroup_id": 13
+                  }
+                },
+                "pivot": {
+                  "user_id": 4,
+                  "institution_id": 5299
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "id": 5,
+        "user_id": 13,
+        "institution_id": 5299,
+        "is_public": 1,
+        "is_multiinstitutional": 0,
+        "equipment_picture_id": null,
+        "name": "Metiman",
+        "status": "PM in September",
+        "created_at": "2014-12-10 19:01:36",
+        "deleted_at": null,
+        "is_unavailable": 0,
+        "pivot": {
+          "event_id": 6,
+          "equipment_id": 5
+        }
+      }
+    ],
+    "attachments": [
+      {
+        "id": 21,
+        "calendar_event_id": 5,
+        "file_path": "https://www.google.com",
+        "file_display_name": "https://www.google.com",
+        "event_id": 6
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Title",
+    "description": "Description",
+    "note": "Note",
+    "date": "2018-07-11",
+    "start_time": 12,
+    "duration": 1,
+    "created_at": "2018-10-02 21:14:30",
+    "updated_at": "2018-10-02 21:14:30",
+    "category": "Category",
+    "department_id": 27,
+    "created_by": 73,
+    "osce_template_id": null,
+    "department": {
+      "id": 27,
+      "institution_id": 5302,
+      "department_label_id": 4,
+      "simstation_override": 0,
+      "simstation_active": 0,
+      "name": "Surgery",
+      "label": {
+        "id": 4,
+        "name": "Surgery",
+        "institution_id": null
+      }
+    },
+    "scenario": null,
+    "sessions": [
+      {
+        "id": 1650,
+        "user_id": 73,
+        "scenario_id": 6,
+        "created_at": "0000-00-00 00:00:00",
+        "run_at": null,
+        "session_key": null,
+        "short_key": "",
+        "cache_scenario_data": null,
+        "multi_session_id": null,
+        "institution_room_id": null,
+        "calendar_event_scenario_id": null,
+        "event_id": 7,
+        "rooms": [
+          {
+            "id": 2,
+            "institution_id": 110,
+            "name": "Alaska Room 1",
+            "is_multiinstitutional": 1,
+            "pivot": {
+              "session_id": 1650,
+              "room_id": 2
+            }
+          }
+        ],
+        "learners": [
+          {
+            "id": 12,
+            "username": "bgillett@email.com",
+            "firstname": "Brian",
+            "lastname": "Gillett",
+            "role": 50,
+            "learner_type_id": null,
+            "learner_experience": 0,
+            "phone": "917-593-9314",
+            "license_accepted": "2015-02-02 17:29:21",
+            "userstatus_id": 5,
+            "user_options": null,
+            "profile_title": null,
+            "profile_about_me": null,
+            "profile_is_public": 0,
+            "title": null,
+            "user_title_id": null,
+            "other": null,
+            "institution_unit_id": null,
+            "external_id": "",
+            "sync_id": 0,
+            "primaryInstitution": {
+              "id": 110,
+              "name": "Alaska Native Medical Center",
+              "address": "4315 Diplomacy Drive",
+              "city": "Anchorage",
+              "state_province": "AK",
+              "postal_code": "99508",
+              "latitude": "61.182700",
+              "longitude": "-149.800090",
+              "timezone": "America/Anchorage",
+              "simstation_active": 1,
+              "setting_add_video_to_session": 1,
+              "vle": 1,
+              "calendar_event_approval": 0,
+              "new_calendar": 1,
+              "primaryClient": {
+                "id": 16,
+                "name": "Alaska test group",
+                "pivot": {
+                  "institution_id": 110,
+                  "institutiongroup_id": 16
+                }
+              },
+              "pivot": {
+                "user_id": 12,
+                "institution_id": 110
+              }
+            },
+            "pivot": {
+              "scenario_session_id": 1650,
+              "user_id": 12
+            },
+            "institutions": [
+              {
+                "id": 110,
+                "name": "Alaska Native Medical Center",
+                "address": "4315 Diplomacy Drive",
+                "city": "Anchorage",
+                "state_province": "AK",
+                "postal_code": "99508",
+                "latitude": "61.182700",
+                "longitude": "-149.800090",
+                "timezone": "America/Anchorage",
+                "simstation_active": 1,
+                "setting_add_video_to_session": 1,
+                "vle": 1,
+                "calendar_event_approval": 0,
+                "new_calendar": 1,
+                "primaryClient": {
+                  "id": 16,
+                  "name": "Alaska test group",
+                  "pivot": {
+                    "institution_id": 110,
+                    "institutiongroup_id": 16
+                  }
+                },
+                "pivot": {
+                  "user_id": 12,
+                  "institution_id": 110
+                }
+              }
+            ]
+          }
+        ],
+        "instructors": [
+          {
+            "id": 4,
+            "username": "brian@simshare.org",
+            "firstname": "Brian",
+            "lastname": "Gillett",
+            "role": 100,
+            "learner_type_id": null,
+            "learner_experience": 0,
+            "phone": "",
+            "license_accepted": "2017-10-13 14:43:06",
+            "userstatus_id": 2,
+            "user_options": null,
+            "profile_title": "Founder, SimShare",
+            "profile_about_me": "Text, text, text",
+            "profile_is_public": 1,
+            "title": null,
+            "user_title_id": null,
+            "other": null,
+            "institution_unit_id": null,
+            "external_id": "",
+            "sync_id": 0,
+            "primaryInstitution": {
+              "id": 5299,
+              "name": "Maimonides Medical Center",
+              "address": "4802 Tenth Avenue",
+              "city": "Brooklyn",
+              "state_province": "NY",
+              "postal_code": "11219",
+              "latitude": "40.639710",
+              "longitude": "-73.999100",
+              "timezone": "America/New_York",
+              "simstation_active": 0,
+              "setting_add_video_to_session": 0,
+              "vle": 1,
+              "calendar_event_approval": 0,
+              "new_calendar": 0,
+              "primaryClient": {
+                "id": 13,
+                "name": "HIC Hospitals",
+                "pivot": {
+                  "institution_id": 5299,
+                  "institutiongroup_id": 13
+                }
+              },
+              "pivot": {
+                "user_id": 4,
+                "institution_id": 5299
+              }
+            },
+            "pivot": {
+              "scenario_session_id": 1650,
+              "user_id": 4
+            },
+            "institutions": [
+              {
+                "id": 5299,
+                "name": "Maimonides Medical Center",
+                "address": "4802 Tenth Avenue",
+                "city": "Brooklyn",
+                "state_province": "NY",
+                "postal_code": "11219",
+                "latitude": "40.639710",
+                "longitude": "-73.999100",
+                "timezone": "America/New_York",
+                "simstation_active": 0,
+                "setting_add_video_to_session": 0,
+                "vle": 1,
+                "calendar_event_approval": 0,
+                "new_calendar": 0,
+                "primaryClient": {
+                  "id": 13,
+                  "name": "HIC Hospitals",
+                  "pivot": {
+                    "institution_id": 5299,
+                    "institutiongroup_id": 13
+                  }
+                },
+                "pivot": {
+                  "user_id": 4,
+                  "institution_id": 5299
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "equipment": [
+      {
+        "id": 5,
+        "user_id": 13,
+        "institution_id": 5299,
+        "is_public": 1,
+        "is_multiinstitutional": 0,
+        "equipment_picture_id": null,
+        "name": "Metiman",
+        "status": "PM in September",
+        "created_at": "2014-12-10 19:01:36",
+        "deleted_at": null,
+        "is_unavailable": 0,
+        "pivot": {
+          "event_id": 7,
+          "equipment_id": 5
+        }
+      }
+    ],
+    "attachments": [
+      {
+        "id": 22,
+        "calendar_event_id": 5,
+        "file_path": "https://www.google.com",
+        "file_display_name": "https://www.google.com",
+        "event_id": 7
+      }
+    ]
+  }
+]

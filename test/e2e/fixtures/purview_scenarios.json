@@ -1,0 +1,94 @@
+[
+  {
+    "id": 647,
+    "name": "Death &amp; Delivering Bad News",
+    "description": "This simulation scenario involves a 51 y.o. female with advanced NHL unresponsive to chemotherapy; admitted for PNA, in PEA arrest. The patient died after unsuccessful resuscitation efforts. The learning outcome focuses on using empathetic communication of end-of-life news to family members using SPIKES model and providing the necessary support (chaplain services and burial plans). Participants should be informed of the novel nature of the case, without specifically mentioning death/dying/bad news communication. They have the option to discontinue participation at any time if they feel uncomfortable and faculty/fellows supports are available to them.",
+    "is_private": 0,
+    "department_id": 324,
+    "department_name": "Administration",
+    "institution_id": 5776,
+    "institution_name": "Arkham Asylum",
+    "equipment": [],
+    "personnel": [
+      {
+        "name": "number_of_technicians",
+        "label": "Technician",
+        "value": "1"
+      },
+      {
+        "name": "number_of_confederatess",
+        "label": "Confederates",
+        "value": "3-4"
+      }
+    ]
+  },
+  {
+    "id": 651,
+    "name": "COM: Train the Trainer - Debriefing",
+    "description": "Introduction to Debriefing and TeamStePPs",
+    "is_private": 0,
+    "department_id": 324,
+    "department_name": "Administration",
+    "institution_id": 5776,
+    "institution_name": "Arkham Asylum",
+    "equipment": [],
+    "personnel": [
+      {
+        "name": "number_of_technicians",
+        "label": "Technician",
+        "value": "1"
+      },
+      {
+        "name": "number_of_confederatess",
+        "label": "Confederates",
+        "value": "6"
+      }
+    ]
+  },
+  {
+    "id": 652,
+    "name": "Build Walkthrough",
+    "description": "Walking through building a scenario w/ Brian 11/13",
+    "is_private": 0,
+    "department_id": 324,
+    "department_name": "Administration",
+    "institution_id": 5776,
+    "institution_name": "Arkham Asylum",
+    "equipment": [],
+    "personnel": [
+      {
+        "name": "number_of_technicians",
+        "label": "Technician",
+        "value": "1"
+      },
+      {
+        "name": "number_of_confederates",
+        "label": "Confederate",
+        "value": "1"
+      }
+    ]
+  },
+  {
+    "id": 661,
+    "name": "111",
+    "description": "111",
+    "is_private": 0,
+    "department_id": 324,
+    "department_name": "Administration",
+    "institution_id": 5776,
+    "institution_name": "Arkham Asylum",
+    "equipment": [],
+    "personnel": [
+      {
+        "name": "number_of_technicians",
+        "label": "Technician",
+        "value": "1"
+      },
+      {
+        "name": "number_of_confederates",
+        "label": "Confederate",
+        "value": "1"
+      }
+    ]
+  }
+]

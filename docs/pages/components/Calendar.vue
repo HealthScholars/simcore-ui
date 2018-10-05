@@ -8,12 +8,13 @@
       </template>
       <template slot="view">
 
-        <Calendar
+        <CalendarEvents
           :user="currentUser"
-          :instructors="instructors"
-          :equipment="equipment"
+          :lookups="lookups"
+          :events="events"
           :totalAvailabilities="totalAvailabilities"
           @updateAvailabilities="updateAvailabilities"
+          @submitEvent="submitEvent"
         />
 
       </template>
@@ -31,13 +32,13 @@
 <script>
   import { normalize } from '../../../utilities/filter-availabilities'
   import Demobox from '../../utility/Demobox'
-  import Calendar from '../../../components/Calendar'
+  import CalendarEvents from '../../../components/CalendarEvents'
 
   export default {
     name: 'calendar-doc',
     components: {
       Demobox,
-      Calendar,
+      CalendarEvents,
     },
     data() {
       return {
@@ -45,20 +46,35 @@
       }
     },
     created() {
-      this.$store.dispatch('fetchInstructorList')
-      this.$store.dispatch('fetchEquipmentList')
-      this.$store.dispatch('fetchCurrentUserAvailabilities')
-      this.$store.dispatch('fetchInstructorAvailabilities')
+      [
+        'users',
+        'equipment',
+        'rooms',
+        'scenarios',
+        'departments',
+        'events',
+      ].forEach(action => this.$store.dispatch('fetchList', action));
+      [
+        'fetchCurrentUserAvailabilities',
+        'fetchInstructorAvailabilities',
+      ].forEach(action => this.$store.dispatch(action));
     },
     computed: {
+      lookups() {
+        return {
+          instructors: this.$store.getters.instructors,
+          learners: this.$store.getters.instructors,
+          equipment: this.$store.getters.list({ list: 'equipment', value: 'name' }),
+          rooms: this.$store.getters.list({ list: 'rooms', value: 'name' }),
+          scenarios: this.$store.getters.list({ list: 'scenarios', value: 'name' }),
+          departments: this.$store.getters.list({ list: 'departments', value: 'name' }),
+        }
+      },
       currentUser() {
         return this.$store.state.currentUser
       },
-      instructors() {
-        return this.$store.getters.instructors
-      },
-      equipment() {
-        return this.$store.getters.equipment
+      events() {
+        return this.$store.state.events
       },
       totalAvailabilities() {
         return normalize(this.$store.state.purviewAvailabilities)
@@ -70,6 +86,9 @@
           date: date.format('YYYY-MM-DD'),
           availabilities,
         })
+      },
+      submitEvent(event) {
+        this.$store.dispatch('submitEvent', event)
       },
     },
   }

@@ -2,7 +2,10 @@
   <transition name="sim-bubble" appear>
     <div :class="`sim-bubble sim-bubble--${position.orientation}`">
       <div class="sim-bubble--content">
-        <slot></slot>
+        <component
+           :is="content.component"
+           :properties="content.props"
+        />
       </div>
       <IconText
         icon="#icon--control--x"
@@ -16,13 +19,19 @@
 
 <script>
   import IconText from './IconText'
+  import EventScheduler from './EventScheduler'
+  import EventListing from './EventListing'
 
   export default {
     components: {
       IconText,
+      EventScheduler,
+      EventListing,
     },
     props: {
+      content: Object,
       position: Object,
+      props: Object,
     },
     mounted() {
       this.setBubbleOpen(true)

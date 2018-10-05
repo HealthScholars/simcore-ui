@@ -13,14 +13,6 @@
         @click.native="loadNextMonth"
       />
     </div>
-    <div class="sim-calendar--header--mode" v-if="true">
-      <ToggleSwitch
-        :value="isCoordinator"
-        @change="$emit('toggleContext')"
-        left-label="My Availability"
-        right-label="Schedule Events"
-      />
-    </div>
     <div class="sim-calendar--header--controls sim-calendar--header--controls--days">
       <IconText
         icon="fa-arrow-left fa-fw"
@@ -39,15 +31,10 @@
 
 <script>
   import IconText from './IconText'
-  import ToggleSwitch from './Switch'
 
   export default {
     components: {
       IconText,
-      ToggleSwitch,
-    },
-    props: {
-      isCoordinator: Boolean,
     },
     computed: {
       dateService() {

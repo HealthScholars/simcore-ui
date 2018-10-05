@@ -6,11 +6,12 @@
         ref="input"
         :placeholder="placeholder"
         :value="inputValue"
+        :required="isRequired"
         @input="updateInput"
         @blur="blur"
         @keydown.down="highlightNext"
         @keydown.up="highlightPrevious"
-        @keydown.enter="selectHighlighted"
+        @keydown.enter.prevent="selectHighlighted"
         @keydown.tab.exact="selectHighlighted"
         @keyup.esc="blur"
       />
@@ -63,15 +64,8 @@
         default: 'find...',
       },
       canRemove: Boolean,
-      isFocused: Boolean,
       selectedItem: Object,
-    },
-    mounted(){
-      this.$watch('isFocused', () => {
-        if (this.isFocused) {
-          this.$refs.input.focus()
-        }
-      }, { immediate: true })
+      isRequired: Boolean,
     },
     computed: {
       inputValue() {
@@ -132,9 +126,7 @@
         }
       },
       selectHighlighted() {
-        this.optionsOpen
-          ? this.select(this.matchingOptions[this.highlightedIndex])
-          : this.$emit('next')
+          this.select(this.matchingOptions[this.highlightedIndex])
       },
       highlightPrevious() {
         if (this.highlightedIndex > 0) {

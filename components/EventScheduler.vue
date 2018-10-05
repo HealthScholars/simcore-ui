@@ -1,7 +1,8 @@
 <template>
-  <form class="event-scheduler" @submit.prevent="submitEvent" v-on-clickaway="closeBubble">
+  <form class="event-scheduler" @submit.prevent="submitEvent">
     <EventSchedulerHeader
-      :time="event.time"
+      :day="event.day"
+      :startTime="event.startTime"
       :duration="event.duration"
     />
     <main>
@@ -11,88 +12,91 @@
             :title="event.title"
             :description="event.description"
             :department="event.department"
+            :departments="lookups.departments"
             :category="event.category"
             @updateEventProperty="updateEventProperty"
           />
         </li>
         <li>
-          <EventSchedulerScenarios
-            :scenarios="event.scenarios"
-            @addScenario="addScenario"
+          <EventSchedulerSessions
+            :sessions="event.sessions"
+            :lookups="lookups"
+            @update="updateEventProperty('sessions', ...arguments)"
           />
         </li>
         <li>
-          <EventSchedulerPeople
-            :scenarios="event.scenarios"
-            @updateEventProperty="updateEventProperty"
+          <EventSchedulerEquipment
+            :equipmentList="lookups.equipment"
+            :selectedEquipment="event.equipment"
+            @update="updateEventProperty('equipment', ...arguments)"
           />
+        </li>
+        <li>
+          <EventSchedulerAttachments
+            :attachments="event.attachments"
+            @update="updateEventProperty('attachments', ...arguments)"
+          />
+        </li>
+        <li>
+          <fieldset>
+            <h4>Note</h4>
+            <textarea v-model="event.note"></textarea>
+          </fieldset>
         </li>
       </ol>
     </main>
-    <footer>
-      <button class="save-draft" @click="saveDraft">Save Draft</button>
-      <input type="submit" value="Submit For Approval" />
-    </footer>
+    <EventSchedulerFooter />
   </form>
 </template>
 
 <script>
 import IconText from './IconText'
-import AutoFinder from './Autofinder'
-import DataList from './Datalist'
-import SimSelection from './Selection'
+import AutoFinderList from './AutofinderList'
 
 import EventSchedulerHeader from './EventSchedulerHeader'
 import EventSchedulerInformation from './EventSchedulerInformation'
-import EventSchedulerScenarios from './EventSchedulerScenarios'
-import EventSchedulerPeople from './EventSchedulerPeople'
+import EventSchedulerSessions from './EventSchedulerSessions'
+import EventSchedulerAttachments from './EventSchedulerAttachments'
+import EventSchedulerEquipment from './EventSchedulerEquipment'
+import EventSchedulerFooter from './EventSchedulerFooter'
 
-import { getHour, formatTimesForDisplay } from '../utilities/date'
-import { mixin as clickaway } from 'vue-clickaway'
+import { deepClone } from '../utilities/deep-clone'
 
 export default {
   components: {
     IconText,
-    AutoFinder,
-    DataList,
-    SimSelection,
+    AutoFinderList,
     EventSchedulerHeader,
     EventSchedulerInformation,
-    EventSchedulerScenarios,
-    EventSchedulerPeople,
+    EventSchedulerSessions,
+    EventSchedulerAttachments,
+    EventSchedulerEquipment,
+    EventSchedulerFooter,
   },
-  mixins: [ clickaway ],
   props: {
-    event: Object,
+    properties: Object,
   },
   computed: {
-    eventDate() {
-      return this.event.time.format('dddd, MMMM Do, YYYY')
+    event() {
+      return this.properties.event
     },
-    eventHour() {
-      return getHour(this.event.time)
-    },
-    eventTime() {
-      return formatTimesForDisplay(this.eventHour, this.event.duration)
+    lookups() {
+      return this.properties.lookups
     },
   },
   methods: {
-    closeBubble() {
-      this.$store.dispatch('services/bubble/setOpen', false)
-    },
     saveDraft() {
-      this.$emit('saveDraft', this.event)
+      this.$emit('saveDraft', this.properties.event)
     },
     submitEvent() {
-      console.log("submitting", this.event)
-      this.$emit('submitEvent', this.event)
+      this.$emit('submitEvent', this.properties.event)
     },
     updateEventProperty(property, value) {
       this.$emit('updateEventProperty', property, value)
     },
-    addScenario(scenario) {
-      this.$emit('addScenario', scenario)
-    }
+    setSessions(sessions) {
+      this.$set(this.properties.event, "sessions", sessions)
+    },
   },
 }
 </script>
@@ -161,6 +165,8 @@ export default {
     }
     fieldset {
       border: none;
+      width: 100%;
+      padding: 0;
     }
     textarea {
       resize: none;

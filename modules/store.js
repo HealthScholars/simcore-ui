@@ -8,10 +8,12 @@ if (process.env.NODE_ENV === 'development') {
   mockHttpResponses(axios)
 }
 
+import camelize from 'camelize'
+
 import { getBoundariesOfMonth } from '../utilities/date'
 import buildUrl from '../utilities/build-url'
 
-import services from '../modules/services'
+import services from './services'
 
 const store = new Vuex.Store({
   state: {
@@ -22,20 +24,25 @@ const store = new Vuex.Store({
     purviewAvailabilities: {},
     instructors: [],
     equipment: [],
+    rooms: [],
+    scenarios: [],
+    learners: [],
+    events: [],
+    departments: [],
   },
   getters: {
+    list: (state) => ({list, value}) => {
+      return state[list].map(item => {
+        item.label = item[value]
+        return item
+      })
+    },
     instructors(state) {
       return state.instructors.map(instructor => {
         instructor.label = `${instructor.lastname}, ${instructor.firstname}`
         return instructor
       })
     },
-    equipment(state) {
-      return state.equipment.map(equipment => {
-        equipment.label = equipment.name
-        return equipment
-      })
-    }
   },
   mutations: {
     updateCurrentUserAvailabilitiesByDate(state, {date, availabilities}) {
@@ -44,17 +51,24 @@ const store = new Vuex.Store({
     updateCurrentUserAvailabilities(state, availabilities) {
       state.currentUser.availabilities = availabilities
     },
-    updateInstructors(state, instructors) {
-      state.instructors = instructors
-    },
-    updateEquipment(state, equipment) {
-      state.equipment = equipment
-    },
     updateInstructorAvailabilities(state, availabilities) {
       state.purviewAvailabilities = availabilities
     },
+    updateList(state, { key, list }) {
+      state[key] = list
+    },
   },
   actions: {
+    async fetchList({ dispatch, state, commit }, key) {
+      const url = buildUrl(key)(state.currentUser.id)
+      dispatch('services/loading/pushLoading')
+      const list = await axios.get(url)
+        .then(response => response.data)
+        .then(normalizeResponse(key))
+        .catch(error => console.error(error.message))
+      dispatch('services/loading/popLoading')
+      return commit('updateList', { key, list })
+    },
     async updateCurrentUserAvailabilities({dispatch, state, commit}, {date, availabilities}) {
       const url = buildUrl('updateAvailabilities')(state.currentUser.id)
       const payload = {
@@ -81,7 +95,7 @@ const store = new Vuex.Store({
     },
     async fetchInstructorAvailabilities({dispatch, state, commit}) {
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
-      const url = buildUrl('purviewAvailabilities')(state.currentUser.id, {startDate, endDate})
+      const url = buildUrl('userAvailabilities')(state.currentUser.id, {startDate, endDate})
       dispatch('services/loading/pushLoading')
       const availabilities = await axios.get(url)
         .then(response => response.data.users)
@@ -90,7 +104,7 @@ const store = new Vuex.Store({
       return commit('updateInstructorAvailabilities', availabilities)
     },
     async fetchInstructorList({dispatch, state, commit}) {
-      const url = buildUrl('purviewUsers')(state.currentUser.id)
+      const url = buildUrl('availabilities')(state.currentUser.id)
       dispatch('services/loading/pushLoading')
       const instructors = await axios.get(url)
         .then(response => response.data.users.list)
@@ -98,21 +112,40 @@ const store = new Vuex.Store({
       dispatch('services/loading/popLoading')
       return commit('updateInstructors', instructors)
     },
-    async fetchEquipmentList({dispatch, state, commit}) {
-      const url = buildUrl('purviewEquipment')(state.currentUser.id)
+    async fetchLearnerList() {
+    },
+    async submitEvent({dispatch, state, commit}, event) {
+      console.log("submitted:", JSON.parse(JSON.stringify(event)))
+      const url = buildUrl('addEvent')(state.currentUser.id)
       dispatch('services/loading/pushLoading')
-      const equipment = await axios.get(url)
+      const postedEvent = await axios.post(url, event)
         .then(response => response.data)
         .catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
-      return commit('updateEquipment', equipment)
-    },
-    async createEvent({commit}, pendingEvent) {
     },
   },
   modules: {
     services,
   },
 })
+
+function normalizeResponse(key){
+  const transformations = {
+    users: response => {
+      return response.users.list
+    },
+    departments: response => {
+      return Object.values(response)
+    },
+    events: response => {
+      return camelize(response)
+    },
+  }
+  return response => {
+    return transformations[key]
+      ? transformations[key](response)
+      : response
+  }
+}
 
 export default store

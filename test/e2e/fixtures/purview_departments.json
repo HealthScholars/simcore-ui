@@ -1,0 +1,534 @@
+{
+  "40": {
+    "id": 40,
+    "name": "Emergency Medicine",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "41": {
+    "id": 41,
+    "name": "Anesthesiology",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "42": {
+    "id": 42,
+    "name": "Nursing",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "57": {
+    "id": 57,
+    "name": "Sim Center Administration",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "100": {
+    "id": 100,
+    "name": "Administration",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "237": {
+    "id": 237,
+    "name": "LabelLabel",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "270": {
+    "id": 270,
+    "name": "Test Dep",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "271": {
+    "id": 271,
+    "name": "Klop",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "272": {
+    "id": 272,
+    "name": "Dentistry",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "304": {
+    "id": 304,
+    "name": "Cardiology",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "306": {
+    "id": 306,
+    "name": "Critical Care",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "313": {
+    "id": 313,
+    "name": "Behavioral Health",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "315": {
+    "id": 315,
+    "name": "Behavioral Health",
+    "institution": {
+      "id": 108,
+      "name": "Alaska Psychiatric Institute",
+      "address": "2900 Providence Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.188190",
+      "longitude": "-149.830900",
+      "timezone": "America/Anchorage",
+      "simstation_active": 0,
+      "setting_add_video_to_session": 0,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 108,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "318": {
+    "id": 318,
+    "name": "Administration",
+    "institution": {
+      "id": 108,
+      "name": "Alaska Psychiatric Institute",
+      "address": "2900 Providence Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.188190",
+      "longitude": "-149.830900",
+      "timezone": "America/Anchorage",
+      "simstation_active": 0,
+      "setting_add_video_to_session": 0,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 108,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "319": {
+    "id": 319,
+    "name": "Neurology",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "320": {
+    "id": 320,
+    "name": "Ambulatory Care",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "336": {
+    "id": 336,
+    "name": "?ava?adsadsd",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "343": {
+    "id": 343,
+    "name": "Pediatrics",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  },
+  "344": {
+    "id": 344,
+    "name": "Internal Medicine",
+    "institution": {
+      "id": 110,
+      "name": "Alaska Native Medical Center",
+      "address": "4315 Diplomacy Drive",
+      "city": "Anchorage",
+      "state_province": "AK",
+      "postal_code": "99508",
+      "latitude": "61.182700",
+      "longitude": "-149.800090",
+      "timezone": "America/Anchorage",
+      "simstation_active": 1,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 16,
+        "name": "Alaska test group",
+        "pivot": {
+          "institution_id": 110,
+          "institutiongroup_id": 16
+        }
+      }
+    }
+  }
+}

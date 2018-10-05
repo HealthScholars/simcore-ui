@@ -1,0 +1,62 @@
+[
+  {
+    "id": 50,
+    "institution_id": 5776,
+    "name": "Room 1408",
+    "is_multiinstitutional": 0,
+    "institution": {
+      "id": 5776,
+      "name": "Arkham Asylum",
+      "address": "1974 Arkham Drive",
+      "city": "Gotham City",
+      "state_province": "NJ",
+      "postal_code": "07101",
+      "latitude": "40.735657",
+      "longitude": "-74.172367",
+      "timezone": "EST",
+      "simstation_active": 0,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 5681,
+        "name": "Gotham City",
+        "pivot": {
+          "institution_id": 5776,
+          "institutiongroup_id": 5681
+        }
+      }
+    }
+  },
+  {
+    "id": 51,
+    "institution_id": 5776,
+    "name": "Room of Requirement",
+    "is_multiinstitutional": 0,
+    "institution": {
+      "id": 5776,
+      "name": "Arkham Asylum",
+      "address": "1974 Arkham Drive",
+      "city": "Gotham City",
+      "state_province": "NJ",
+      "postal_code": "07101",
+      "latitude": "40.735657",
+      "longitude": "-74.172367",
+      "timezone": "EST",
+      "simstation_active": 0,
+      "setting_add_video_to_session": 1,
+      "vle": 1,
+      "calendar_event_approval": 1,
+      "new_calendar": 1,
+      "primaryClient": {
+        "id": 5681,
+        "name": "Gotham City",
+        "pivot": {
+          "institution_id": 5776,
+          "institutiongroup_id": 5681
+        }
+      }
+    }
+  }
+]

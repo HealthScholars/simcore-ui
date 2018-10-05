@@ -5,12 +5,8 @@
     <IconCheckbox/>
     <IconControl/>
 
-    <CalendarHeader
-      :isCoordinator="isCoordinator"
-      @toggleContext="toggleContext"
-    />
+    <CalendarHeader />
     <div class="sim-calendar--body">
-      <template v-if="isCoordinator">
         <CalendarBodyEvents
           :filteredAvailabilities="filteredAvailabilities"
           :lookups="lookups"
@@ -31,20 +27,6 @@
           @updateFilters="updateFilters"
         />
         -->
-      </template>
-      <template v-else>
-        <CalendarBodyAvailability
-          :availabilities="user.availabilities"
-          :showExpandedWeek="showExpandedWeek"
-          @updateAvailabilities="updateAvailabilities"
-          @toggleExpandedWeek="toggleExpandedWeek"
-          @expandWeek="expandWeek"
-        />
-        <SidebarInstructor
-          :availabilities="selectedDateAvailabilities"
-          @updateAvailabilities="updateAvailabilities"
-        />
-      </template>
     </div>
   </div>
 </template>
@@ -59,9 +41,7 @@ import IconCheckbox from './IconCheckbox'
 import IconControl from './IconControl'
 
 import CalendarHeader from './CalendarHeader'
-import CalendarBodyAvailability from './CalendarBodyAvailability'
 import CalendarBodyEvents from './CalendarBodyEvents'
-import SidebarInstructor from './SidebarInstructor'
 import SidebarCoordinator from './SidebarCoordinator'
 
 export default {
@@ -71,9 +51,7 @@ export default {
     IconCheckbox,
     IconControl,
     CalendarHeader,
-    CalendarBodyAvailability,
     CalendarBodyEvents,
-    SidebarInstructor,
     SidebarCoordinator,
   },
   props: {

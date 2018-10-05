@@ -5,34 +5,8 @@
     <IconCheckbox/>
     <IconControl/>
 
-    <CalendarHeader
-      :isCoordinator="isCoordinator"
-      @toggleContext="toggleContext"
-    />
+    <CalendarHeader />
     <div class="sim-calendar--body">
-      <template v-if="isCoordinator">
-        <CalendarBodyEvents
-          :filteredAvailabilities="filteredAvailabilities"
-          :lookups="lookups"
-          :bubbleIsOpen="bubbleIsOpen"
-          :showExpandedWeek="showExpandedWeek"
-          :user="user"
-          :events="events"
-          @toggleExpandedWeek="toggleExpandedWeek"
-          @expandWeek="expandWeek"
-          @submitEvent="submitEvent"
-        />
-        <!--
-        <SidebarCoordinator
-          :instructors="instructors"
-          :equipment="equipment"
-          :filters="filters"
-          :isDisabled="isBubbleOpen"
-          @updateFilters="updateFilters"
-        />
-        -->
-      </template>
-      <template v-else>
         <CalendarBodyAvailability
           :availabilities="user.availabilities"
           :showExpandedWeek="showExpandedWeek"
@@ -44,7 +18,6 @@
           :availabilities="selectedDateAvailabilities"
           @updateAvailabilities="updateAvailabilities"
         />
-      </template>
     </div>
   </div>
 </template>
@@ -60,9 +33,7 @@ import IconControl from './IconControl'
 
 import CalendarHeader from './CalendarHeader'
 import CalendarBodyAvailability from './CalendarBodyAvailability'
-import CalendarBodyEvents from './CalendarBodyEvents'
 import SidebarInstructor from './SidebarInstructor'
-import SidebarCoordinator from './SidebarCoordinator'
 
 export default {
   components: {
@@ -72,9 +43,7 @@ export default {
     IconControl,
     CalendarHeader,
     CalendarBodyAvailability,
-    CalendarBodyEvents,
     SidebarInstructor,
-    SidebarCoordinator,
   },
   props: {
     user: Object,
@@ -139,9 +108,6 @@ export default {
       const selectedDate = this.selectedDate.format('YYYY-MM-DD')
       return this.user.availabilities[selectedDate] || []
     },
-    contextLabel() {
-      return this.isCoordinator ? 'coordinator' : 'instructor'
-    },
     isBubbleOpen() {
       return this.bubbleService.isOpen
     },
@@ -156,14 +122,8 @@ export default {
     updateAvailabilities(date, availabilities) {
       this.$emit('updateAvailabilities', date, availabilities)
     },
-    toggleContext() {
-      this.isCoordinator = !this.isCoordinator
-    },
     expandWeek() {
       this.showExpandedWeek = true
-    },
-    submitEvent(event) {
-      this.$emit('submitEvent', event)
     },
   },
 }

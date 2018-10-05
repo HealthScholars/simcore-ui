@@ -8,9 +8,7 @@ import App from './App'
 import router from './router'
 import common from './mixins'
 
-import store from './store'
-
-import availabilitiesStub from '../test/e2e/fixtures/availabilities.json'
+import store from '../modules/store'
 
 Vue.config.productionTip = false
 

@@ -4,6 +4,7 @@
     <label for="title">Title</label>
     <input
       required
+      autofocus
       type="text"
       id="title"
       :value="title"
@@ -16,6 +17,7 @@
       :value="description"
       @input="updateEventProperty('description', $event.target.value)"
     ></textarea>
+    <!--
     <label for="category">Category</label>
     <select id="category">
       <option
@@ -26,14 +28,18 @@
         {{category.label}}
       </option>
     </select>
+    -->
     <label>Department</label>
     <AutoFinder
       id="department"
-      placeholder="Start typing to find a Department"
+      class="department-finder"
+      placeholder="Type to search departments"
+      :isRequired="true"
       :options="departments"
       :canRemove="false"
       :selectedItem="department"
-      @select="updateEventProperty('department', $event.target.value)"
+      @select="updateEventProperty('department', ...arguments)"
+      @clear="updateEventProperty('department', {})"
     />
   </fieldset>
 </template>
@@ -49,21 +55,10 @@ export default {
     title: String,
     description: String,
     department: Object,
+    departments: Array,
     category: Object,
   },
   computed: {
-    departments() {
-      return [{
-        id: 1,
-        label: 'A',
-      }, {
-        id: 2,
-        label: 'B',
-      }, {
-        id: 3,
-        label: 'C',
-      }]
-    },
     categories() {
       return [{
         id: 1,
@@ -79,11 +74,16 @@ export default {
   },
   methods: {
     updateEventProperty(property, value){
-      this.$emit('updateEventProperty', property, title)
+      this.$emit('updateEventProperty', property, value)
     },
   },
 }
 </script>
 
 <style lang="scss">
+.event-information {
+  .department-finder {
+    padding-bottom: 1em;
+  }
+}
 </style>
