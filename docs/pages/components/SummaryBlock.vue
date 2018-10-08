@@ -1,13 +1,15 @@
 <template>
   <div>
-    <SummaryBlock v-for="summary in this.summaries"
+    <SummaryBlock v-for="(summary, index) in this.summaries"
+      :key="index"
       :index="summary.index"
       :title="summary.title"
       :closeAction="close"
     >
-      <SummaryList v-for="section in summary.sections"
-                      :title="section.title"
-                      :content="section.content"
+      <SummaryList v-for="(section, index) in summary.sections"
+        :key="index"
+        :title="section.title"
+        :content="section.content"
       />
     </SummaryBlock>
   </div>
