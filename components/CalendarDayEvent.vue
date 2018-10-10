@@ -102,12 +102,11 @@
         this.$emit('createPendingEvent', this.day, startTime)
       },
       updateBlockPosition(type, index) {
-        const elements = {
-          event: this.$refs.timeBlockEvent[index],
-          pendingEvent: this.$refs.pendingEvent,
-        }
+        const element = type === "pendingEvent"
+          ? this.$refs.pendingEvent
+          : this.$refs.timeBlockEvent[index]
         this.$emit('updateBlockPosition', {
-          domPosition: elements[type].$el.getBoundingClientRect(),
+          domPosition: element.$el.getBoundingClientRect(),
           offset: {
             x: 0,
             y: 0,
