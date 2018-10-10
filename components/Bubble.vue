@@ -3,8 +3,10 @@
     <div :class="`sim-bubble sim-bubble--${position.orientation}`">
       <div class="sim-bubble--content">
         <component
-           :is="content.component"
-           :properties="content.props"
+          :is="content.component"
+          :properties="content.props"
+          @updateEventProperty="updateEventProperty"
+          @submitEvent="submitEvent"
         />
       </div>
       <IconText
@@ -45,6 +47,12 @@
       },
       dismiss() {
         this.$emit('dismiss')
+      },
+      submitEvent() {
+        this.$emit('submitEvent', this.properties.event)
+      },
+      updateEventProperty(property, value) {
+        this.$emit('updateEventProperty', property, value)
       },
     },
   }

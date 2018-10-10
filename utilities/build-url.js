@@ -1,4 +1,4 @@
-const baseUrl = BASE_URL || 'https://dev.simcoretech.com/api/v1'
+const baseUrl = window.BASE_URL || 'https://dev.simcoretech.com/api/v1'
 
 const methods = {
   updateAvailabilities(userId) {

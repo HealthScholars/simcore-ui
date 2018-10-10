@@ -26,6 +26,8 @@
       v-on-clickaway="resetBubbleContent"
       @keydown.esc="resetBubbleContent"
       @dismiss="resetBubbleContent"
+      @updateEventProperty="updateEventProperty"
+      @submitEvent="submitEvent"
     />
     <!--
       <EventScheduler
@@ -153,6 +155,7 @@
         this.pendingEvent = null
       },
       updateEventProperty(property, value) {
+        console.log("called", property, value)
         this.$set(this.pendingEvent, property, value)
       },
       addScenario(scenario) {
