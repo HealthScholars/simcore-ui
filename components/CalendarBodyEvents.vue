@@ -107,7 +107,7 @@
         const date = day.format('YYYY-MM-DD')
         return this.events.filter(event => event.date === date)
       },
-      CalendarEvent({ day, startTime, duration }) {
+      CalendarEvent({ day, startTime, duration, user }) {
         return {
           day,
           startTime,
@@ -116,7 +116,7 @@
           description: '',
           department: {},
           isApproved: false,
-          institution: this.user.institution,
+          institution: user.institution,
           equipment: [{
             id: -1
           }],
@@ -139,7 +139,7 @@
       },
       createPendingEvent(day, startTime) {
         const duration = 1;
-        this.pendingEvent = new this.CalendarEvent({ day, startTime, duration })
+        this.pendingEvent = new this.CalendarEvent({ day, startTime, duration, user: this.user })
         this.selectPendingEvent(this.pendingEvent);
       },
       getInstructor(id){
