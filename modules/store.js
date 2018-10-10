@@ -4,8 +4,13 @@ Vue.use(Vuex)
 
 import axios from 'axios'
 import mockHttpResponses from '../utilities/mock-http-responses'
+let currentUser = {}
 if (process.env.NODE_ENV === 'development') {
   mockHttpResponses(axios)
+  currentUser = {
+    id: 912,
+    availabilities: {},
+  }
 }
 
 import camelize from 'camelize'
@@ -17,10 +22,7 @@ import services from './services'
 
 const store = new Vuex.Store({
   state: {
-    currentUser: {
-      id: 912,
-      availabilities: {},
-    },
+    currentUser,
     purviewAvailabilities: {},
     instructors: [],
     equipment: [],

@@ -4,7 +4,7 @@
 .sim-calendar {
   --edge-color: var(--medium-grey);
   --edge: 1px 1px 0 0 var(--edge-color);
-  --lines: -1px -1px 0px 0px var(--edge-color), -1px -1px 0px 0px var(--edge-color) inset;
+  --lines: 1px 1px 0px 0px var(--edge-color), 1px 1px 0px 0px var(--edge-color) inset;
   --picker-bg: var(--lighter);
   --picker-fg: var(--dark);
   font-family: sans-serif;
@@ -243,7 +243,7 @@
       position: relative;
       flex: 0 0 14.285%;
       min-height: 10vmin;
-      padding: 0 1px 1px 0;
+      // padding: 0 1px 1px 0;
       cursor: pointer;
       display: flex;
       flex-direction: column;
