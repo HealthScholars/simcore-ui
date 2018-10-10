@@ -5,6 +5,7 @@ Vue.use(Vuex)
 import axios from 'axios'
 import mockHttpResponses from '../utilities/mock-http-responses'
 
+let currentUser = {}
 if (process.env.NODE_ENV === 'dev') {
   mockHttpResponses(axios)
   currentUser = {
