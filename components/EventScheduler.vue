@@ -86,7 +86,7 @@ export default {
   },
   methods: {
     saveDraft() {
-      this.$emit('saveDraft', this.properties.event)
+      this.$emit('saveDraft', this.event)
     },
     submitEvent() {
       this.$emit('submitEvent', this.properties.event)

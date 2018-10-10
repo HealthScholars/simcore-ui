@@ -48,8 +48,8 @@
       dismiss() {
         this.$emit('dismiss')
       },
-      submitEvent() {
-        this.$emit('submitEvent', this.properties.event)
+      submitEvent(event) {
+        this.$emit('submitEvent', event)
       },
       updateEventProperty(property, value) {
         this.$emit('updateEventProperty', property, value)
