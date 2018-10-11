@@ -1,7 +1,7 @@
 <template>
   <footer class="event-scheduler-footer">
-    <button class="save-draft" @click="$emit('saveDraft')">Save Draft</button>
-    <input type="submit" value="Submit For Approval" />
+    <button class="save-draft" @click="$emit('saveDraft')">Save Event</button>
+    <input type="submit" @click="$emit('saveDraft')" value="Save Event" />
   </footer>
 </template>
 
@@ -10,15 +10,16 @@
     display: flex;
     justify-content: space-between;
     .save-draft {
+      visibility: hidden;
+      padding: 1rem;
+      border-radius: 4px;
+      background-color: #ccc;
+      color: #999;
+    }
+    input[type=submit] {
       padding: 1rem;
       background-color: orange;
       color: white;
-      border-radius: 4px;
-    }
-    [type=submit] {
-      padding: 1rem;
-      background-color: #ccc;
-      color: #999;
       border-radius: 4px;
     }
   }

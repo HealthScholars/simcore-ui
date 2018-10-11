@@ -149,7 +149,7 @@
         return this.lookups.instructors.find(instructor => +instructor.id === +id)
       },
       closeBubble() {
-        this.resetSelectedEvent()
+        this.resetBubbleContent()
         this.$store.dispatch('services/bubble/setOpen', false)
       },
       clearPendingEvent() {
@@ -198,6 +198,8 @@
       },
       submitEvent(event) {
         this.$emit('submitEvent', this.prepareEvent(event))
+        this.clearPendingEvent()
+        this.closeBubble()
       },
       getStyles(position) {
         const top = this.$refs.bubble
@@ -262,4 +264,3 @@
     },
   }
 </script>
-

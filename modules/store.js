@@ -124,6 +124,7 @@ const store = new Vuex.Store({
         .then(response => response.data)
         .catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
+      dispatch('fetchList', 'events')
     },
   },
   modules: {
