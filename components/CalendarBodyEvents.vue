@@ -119,6 +119,7 @@
           department: {},
           isApproved: false,
           institution: user.institution,
+            note: '',
           equipment: [{
             id: -1
           }],
@@ -168,7 +169,7 @@
       },
       prepareSession(session) {
         return {
-          scenario_id: session.scenario.id,
+          scenario_id: session.scenario.id || -1,
           instructors: session.instructors
             .map(this.getId)
             .filter(this.isValidId),
@@ -182,18 +183,21 @@
       },
       prepareEvent(event) {
         return {
+          title: event.title,
+          description: event.description,
           date: event.day.format('YYYY-MM-DD'),
-          startTime: +event.startTime,
+          start_time: +event.startTime,
           duration: +event.duration,
-          institution_id: +event.institution.id,
+          institution_id: 1,//+event.institution.id,
           department_id: +event.department.id,
-          equipment: event.equipment.map(this.getId),
-          attachments: Object.assign([], event.attachments),
-          sessions: event.sessions.map(this.prepareSession)
+          equipment: event.equipment.map(this.getId).filter(this.isValidId),
+          attachments: Object.assign([], event.attachments).filter(attachment => attachment.id > 0),
+          sessions: event.sessions.map(this.prepareSession),
+          note: event.note,
         }
       },
       submitEvent(event) {
-        this.$emit('submitEvent', event)
+        this.$emit('submitEvent', this.prepareEvent(event))
       },
       getStyles(position) {
         const top = this.$refs.bubble
@@ -258,3 +262,4 @@
     },
   }
 </script>
+

@@ -118,7 +118,6 @@ const store = new Vuex.Store({
     async fetchLearnerList() {
     },
     async submitEvent({dispatch, state, commit}, event) {
-      console.log("submitted:", JSON.parse(JSON.stringify(event)))
       const url = buildUrl('addEvent')(state.currentUser.id)
       dispatch('services/loading/pushLoading')
       const postedEvent = await axios.post(url, event)

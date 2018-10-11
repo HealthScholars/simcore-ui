@@ -1,6 +1,8 @@
 const { deepClone } = require('./deep-clone')
 
 function filterAvailabilities(instructors, filters) {
+  return instructors
+  /*
   if (!(instructors instanceof Array)){
     instructors = normalize(instructors)
   }
@@ -11,6 +13,7 @@ function filterAvailabilities(instructors, filters) {
     .reduce(aggregateDaysWithSpecificUsers(filters.instructors), [])
     .map(filterEnoughInstructors(filters.instructorCount))
     .map(filterRequiredInstructors(filters.instructors))
+  */
 }
 
 // Reorganizes the API response to something workable
