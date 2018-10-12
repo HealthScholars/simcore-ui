@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 
-let today, selectedDate
+let today = dayjs()
+let selectedDate = today
+
 if (process.env.NODE_ENV === 'dev') {
   today = dayjs('2018-07-13')
   selectedDate = dayjs('2018-07-13')
