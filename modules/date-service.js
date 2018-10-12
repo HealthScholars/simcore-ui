@@ -1,10 +1,16 @@
 import dayjs from 'dayjs'
 
+let today, selectedDate
+if (process.env.NODE_ENV === 'dev') {
+  today = dayjs('2018-07-13')
+  selectedDate = dayjs('2018-07-13')
+}
+
 export default {
   namespaced: true,
   state: {
-    today: dayjs('2018-07-13'),
-    selectedDate: dayjs('2018-07-13'),
+    today,
+    selectedDate,
   },
   mutations: {
     setDate(state, date){
