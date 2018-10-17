@@ -14,6 +14,7 @@ import DocSingleSelector from '../pages/components/SingleSelector'
 import DocBadges from '../pages/components/Badge'
 import DocBulkCheck from '../pages/components/BulkCheck'
 import DocCalendar from '../pages/components/Calendar'
+import Availability from '../pages/components/AvailabilityCalendar'
 import DocDatalist from '../pages/components/Datalist'
 import DocDatepicker from '../pages/components/Datepicker'
 import DocFilterBy from '../pages/components/FilterBy'
@@ -101,6 +102,14 @@ export default new Router({
           label: 'Calendar',
           components: {
             details: DocCalendar,
+          },
+        },
+        {
+          path: 'availability',
+          name: 'availability',
+          label: 'Availability',
+          components: {
+            details: Availability,
           },
         },
         {

@@ -47,15 +47,11 @@ export default {
   },
   props: {
     user: Object,
-    lookups: Object,
     totalAvailabilities: Array,
-    events: Array,
   },
   data() {
     return {
-      isCoordinator: false,
       showExpandedWeek: false,
-      duration: 1,
       pendingEvent: null,
       bubbleIsOpen: false,
       filters: {
@@ -86,23 +82,11 @@ export default {
       return this.selectedDate.isSame(this.today, 'month')
     },
     componentClasses() {
-      const classes = {
+      return {
         'is-current-month': this.isCurrentMonth,
         'is-expanded': this.showExpandedWeek,
+        'is-instructor-context': true,
       }
-      classes[`is-${this.contextLabel}-context`] = true
-      return classes
-    },
-    decoratedFilters() {
-      const filters = deepClone(this.filters)
-      filters.instructorCount = filters.instructors.length
-      filters.instructors = filters.instructors
-        .map(instructor => instructor.id)
-        .filter(id => id > 0)
-      return filters
-    },
-    filteredAvailabilities() {
-      return filterAvailabilities([...this.totalAvailabilities], this.decoratedFilters)
     },
     selectedDateAvailabilities() {
       const selectedDate = this.selectedDate.format('YYYY-MM-DD')
@@ -115,9 +99,6 @@ export default {
   methods: {
     toggleExpandedWeek() {
       this.showExpandedWeek = !this.showExpandedWeek
-    },
-    updateFilters(filters) {
-      this.filters = filters
     },
     updateAvailabilities(date, availabilities) {
       this.$emit('updateAvailabilities', date, availabilities)

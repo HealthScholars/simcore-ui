@@ -5,7 +5,10 @@ Vue.use(Vuex)
 import axios from 'axios'
 import mockHttpResponses from '../utilities/mock-http-responses'
 
-let currentUser = {}
+let currentUser = window.currentUser
+if (currentUser) {
+  currentUser.availabilities = {}
+}
 if (process.env.NODE_ENV === 'dev') {
   mockHttpResponses(axios)
   currentUser = {
@@ -80,6 +83,7 @@ const store = new Vuex.Store({
       payload.dates[date] = availabilities
       commit('updateCurrentUserAvailabilitiesByDate', {date, availabilities})
       dispatch('services/loading/pushLoading')
+      console.log(JSON.parse(JSON.stringify(payload)))
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
     },
