@@ -18,15 +18,12 @@
           @expandWeek="expandWeek"
           @submitEvent="submitEvent"
         />
-        <!--
         <SidebarCoordinator
-          :instructors="instructors"
-          :equipment="equipment"
+          :instructors="lookups.instructors"
           :filters="filters"
           :isDisabled="isBubbleOpen"
           @updateFilters="updateFilters"
         />
-        -->
     </div>
   </div>
 </template>
@@ -59,6 +56,7 @@ export default {
     lookups: Object,
     totalAvailabilities: Array,
     events: Array,
+    instructors: Array,
   },
   data() {
     return {
@@ -70,9 +68,6 @@ export default {
       filters: {
         duration: 1,
         instructors: [{
-          id: -1,
-        }],
-        equipment: [{
           id: -1,
         }],
       },
@@ -98,8 +93,8 @@ export default {
       const classes = {
         'is-current-month': this.isCurrentMonth,
         'is-expanded': this.showExpandedWeek,
+        'is-coordinator-context': true,
       }
-      classes[`is-${this.contextLabel}-context`] = true
       return classes
     },
     decoratedFilters() {

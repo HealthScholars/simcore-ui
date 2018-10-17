@@ -45,3 +45,7 @@
     },
   }
 </script>
+
+<style lang="scss">
+  @import '../styles/timepicker';
+</style>

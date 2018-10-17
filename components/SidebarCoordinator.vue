@@ -14,12 +14,14 @@
           :selectedInstructors="filters.instructors"
           @setInstructors="setInstructors"
         />
+        <!--
         <EquipmentPicker
           :availableItems="filteredEquipment"
           :selectedItems="filters.equipment"
           @addEquipment="addEquipment"
           @removeEquipment="removeEquipment"
         />
+        -->
       </div>
     </div>
   </aside>

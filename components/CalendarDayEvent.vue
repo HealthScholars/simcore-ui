@@ -36,7 +36,6 @@
       class="local--day--blocks local--day--aggregate-blocks"
       @click="expandWeek"
      >
-    <!--
       <template v-if="availabilities.length">
         <div v-for="(block, index) in availabilities">
           <TimeBlockSpecificAvailability
@@ -54,7 +53,6 @@
         </div>
       </template>
       <template v-else><TimeBlockNull /></template>
-    -->
     </div>
   </CalendarDay>
 </template>

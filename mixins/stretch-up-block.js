@@ -40,7 +40,7 @@ export default {
     doneStretchingUp() {
       this.stretchDirection = null
       this.$emit('setStretching', false)
-      this.$emit('updateTimeblock')
+      this.$emit('updateTimeblock', this.block)
       removeEventListener('mousemove', this.stretchUp)
       removeEventListener('mouseup', this.doneStretchingUp)
     },
