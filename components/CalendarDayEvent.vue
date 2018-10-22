@@ -42,13 +42,13 @@
             v-if="hasOnlySpecificInstructors(block)"
             :key="index"
             :block="block"
-            @click.native="createPendingEvent(block, day)"
+            @click.native="createPendingEvent(block.startTime)"
           />
           <TimeBlockAggregateAvailability
             v-else
             :key="index"
             :block="block"
-            @click.native="createPendingEvent(block, day)"
+            @click.native="createPendingEvent(block.startTime)"
           />
         </div>
       </template>

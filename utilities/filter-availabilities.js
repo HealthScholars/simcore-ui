@@ -78,6 +78,8 @@ function filterEnoughInstructors(requiredCount) {
   return function(day){
     day.availabilities = day.availabilities
       .filter(availability => {
+        availability.generalInstructors = availability.generalInstructors || []
+        availability.specificInstructors = availability.specificInstructors || []
         const instructorCount = [
           availability.specificInstructors,
           availability.generalInstructors,
