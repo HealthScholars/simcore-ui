@@ -7,6 +7,7 @@
           :properties="content.props"
           @updateEventProperty="updateEventProperty"
           @submitEvent="submitEvent"
+          @deleteEvent="deleteEvent"
         />
       </div>
       <IconText
@@ -50,6 +51,9 @@
       },
       submitEvent(event) {
         this.$emit('submitEvent', event)
+      },
+      deleteEvent(event) {
+        this.$emit('deleteEvent', event)
       },
       updateEventProperty(property, value) {
         this.$emit('updateEventProperty', property, value)

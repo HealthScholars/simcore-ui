@@ -1,6 +1,9 @@
 <template>
   <header>
-    <IconText icon="#icon--event-duration" icon-type="svg" :text="this.headline" />
+    <div class="control">
+      <IconText icon="#icon--event-duration" icon-type="svg" :text="this.headline" />
+      <IconText v-if="isDeletable" icon="fa-trash-o" @click.native="$emit('deleteEvent')" />
+    </div>
     <div class="schedule">
       <time class="event-date">{{eventDate}}</time>
       <time class="event-time">{{eventTime}}</time>
@@ -22,6 +25,7 @@ export default {
     day: Object,
     startTime: Number,
     duration: Number,
+    isDeletable: Boolean,
     headline: {
       type: String,
       default: 'New Event',
@@ -56,6 +60,12 @@ export default {
     span {
       color: orange;
       font-size: 1rem;
+    }
+    .control {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
     }
     .schedule {
       display: flex;

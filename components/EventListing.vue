@@ -5,6 +5,8 @@
       :startTime="properties.event.startTime"
       :duration="properties.event.duration"
       :headline="properties.event.title"
+      :isDeletable="properties.event.id > 0"
+      @deleteEvent="deleteEvent"
     />
     <main>
       <ol>
@@ -104,6 +106,11 @@ export default {
       return new dayjs(this.properties.event.date);
     },
   },
+  methods: {
+    deleteEvent() {
+      this.$emit('deleteEvent', this.properties.event)
+    },
+  },
 }
 </script>
 
@@ -131,6 +138,12 @@ export default {
       flex-flow: row nowrap;
       justify-content: space-between;
       color: black;
+    }
+    .control {
+      width: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
     }
   }
   main {

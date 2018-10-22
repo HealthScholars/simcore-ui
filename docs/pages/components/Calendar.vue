@@ -15,6 +15,7 @@
           :totalAvailabilities="totalAvailabilities"
           @updateAvailabilities="updateAvailabilities"
           @submitEvent="submitEvent"
+          @deleteEvent="deleteEvent"
         />
 
       </template>
@@ -86,6 +87,9 @@
           date: date.format('YYYY-MM-DD'),
           availabilities,
         })
+      },
+      deleteEvent(event) {
+        this.$store.dispatch('deleteEvent', event)
       },
       submitEvent(event) {
         this.$store.dispatch('submitEvent', event)

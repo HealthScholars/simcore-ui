@@ -17,6 +17,7 @@
           @toggleExpandedWeek="toggleExpandedWeek"
           @expandWeek="expandWeek"
           @submitEvent="submitEvent"
+          @deleteEvent="deleteEvent"
         />
         <SidebarCoordinator
           :instructors="lookups.instructors"
@@ -137,6 +138,9 @@ export default {
     },
     submitEvent(event) {
       this.$emit('submitEvent', event)
+    },
+    deleteEvent(event) {
+      this.$emit('deleteEvent', event)
     },
   },
 }

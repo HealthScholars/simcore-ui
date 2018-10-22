@@ -4,6 +4,8 @@
       :day="event.day"
       :startTime="event.startTime"
       :duration="event.duration"
+      :isDeletable="event.id > 0"
+      @deleteEvent="deleteEvent"
     />
     <main>
       <ol>
@@ -90,6 +92,9 @@ export default {
     },
     submitEvent() {
       this.$emit('submitEvent', this.properties.event)
+    },
+    deleteEvent() {
+      this.$emit('deleteEvent', this.properties.event)
     },
     updateEventProperty(property, value) {
       this.$emit('updateEventProperty', property, value)

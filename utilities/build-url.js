@@ -7,6 +7,9 @@ const methods = {
   addEvent(userId) {
     return `${baseUrl}/users/${userId}/events`
   },
+  deleteEvent(userId, eventId) {
+    return `${baseUrl}/users/${userId}/events/${eventId}`
+  },
   equipment(userId) {
     return `${baseUrl}/users/${userId}/purview_equipment`
   },

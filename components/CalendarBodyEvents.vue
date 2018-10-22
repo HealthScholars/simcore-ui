@@ -28,6 +28,7 @@
       @dismiss="resetBubbleContent"
       @updateEventProperty="updateEventProperty"
       @submitEvent="submitEvent"
+      @deleteEvent="deleteEvent"
     />
     <!--
       <EventScheduler
@@ -199,6 +200,10 @@
       submitEvent(event) {
         this.$emit('submitEvent', this.prepareEvent(event))
         this.clearPendingEvent()
+        this.closeBubble()
+      },
+      deleteEvent(event) {
+        this.$emit('deleteEvent', event)
         this.closeBubble()
       },
       getStyles(position) {
