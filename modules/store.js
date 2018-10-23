@@ -130,6 +130,15 @@ const store = new Vuex.Store({
       dispatch('services/loading/popLoading')
       dispatch('fetchList', 'events')
     },
+    async updateEvent({dispatch, state, commit}, event) {
+      const url = buildUrl('updateEvent')(state.currentUser.id, event.id)
+      dispatch('services/loading/pushLoading')
+      const updatedEvent = await axios.put(url, event)
+        .then(response => response.data)
+        .catch(error => console.error(error.message))
+      dispatch('services/loading/popLoading')
+      dispatch('fetchList', 'events')
+    },
     async deleteEvent({dispatch, state, commit}, event) {
       const url = buildUrl('deleteEvent')(state.currentUser.id, event.id)
       dispatch('services/loading/pushLoading')

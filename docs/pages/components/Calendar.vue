@@ -92,7 +92,8 @@
         this.$store.dispatch('deleteEvent', event)
       },
       submitEvent(event) {
-        this.$store.dispatch('submitEvent', event)
+        const action = event.id > 0 ? 'updateEvent' : 'submitEvent'
+        this.$store.dispatch(action, event)
       },
     },
   }
