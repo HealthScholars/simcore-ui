@@ -56,7 +56,7 @@ export default {
     description: String,
     department: Object,
     departments: Array,
-    category: Object,
+    // category: Object,
   },
   computed: {
     categories() {

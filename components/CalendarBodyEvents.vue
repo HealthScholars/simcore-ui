@@ -11,7 +11,7 @@
       @toggleExpandedWeek="toggleExpandedWeek"
       @expandWeek="expandWeek"
       @createPendingEvent="createPendingEvent"
-      @selectEvent="selectEvent"
+      @selectEvent="selectPendingEvent"
       @selectPendingEvent="selectPendingEvent"
       @clearPendingEvent="clearPendingEvent"
       @updateBlockPosition="updateBlockPosition(...arguments, day)"
@@ -247,6 +247,7 @@
           : undefined
       },
       selectEvent(event) {
+        console.log('existing event', JSON.parse(JSON.stringify(event)));
         this.bubbleContent = {
           component: 'EventListing',
           props: {
@@ -254,11 +255,40 @@
           },
         }
       },
+      decorateEvent(event) {
+        event.day = event.day || dayjs(event.date)
+        event.attachments = event.attachments.map(attachment => {
+          attachment.location = attachment.filePath
+          return attachment
+        })
+        event.department.label = event.department.name
+        event.equipment = event.equipment.map(item => {
+          item.label = item.name
+          return item
+        })
+        event.sessions = event.sessions.map(session => {
+          session.rooms = (session.rooms && session.rooms.map(room => {
+            room.label = room.name
+            return room
+          }) || [])
+          session.instructors = (session.instructors && session.instructors.map(instructor => {
+            instructor.label = instructor.name
+            return instructor
+          }) || [])
+          session.learners = (session.learners && session.learners.map(learner => {
+            learner.label = `${learner.firstname} ${learner.lastname}`
+            return learner
+          }) || [])
+          session.scenario = session.scenario || {}
+          return session
+        })
+        return event
+      },
       selectPendingEvent(event) {
         this.bubbleContent = {
           component: 'EventScheduler',
           props: {
-            event,
+            event: this.decorateEvent(event),
             lookups: this.lookups,
           },
         }

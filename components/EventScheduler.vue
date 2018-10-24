@@ -5,6 +5,7 @@
       :startTime="event.startTime"
       :duration="event.duration"
       :isDeletable="event.id > 0"
+      :headline="event.id > 0 ? 'Update Event' : 'New Event'"
       @deleteEvent="deleteEvent"
     />
     <main>
