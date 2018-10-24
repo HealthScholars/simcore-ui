@@ -27,6 +27,7 @@
       @keydown.esc="resetBubbleContent"
       @dismiss="resetBubbleContent"
       @updateEventProperty="updateEventProperty"
+      @updateEvent="updateEvent"
       @submitEvent="submitEvent"
       @deleteEvent="deleteEvent"
     />
@@ -56,6 +57,7 @@
   import EventScheduler from './EventScheduler'
 
   import { formatTimesForDisplay, formatBlockHoursForDisplay } from '../utilities/date'
+  import { deepClone } from '../utilities/deep-clone'
   import { mixin as clickaway } from 'vue-clickaway'
 
   export default {
@@ -156,8 +158,28 @@
       clearPendingEvent() {
         this.pendingEvent = null
       },
-      updateEventProperty(property, value) {
-        this.$set(this.pendingEvent, property, value)
+      updateEvent(updatedEvent) {
+        const matchingEvent = this.events.find((event, index) => {
+          if (+event.id === +updatedEvent.id) {
+            this.$set(this.events, index, updatedEvent)
+            return updatedEvent
+          }
+
+          return event
+        })
+
+        if (matchingEvent.id < 0) {
+          this.$set(this.pendingEvent, property, value)
+        }
+      },
+      updateEventProperty(updatedEvent, property, value) {
+        if (!updatedEvent.id) {
+          this.$set(this.pendingEvent, property, value)
+        } else {
+          const index = this.events.findIndex(event => +event.id === +updatedEvent.id)
+          updatedEvent[property] = value
+          this.$set(this.events, index, updatedEvent)
+        }
       },
       addScenario(scenario) {
         this.pendingEvent.scenarios.push(scenario)
@@ -247,7 +269,6 @@
           : undefined
       },
       selectEvent(event) {
-        console.log('existing event', JSON.parse(JSON.stringify(event)));
         this.bubbleContent = {
           component: 'EventListing',
           props: {

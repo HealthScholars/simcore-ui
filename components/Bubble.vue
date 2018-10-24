@@ -6,6 +6,7 @@
           :is="content.component"
           :properties="content.props"
           @updateEventProperty="updateEventProperty"
+          @updateEvent="updateEvent"
           @submitEvent="submitEvent"
           @deleteEvent="deleteEvent"
         />
@@ -55,8 +56,11 @@
       deleteEvent(event) {
         this.$emit('deleteEvent', event)
       },
-      updateEventProperty(property, value) {
-        this.$emit('updateEventProperty', property, value)
+      updateEvent(event) {
+        this.$emit('updateEvent', event)
+      },
+      updateEventProperty(event, property, value) {
+        this.$emit('updateEventProperty', event, property, value)
       },
     },
   }

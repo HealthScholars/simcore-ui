@@ -98,7 +98,7 @@ export default {
       this.$emit('deleteEvent', this.properties.event)
     },
     updateEventProperty(property, value) {
-      this.$emit('updateEventProperty', property, value)
+      this.$emit('updateEventProperty', this.properties.event, property, value)
     },
     setSessions(sessions) {
       this.$set(this.properties.event, "sessions", sessions)
