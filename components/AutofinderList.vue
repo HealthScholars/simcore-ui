@@ -10,16 +10,15 @@
         :key="`general-${index}`"
         :class="`item-${item.id}`"
       >
-        <Autofinder
-          :options="availableItems"
-          :selectedItem="item"
-          :canRemove="selectedItems.length > 1"
-          :isFocused="index === selectedItems.length - 1"
-          placeholder="Type to search"
-          @select="select(index, ...arguments)"
-          @clear="clear(index)"
-          @remove="remove(index)"
-          @next="next(index)"
+        <slot
+          :selectedItems="selectedItems"
+          :availableItems="availableItems"
+          :index="index"
+          :item="item"
+          :select="select"
+          :clear="clear"
+          :remove="remove"
+          :next="next"
         />
       </li>
       <li key="add">

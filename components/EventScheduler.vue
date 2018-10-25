@@ -24,6 +24,8 @@
           <EventSchedulerSessions
             :sessions="event.sessions"
             :lookups="lookups"
+            :bookings="bookings"
+            :event="event"
             @update="updateEventProperty('sessions', ...arguments)"
           />
         </li>
@@ -31,6 +33,8 @@
           <EventSchedulerEquipment
             :equipmentList="lookups.equipment"
             :selectedEquipment="event.equipment"
+            :equipmentBookings="bookings.equipment"
+            :event="event"
             @update="updateEventProperty('equipment', ...arguments)"
           />
         </li>
@@ -64,6 +68,7 @@ import EventSchedulerEquipment from './EventSchedulerEquipment'
 import EventSchedulerFooter from './EventSchedulerFooter'
 
 import { deepClone } from '../utilities/deep-clone'
+import { omit } from 'lodash'
 
 export default {
   components: {
@@ -86,6 +91,9 @@ export default {
     lookups() {
       return this.properties.lookups
     },
+    bookings() {
+      return this.removeEventBookings(this.properties.bookings)
+    },
   },
   methods: {
     saveDraft() {
@@ -102,6 +110,33 @@ export default {
     },
     setSessions(sessions) {
       this.$set(this.properties.event, "sessions", sessions)
+    },
+    removeEventBookings(bookings) {
+      const currentEquipment = Object.keys(bookings.equipment).filter(item => {
+        return this.event.equipment
+          .map(item => item.id)
+          .includes(+item)
+      }).map(item => item.id)
+      bookings.equipment = omit(bookings.equipment, currentEquipment)
+
+      const currentRooms = Object.keys(bookings.rooms).filter(room => {
+        return this.event.sessions
+          .map(session => session.rooms)
+          .map(room => room.id)
+          .includes(room.id)
+      })
+      bookings.rooms = omit(bookings.rooms, currentRooms)
+
+      const currentPeople = Object.keys(bookings.people).filter(person => {
+        return this.event.sessions
+          .map(session => {
+            return [session.instructors, session.learners].flat()
+          }).map(person => person.id)
+          .includes(person.id)
+      })
+      bookings.people = omit(bookings.people, currentPeople)
+
+      return bookings
     },
   },
 }

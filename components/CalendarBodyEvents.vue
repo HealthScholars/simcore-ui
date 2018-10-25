@@ -108,6 +108,45 @@
           ? matchingDay.availabilities
           : []
       },
+      splitTimes(startTime, duration) {
+        const times = []
+        for (let i = 0; i <= duration; i += 0.5) {
+          times.push(startTime + i)
+        }
+        return times
+      },
+      addTimes(totalList, initialList, times) {
+        return totalList.reduce((list, item) => {
+          list[item]
+            ? list[item].push(...times)
+            : list[item] = [ ...times ]
+          return list
+        }, initialList)
+      },
+      getBookings(day) {
+        return this.events
+          .filter(event => event.date === day.format('YYYY-MM-DD'))
+          .reduce((bookings, event) => {
+            const times = this.splitTimes(event.startTime, event.duration)
+
+            bookings.equipment = this.addTimes(event.equipment.map(this.getId), bookings.equipment, times)
+            const rooms = event.sessions
+              .map(session => session.rooms.map(this.getId)).flat()
+            bookings.rooms = this.addTimes(rooms, bookings.rooms, times)
+            const people = event.sessions.map(session => [
+              session.instructors.map(this.getId),
+              session.learners.map(this.getId),
+            ].flat())
+            .flat()
+            bookings.people = this.addTimes(people, bookings.people, times)
+
+            return bookings
+          }, {
+            rooms: {},
+            people: {},
+            equipment: {},
+          })
+      },
       getEvents(day) {
         const date = day.format('YYYY-MM-DD')
         return this.events.filter(event => event.date === date)
@@ -311,6 +350,7 @@
           props: {
             event: this.decorateEvent(event),
             lookups: this.lookups,
+            bookings: this.getBookings(event.day),
           },
         }
       },

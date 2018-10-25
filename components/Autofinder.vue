@@ -1,5 +1,6 @@
 <template>
   <div class="sim-autofinder sim-autofinder--visible-options">
+    <div v-if="errorMessage" class="error-message" :title="errorMessage">!</div>
     <label class="sim-autofinder--search">
       <IconText :icon="icon" icon-type="svg" />
       <input type="text" class="sim-autofinder--search--input"
@@ -66,6 +67,7 @@
       canRemove: Boolean,
       selectedItem: Object,
       isRequired: Boolean,
+      errorMessage: String,
     },
     computed: {
       inputValue() {
@@ -149,5 +151,117 @@
 </script>
 
 <style lang="scss">
-  @import '../styles/autofinder';
+.sim-autofinder {
+  flex: 1;
+  position: relative;
+
+  .error-message {
+    position: absolute;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1em;
+    opacity: 0.7;
+    right: 0;
+    top: -1.5em;
+    width: 2em;
+    text-align: center;
+    padding: 4px;
+    color: white;
+    background-color: orange;
+    z-index: 1000;
+  }
+  .sim-autofinder--search {
+    display: flex;
+
+    &--input[type="text"] {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      color: var(--light);
+      flex: 1;
+      font-weight: normal;
+      margin: -.2em .2em;
+      padding: .2em;
+
+      &::placeholder {
+        font-style: italic;
+      }
+    }
+  }
+
+  &--remove-item {
+    cursor: pointer;
+    line-height: 0;
+
+    .sim-icontext {
+      opacity: 0;
+    }
+  }
+
+  &:hover {
+
+    .sim-autofinder--remove-item  {
+      .sim-icontext {
+        opacity: .5;
+      }
+    }
+  }
+
+  &--visible-options {
+  }
+
+  &--options {
+    color: var(--autofinder-items-fg, var(--dark));
+    background: var(--autofinder-items-bg, var(--lighter));
+    border-radius: .2rem;
+    box-shadow: 0 0 0 1px var(--fog), 0 .3em 1em -.3em var(--shadow);
+    max-height: 15em;
+    overflow: auto;
+    position: absolute;
+    top: calc(100% + 1px);
+    left: 1em;
+    right: 1em;
+    max-height: 15em;
+    overflow: auto;
+    color: var(--autofinder-items-fg, var(--dark));
+    background: var(--autofinder-items-bg, var(--lighter));
+    border-radius: .2rem;
+    box-shadow: 0 0 0 1px var(--fog), 0 .3em 1em -.3em var(--shadow);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    z-index: 100;
+
+    .heading {
+      font-weight: 500;
+      font-size: 1.2em;
+      padding: 0.3em;
+      border-top: 1px solid #bbb;
+      display: block;
+    }
+
+    .subheading {
+      font-weight: 600;
+      font-size: 0.85em;
+      padding: 0.3em;
+      display: block;
+    }
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      padding: .5em;
+
+      &.highlighted {
+        background: var(--autofinder-highlight-bg, var(--shade));
+        color: var(--autofinder-highlight-fg, var(--blue));
+      }
+    }
+  }
+}
 </style>

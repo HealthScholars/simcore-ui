@@ -7,6 +7,8 @@
           :session="session"
           :lookups="lookups"
           :canRemove="true"
+          :bookings="bookings"
+          :event="event"
           @remove="removeSession(session)"
           @update="setSession(index, ...arguments)"
         />
@@ -36,6 +38,8 @@ export default {
   props: {
     sessions: Array,
     lookups: Object,
+    bookings: Object,
+    event: Object,
   },
   methods: {
     add() {
