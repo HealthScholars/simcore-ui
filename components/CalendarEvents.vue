@@ -175,7 +175,7 @@ export default {
 
 .sim-calendar .sim-bubble {
   top: -1em;
-  bottom: -1em;
+  // bottom: -70em;
   width: calc(var(--width-factor, 1) * 25em);
   max-width: 50%;
   &::before,
