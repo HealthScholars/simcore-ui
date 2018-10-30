@@ -257,33 +257,45 @@ export default {
       }
     }
   }
+
+  &--filters {
+    --ms-lodestar: 600ms;
+    --selection-color: var(--green);
+
+    .sim-calendar--aside--body {
+      flex: auto;
+      height: 60em;
+    }
+
+    .filter-molecule {
+      .sim-timepicker--y {
+        padding: 1em .5em 1em 1em;
+        .sim-timepicker--inner {
+          width: auto;
+        }
+
+        .sim-timeblock .sim-timeblock--info {
+          left: 50%;
+          transform: translate(-50%, -50%);
+          white-space: normal;
+          text-align: center;
+        }
+      }
+
+      &.filter--duration {
+        background: var(--shade);
+        margin: -1em 1em -1em -1em;
+        padding: 1em;
+      }
+
+      &.filter--instructors {
+        &--seat {
+          display: flex;
+        }
+      }
+    }
+  }
 }
 
-.filter-molecule {
-  .sim-timepicker--y {
-    padding: 1em .5em 1em 1em;
-    .sim-timepicker--inner {
-      width: auto;
-    }
 
-    .sim-timeblock .sim-timeblock--info {
-      left: 50%;
-      transform: translate(-50%, -50%);
-      white-space: normal;
-      text-align: center;
-    }
-  }
-
-  &.filter--duration {
-    background: var(--shade);
-    margin: -1em 1em -1em -1em;
-    padding: 1em;
-  }
-
-  &.filter--instructors {
-    &--seat {
-      display: flex;
-    }
-  }
-}
 </style>
