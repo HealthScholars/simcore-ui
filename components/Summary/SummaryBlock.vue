@@ -30,7 +30,7 @@
       },
       sections: {
         type: Array,
-        default: [],
+        default: function () { return [] },
       },
     },
     methods: {
