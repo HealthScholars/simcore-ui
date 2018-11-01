@@ -26,10 +26,8 @@
           class="toggle-button toggle-button--main-menu"
           toggle-button="main-menu"
           >
-          <SimIconText
-            icon="fa-bars"
-            ></SimIconText>
-            <span class="sr-only">Menu</span>
+          
+            <span>Menu</span>
         </button>
       </div>
       <div
@@ -70,22 +68,25 @@
                   ></SimIconText>
               </router-link>
             </li>
+            <li>
+              <button
+                toggle-button="sidebar"
+                class="toggle-button toggle-button--sidebar"
+                :class="{'target-is-visible': appSidebarIsOpen}"
+                @click="toggleAppSidebarVisibility"
+                >
+                <SimIconText
+                  text="Sidebar"
+                  icon="fa-bars"
+                  ></SimIconText>
+              </button>
+            </li>
           </ul>
         </nav>
       </div>
+
     </header>
     <div class="app-content animatable">
-      <button
-        toggle-button="sidebar"
-        class="toggle-button toggle-button--sidebar"
-        :class="{'target-is-visible': appSidebarIsOpen}"
-        @click="toggleAppSidebarVisibility"
-        >
-        <span>Sidebar Menu</span>
-        <SimIconText
-          icon="fa-angle-down"
-          ></SimIconText>
-      </button>
       <aside
         v-show="appSidebarIsOpen"
         class="app-sidebar"
@@ -199,29 +200,9 @@
       randomInt: (min, max) => common.getRandomInt(min, max),
       toggleAppSidebarVisibility() {
         this.shouldAppSidebarBeOpen = !this.shouldAppSidebarBeOpen
-        // (function() {
-        //   var toggleButton = document.querySelector('[toggle-button="sidebar"]')
-        //   var sidebarNav = document.querySelector('[app-menu="sidebar"]')
-        //   var hidden = sidebarNav.getAttribute("aria-hidden") === "true"
-        //   var expanded = toggleButton.getAttribute("aria-expanded") === "true"
-        //   sidebarNav.setAttribute("aria-hidden", String(!hidden))
-        //   sidebarNav.classList.toggle('is--visible')
-        //   toggleButton.setAttribute("aria-expanded", String(!expanded))
-        //   toggleButton.classList.toggle('is--active')
-        // })();
       },
       toggleAppNavVisibility() {
         this.shouldAppNavBeOpen = !this.shouldAppNavBeOpen
-        // (function() {
-        //   var toggleButton = document.querySelector('[toggle-button="main-menu"]')
-        //   var appNav = document.querySelector('[app-menu="main-menu"]')
-        //   var hidden = appNav.getAttribute('aria-hidden') === 'true'
-        //   var expanded = toggleButton.getAttribute('aria-expanded') === 'true'
-        //   appNav.setAttribute('aria-hidden', String(!hidden))
-        //   appNav.classList.toggle('is--visible')
-        //   toggleButton.setAttribute('aria-expanded', String(!expanded))
-        //   toggleButton.classList.toggle('is--active')
-        // })();
       },
     },
   }

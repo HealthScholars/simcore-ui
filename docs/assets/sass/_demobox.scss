@@ -104,6 +104,12 @@
     &:focus ::after {
       opacity: 1;
     }
+
+    // < 640
+    @media (max-width: 40em) {
+      word-break: break-all;
+      white-space: normal;
+    }
   }
 
   &__html {
