@@ -83,6 +83,7 @@
       lookups: Object,
       user: Object,
       events: Array,
+      filters: Object,
     },
     computed: {
       isBubbleOpen() {
@@ -183,8 +184,12 @@
         }
       },
       createPendingEvent(day, startTime) {
-        const duration = 1;
-        this.pendingEvent = new this.CalendarEvent({ day, startTime, duration, user: this.user })
+        this.pendingEvent = new this.CalendarEvent({
+          day,
+          startTime,
+          duration: this.filters.duration,
+          user: this.user,
+        })
         this.selectPendingEvent(this.pendingEvent);
       },
       getInstructor(id){

@@ -14,6 +14,7 @@
           :showExpandedWeek="showExpandedWeek"
           :user="user"
           :events="events"
+          :filters="filters"
           @toggleExpandedWeek="toggleExpandedWeek"
           @expandWeek="expandWeek"
           @submitEvent="submitEvent"

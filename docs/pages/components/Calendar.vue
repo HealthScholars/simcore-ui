@@ -64,7 +64,7 @@
       lookups() {
         return {
           instructors: this.$store.getters.instructors,
-          learners: this.$store.getters.instructors,
+          learners: this.$store.getters.learners,
           equipment: this.$store.getters.list({ list: 'equipment', value: 'name' }),
           rooms: this.$store.getters.list({ list: 'rooms', value: 'name' }),
           scenarios: this.$store.getters.list({ list: 'scenarios', value: 'name' }),

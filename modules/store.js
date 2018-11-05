@@ -35,6 +35,7 @@ const store = new Vuex.Store({
     learners: [],
     events: [],
     departments: [],
+    users: [],
   },
   getters: {
     list: (state) => ({list, value}) => {
@@ -44,9 +45,15 @@ const store = new Vuex.Store({
       })
     },
     instructors(state) {
-      return state.instructors.map(instructor => {
+      return state.users.map(instructor => {
         instructor.label = `${instructor.lastname}, ${instructor.firstname}`
         return instructor
+      })
+    },
+    learners(state) {
+      return state.users.map(learner => {
+        learner.label = `${learner.lastname}, ${learner.firstname}`
+        return learner
       })
     },
   },
