@@ -152,7 +152,7 @@
         const date = day.format('YYYY-MM-DD')
         return this.events.filter(event => event.date === date)
       },
-      CalendarEvent({ day, startTime, duration, user }) {
+      CalendarEvent({ day, startTime, duration, user, instructors }) {
         return {
           day,
           startTime,
@@ -177,9 +177,7 @@
             learners: [{
               id: -1,
             }],
-            instructors: [{
-              id: -1,
-            }]
+            instructors,
           }],
         }
       },
@@ -188,6 +186,7 @@
           day,
           startTime,
           duration: this.filters.duration,
+          instructors: this.filters.instructors,
           user: this.user,
         })
         this.selectPendingEvent(this.pendingEvent);
@@ -337,7 +336,7 @@
             return room
           }) || [])
           session.instructors = (session.instructors && session.instructors.map(instructor => {
-            instructor.label = instructor.name
+            instructor.label = `${instructor.firstname} ${instructor.lastname}`
             return instructor
           }) || [])
           session.learners = (session.learners && session.learners.map(learner => {
