@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class="demobox" :class="{open: open || toggled}">
     <div class="demobox__intro">
       <slot name="intro"></slot>
