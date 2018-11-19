@@ -28,6 +28,7 @@ import AutoFinderList from './AutofinderList'
 import AutoFinder from './Autofinder'
 
 import { deepClone } from '../utilities/deep-clone'
+import { differenceWith, isEqual } from 'lodash'
 
 export default {
   components: {
@@ -56,11 +57,13 @@ export default {
     },
     adjustedScenarioEquipment() {
       const equipmentWithRemovals = this.scenarioEquipment.filter(item => {
-        return !this.manuallyRemovedEquipment.map(item => item.id).includes(item.id)
+        return !this.manuallyRemovedEquipmentIds.includes(item.id)
       })
-      return [...equipmentWithRemovals, ...this.manuallyAddedEquipment, {
-        id: -1,
-      }]
+      return [
+        ...equipmentWithRemovals,
+        ...this.manuallyAddedEquipment,
+        { id: -1 },
+      ]
     },
     eventTimes() {
       return this.splitTimes(this.event.startTime, this.event.duration)
@@ -68,21 +71,44 @@ export default {
     adjustedScenarioEquipmentIds() {
       return this.adjustedScenarioEquipment.map(item => item.id)
     },
+    manuallyRemovedEquipmentIds() {
+      return this.manuallyRemovedEquipment.map(item => item.id)
+    },
   },
   methods: {
     update(equipment) {
-      /* this works! */
-      const newItems = equipment
-        .filter(item => !this.adjustedScenarioEquipmentIds.includes(item.id))
-      this.manuallyAddedEquipment = [...this.manuallyAddedEquipment, ...newItems]
-
-      /* this doesn't, do this next */
-      const itemsToRemove = this.adjustedScenarioEquipmentIds
-        .filter(item => equipment.includes(item.id))
-      console.log('r', itemsToRemove)
-      this.manuallyRemovedEquipment = [...this.manuallyRemovedEquipment, ...itemsToRemove]
+      this.add(equipment)
+      this.remove(equipment.filter(item => item.id > -1))
 
       this.$emit('update', equipment)
+    },
+    adjust({ itemsToAdjust, primaryManualAdjustments, secondaryManualAdjustments }) {
+      return {
+        primaryList: primaryManualAdjustments
+          .filter(item => !itemsToAdjust.map(item => item.id).includes(item.id)),
+        secondaryList: [
+          ...secondaryManualAdjustments,
+          ...differenceWith(itemsToAdjust, this.scenarioEquipment, isEqual),
+        ],
+      }
+    },
+    add(equipment) {
+      const { primaryList, secondaryList } = this.adjust({
+        itemsToAdjust: differenceWith(equipment, this.adjustedScenarioEquipment, isEqual),
+        primaryManualAdjustments: this.manuallyRemovedEquipment,
+        secondaryManualAdjustments: this.manuallyAddedEquipment,
+      })
+      this.manuallyRemovedEquipment = primaryList
+      this.manuallyAddedEquipment = secondaryList
+    },
+    remove(equipment) {
+      const { primaryList, secondaryList } = this.adjust({
+        itemsToAdjust: differenceWith(this.adjustedScenarioEquipment, equipment, isEqual),
+        primaryManualAdjustments: this.manuallyAddedEquipment,
+        secondaryManualAdjustments: this.manuallyRemovedEquipment,
+      })
+      this.manuallyAddedEquipment = primaryList
+      this.manuallyRemovedEquipment = secondaryList
     },
     getErrorMessage(equipment) {
       const bookedTimes = this.equipmentBookings[equipment.id]

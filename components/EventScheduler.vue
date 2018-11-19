@@ -111,7 +111,6 @@ export default {
       this.$emit('saveDraft', this.event)
     },
     accumulateEquipment(accumulatedEquipment, scenarioEquipment) {
-      console.log('hey buddy', accumulatedEquipment, scenarioEquipment)
       return [ ...accumulatedEquipment, ...scenarioEquipment ]
     },
     submitEvent() {

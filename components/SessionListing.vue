@@ -87,7 +87,6 @@ export default {
   },
   methods: {
     update(property, value){
-      console.log("this should be a scenario object", value)
       const session = deepClone(this.session)
       session[property] = value
       this.$emit('update', session)
