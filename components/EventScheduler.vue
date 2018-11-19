@@ -31,6 +31,7 @@
         </li>
         <li>
           <EventSchedulerEquipment
+            :scenarioEquipment="scenarioEquipment"
             :equipmentList="lookups.equipment"
             :selectedEquipment="event.equipment"
             :equipmentBookings="bookings.equipment"
@@ -94,10 +95,24 @@ export default {
     bookings() {
       return this.removeEventBookings(this.properties.bookings)
     },
+    scenarioEquipment() {
+      return this.properties.event.sessions
+        .map(session => session.scenario)
+        .filter(this.isNotEmpty)
+        .map(scenario => scenario.equipment)
+        .reduce(this.accumulateEquipment, [])
+    },
   },
   methods: {
+    isNotEmpty(object) {
+      return !Object.keys(object).length === 0 && object.constructor === Object
+    },
     saveDraft() {
       this.$emit('saveDraft', this.event)
+    },
+    accumulateEquipment(accumulatedEquipment, scenarioEquipment) {
+      console.log('hey buddy', accumulatedEquipment, scenarioEquipment)
+      return [ ...accumulatedEquipment, ...scenarioEquipment ]
     },
     submitEvent() {
       this.$emit('submitEvent', this.properties.event)

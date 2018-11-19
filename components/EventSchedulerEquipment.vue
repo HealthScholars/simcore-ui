@@ -2,7 +2,7 @@
   <fieldset class="event-scheduler-equipment">
     <h4>Equipment</h4>
     <AutoFinderList
-      :selectedItems="selectedEquipment"
+      :selectedItems="adjustedScenarioEquipment"
       :availableItems="availableEquipment"
       @setSelectedList="update"
     >
@@ -35,10 +35,17 @@ export default {
     AutoFinder,
   },
   props: {
+    scenarioEquipment: Array,
     selectedEquipment: Array,
     equipmentList: Array,
     equipmentBookings: Object,
     event: Object,
+  },
+  data() {
+    return {
+      manuallyAddedEquipment: [],
+      manuallyRemovedEquipment: [],
+    }
   },
   computed: {
     availableEquipment() {
@@ -47,12 +54,34 @@ export default {
           .find(selectedEquipment => +selectedEquipment.id === +equipment.id)
       })
     },
+    adjustedScenarioEquipment() {
+      const equipmentWithRemovals = this.scenarioEquipment.filter(item => {
+        return !this.manuallyRemovedEquipment.map(item => item.id).includes(item.id)
+      })
+      return [...equipmentWithRemovals, ...this.manuallyAddedEquipment, {
+        id: -1,
+      }]
+    },
     eventTimes() {
       return this.splitTimes(this.event.startTime, this.event.duration)
+    },
+    adjustedScenarioEquipmentIds() {
+      return this.adjustedScenarioEquipment.map(item => item.id)
     },
   },
   methods: {
     update(equipment) {
+      /* this works! */
+      const newItems = equipment
+        .filter(item => !this.adjustedScenarioEquipmentIds.includes(item.id))
+      this.manuallyAddedEquipment = [...this.manuallyAddedEquipment, ...newItems]
+
+      /* this doesn't, do this next */
+      const itemsToRemove = this.adjustedScenarioEquipmentIds
+        .filter(item => equipment.includes(item.id))
+      console.log('r', itemsToRemove)
+      this.manuallyRemovedEquipment = [...this.manuallyRemovedEquipment, ...itemsToRemove]
+
       this.$emit('update', equipment)
     },
     getErrorMessage(equipment) {
