@@ -16,6 +16,7 @@
           :options="availableItems"
           :selectedItem="selectedItem"
           :canRemove="index !== selectedItems.length - 1"
+          placeholder="Select a piece of equipment"
           @select="addEquipment"
           @remove="removeEquipment(selectedItem)"
         />

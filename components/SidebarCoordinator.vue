@@ -14,14 +14,17 @@
           :selectedInstructors="filters.instructors"
           @setInstructors="setInstructors"
         />
-        <!--
+        <LearnerPicker
+          :learners="learners"
+          :selectedLearners="filters.learners"
+          @setLearners="setLearners"
+        />
         <EquipmentPicker
           :availableItems="filteredEquipment"
           :selectedItems="filters.equipment"
           @addEquipment="addEquipment"
           @removeEquipment="removeEquipment"
         />
-        -->
       </div>
     </div>
   </aside>
@@ -30,6 +33,7 @@
 <script>
   import TimeMeter from './TimeMeter'
   import InstructorPicker from './InstructorPicker'
+  import LearnerPicker from './LearnerPicker'
   import EquipmentPicker from './EquipmentPicker'
   import { deepClone } from '../utilities/deep-clone'
 
@@ -37,11 +41,13 @@
     components: {
       TimeMeter,
       InstructorPicker,
+      LearnerPicker,
       EquipmentPicker,
     },
     props: {
       filters: Object,
       instructors: Array,
+      learners: Array,
       isDisabled: Boolean,
       equipment: Array,
     },
@@ -60,6 +66,11 @@
       setInstructors(instructors) {
         const filters = deepClone(this.filters)
         filters.instructors = instructors
+        this.$emit('updateFilters', filters)
+      },
+      setLearners(learners) {
+        const filters = deepClone(this.filters)
+        filters.learners = learners
         this.$emit('updateFilters', filters)
       },
       addEquipment(equipment) {

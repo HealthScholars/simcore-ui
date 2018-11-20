@@ -22,6 +22,8 @@
         />
         <SidebarCoordinator
           :instructors="lookups.instructors"
+          :learners="lookups.instructors"
+          :equipment="lookups.equipment"
           :filters="filters"
           :isDisabled="isBubbleOpen"
           @updateFilters="updateFilters"
@@ -70,6 +72,12 @@ export default {
       filters: {
         duration: 1,
         instructors: [{
+          id: -1,
+        }],
+        learners: [{
+          id: -1,
+        }],
+        equipment: [{
           id: -1,
         }],
       },

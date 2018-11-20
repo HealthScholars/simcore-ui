@@ -96,11 +96,14 @@ export default {
       return this.removeEventBookings(this.properties.bookings)
     },
     scenarioEquipment() {
-      return this.properties.event.sessions
-        .map(session => session.scenario)
-        .filter(this.isNotEmpty)
-        .map(scenario => scenario.equipment)
-        .reduce(this.accumulateEquipment, [])
+      return [
+        ...this.properties.event.sessions
+          .map(session => session.scenario)
+          .filter(this.isNotEmpty)
+          .map(scenario => scenario.equipment)
+          .reduce(this.accumulateEquipment, []),
+        ...this.properties.event.equipment,
+      ]
     },
   },
   methods: {

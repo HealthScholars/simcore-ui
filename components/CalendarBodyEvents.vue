@@ -152,7 +152,7 @@
         const date = day.format('YYYY-MM-DD')
         return this.events.filter(event => event.date === date)
       },
-      CalendarEvent({ day, startTime, duration, user, instructors }) {
+      CalendarEvent({ day, startTime, duration, user, instructors, equipment, learners }) {
         return {
           day,
           startTime,
@@ -163,9 +163,7 @@
           isApproved: false,
           institution: user.institution,
             note: '',
-          equipment: [{
-            id: -1
-          }],
+          equipment,
           attachments: [{
             id: -1
           }],
@@ -174,9 +172,7 @@
             rooms: [{
               id: -1,
             }],
-            learners: [{
-              id: -1,
-            }],
+            learners,
             instructors,
           }],
         }
@@ -187,6 +183,8 @@
           startTime,
           duration: this.filters.duration,
           instructors: this.filters.instructors,
+          learners: this.filters.learners,
+          equipment: this.filters.equipment,
           user: this.user,
         })
         this.selectPendingEvent(this.pendingEvent);
