@@ -30,6 +30,7 @@ import DocSummaryBlock from '../pages/components/SummaryBlock'
 import DocSwitch from '../pages/components/Switch'
 import DocTag from '../pages/components/Tag'
 import DocTagListItem from '../pages/components/TagListItem'
+import DocTagList from '../pages/components/TagList'
 import DocTimePicker from '../pages/components/TimePicker'
 import DocTooltip from '../pages/components/Tooltip'
 
@@ -239,6 +240,14 @@ export default new Router({
           label: 'TagListItem',
           components: {
             details: DocTagListItem,
+          },
+        },
+        {
+          path: 'tag-list',
+          name: 'tag-list',
+          label: 'TagList',
+          components: {
+            details: DocTagList,
           },
         },
         {
