@@ -9,7 +9,7 @@
     <div class="sim-calendar--body">
         <CalendarBodyEvents
           :filteredAvailabilities="filteredAvailabilities"
-          :lookups="lookups"
+          :lookups="decoratedLookups"
           :bubbleIsOpen="bubbleIsOpen"
           :showExpandedWeek="showExpandedWeek"
           :user="user"
@@ -24,6 +24,7 @@
           :instructors="lookups.instructors"
           :learners="lookups.instructors"
           :equipment="lookups.equipment"
+          :roomAttributes="roomAttributes"
           :filters="filters"
           :isDisabled="isBubbleOpen"
           @updateFilters="updateFilters"
@@ -35,6 +36,7 @@
 <script>
 import { filterAvailabilities } from '../utilities/filter-availabilities'
 import { deepClone } from '../utilities/deep-clone'
+import { chain } from 'lodash'
 
 import IconEventDuration from './IconEventDuration'
 import IconInstructor from './IconInstructor'
@@ -80,6 +82,7 @@ export default {
         equipment: [{
           id: -1,
         }],
+        roomAttributes: [],
       },
     }
   },
@@ -127,6 +130,24 @@ export default {
     },
     isBubbleOpen() {
       return this.bubbleService.isOpen
+    },
+    roomAttributes() {
+      return chain(this.lookups.rooms)
+        .map('custom_attributes')
+        .flatten()
+        .uniqBy('id')
+        .value()
+    },
+    decoratedLookups() {
+      return Object.assign({}, this.lookups, {
+        matchingRooms: this.lookups.rooms.filter(room => {
+          return this.filters.roomAttributes.reduce((isMatch, attribute) => {
+            return isMatch && room.custom_attributes
+              .map(attribute => attribute.value)
+              .includes(attribute.value)
+          }, true)
+        })
+      })
     },
   },
   methods: {
@@ -305,6 +326,5 @@ export default {
     }
   }
 }
-
 
 </style>

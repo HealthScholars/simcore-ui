@@ -27,7 +27,14 @@
           "institutiongroup_id": 5681
         }
       }
-    }
+    },
+    "custom_attributes": [{
+      "id": 1,
+      "value": "Wall Gas"
+    }, {
+      "id": 2,
+      "value": "TV"
+    }]
   },
   {
     "id": 51,
@@ -57,6 +64,13 @@
           "institutiongroup_id": 5681
         }
       }
-    }
+    },
+    "custom_attributes": [{
+      "id": 1,
+      "value": "Wall Gas"
+    }, {
+      "id": 3,
+      "value": "Paddles"
+    }]
   }
 ]

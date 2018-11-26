@@ -70,16 +70,16 @@ export default {
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
-    background-color: #fff;
+    background-color: inherit;
     &.sim-autofinder {
       padding: 0;
       .sim-icontext {
         display: none;
       }
       input {
-        padding: 1rem;
+        padding: 0.25rem 0.5rem;
         margin: 0;
-        color: #333 !important;
+        color: inherit;
       }
     }
   }

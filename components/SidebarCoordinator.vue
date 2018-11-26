@@ -1,5 +1,5 @@
 <template>
-  <aside class="sim-calendar--aside sim-calendar--filters" :class="{'sim-calendar--filters--disabled': isDisabled}">
+  <aside class="sidebar-coordinator sim-calendar--aside sim-calendar--filters" :class="{'sim-calendar--filters--disabled': isDisabled}">
     <div class="sim-calendar--aside--header">
       <span><b>Filters</b></span>
     </div>
@@ -8,7 +8,7 @@
         :duration="filters.duration"
         @setDuration="setDuration"
       />
-      <div class="sim-flex--2">
+      <div class="filters sim-flex--2">
         <InstructorPicker
           :instructors="instructors"
           :selectedInstructors="filters.instructors"
@@ -25,6 +25,11 @@
           @addEquipment="addEquipment"
           @removeEquipment="removeEquipment"
         />
+        <RoomPicker
+          :attributes="decoratedRoomAttributes"
+          :selectedAttributes="filters.roomAttributes"
+          @setRoomAttributes="setRoomAttributes"
+        />
       </div>
     </div>
   </aside>
@@ -35,6 +40,7 @@
   import InstructorPicker from './InstructorPicker'
   import LearnerPicker from './LearnerPicker'
   import EquipmentPicker from './EquipmentPicker'
+  import RoomPicker from './RoomPicker'
   import { deepClone } from '../utilities/deep-clone'
 
   export default {
@@ -43,6 +49,7 @@
       InstructorPicker,
       LearnerPicker,
       EquipmentPicker,
+      RoomPicker,
     },
     props: {
       filters: Object,
@@ -50,8 +57,12 @@
       learners: Array,
       isDisabled: Boolean,
       equipment: Array,
+      roomAttributes: Array,
     },
     computed: {
+      decoratedRoomAttributes() {
+        return this.roomAttributes.map(attribute => Object.assign({ label: attribute.value }, attribute))
+      },
       filteredEquipment() {
         const ids = this.filters.equipment.map(equipment => equipment.id)
         return this.equipment.filter(equipment => !(ids.includes(equipment.id)))
@@ -90,6 +101,21 @@
           .filter(oldEquipment => +oldEquipment.id !== +newEquipment.id)
         this.$emit('updateFilters', filters)
       },
+      setRoomAttributes(newAttributes) {
+        const filters = deepClone(this.filters)
+        filters.roomAttributes = newAttributes
+        this.$emit('updateFilters', filters)
+      },
     },
   }
 </script>
+
+<style lang="scss">
+.sidebar-coordinator {
+  .filters {
+    section {
+      margin-bottom: 1rem;
+    }
+  }
+}
+</style>

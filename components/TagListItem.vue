@@ -27,8 +27,7 @@ export default {
   justify-content: space-between;
   border-radius: 4px;
   color: white;
-  padding: 0.5rem 1rem;
-  box-shadow: 1px 1px 5px #666;
+  padding: 0.25rem 0.5rem;
   button {
     background: inherit;
     margin: 0 0 0 1rem;

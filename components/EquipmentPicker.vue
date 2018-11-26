@@ -1,9 +1,9 @@
 <template>
-  <section>
+  <section class="equipment-picker">
     <header class="filter-molecule--heading text--green">
       <IconText
-        icon="#icon--event-duration"
-        icon-type="svg"
+        icon="fa-wrench"
+        icon-type="fa"
         :text="`Equipment: ${selectedItemCount}`"
       />
     </header>
@@ -58,4 +58,11 @@ export default {
 </script>
 
 <style lang="scss">
+.equipment-picker {
+  header {
+    .fa-wrench {
+      font-size: 2em;
+    }
+  }
+}
 </style>
