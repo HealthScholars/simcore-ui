@@ -62,7 +62,6 @@ export default {
       return [
         ...equipmentWithRemovals,
         ...this.manuallyAddedEquipment,
-        { id: -1 },
       ]
     },
     eventTimes() {

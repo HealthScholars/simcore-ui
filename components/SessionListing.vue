@@ -4,11 +4,12 @@
       <AutoFinder
         :options="lookups.scenarios"
         :selectedItem="session.scenario"
-        :canRemove="false"
+        :canRemove="true"
         :isFocused="false"
         placeholder="Type to search scenarios"
         @select="update('scenario', ...arguments)"
         @clear="update('scenario', {})"
+        @remove="update('scenario', {})"
       />
       <IconText
         v-if="canRemove"
