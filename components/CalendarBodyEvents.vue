@@ -131,7 +131,8 @@
             const times = this.splitTimes(event.startTime, event.duration)
 
             bookings.equipment = this.addTimes(event.equipment.map(this.getId), bookings.equipment, times)
-            const rooms = event.sessions
+            const
+            rooms = event.sessions
               .map(session => session.rooms.map(this.getId)).flat()
             bookings.rooms = this.addTimes(rooms, bookings.rooms, times)
             const people = event.sessions.map(session => [

@@ -23,43 +23,35 @@
         icon="#icon--control--x" icon-type="svg"
       />
     </label>
-    <div v-if="optionsOpen" class="sim-autofinder--options">
-      <transition-group appear name="list" tag="ul" mode="in-out">
-        <li v-for="(option, index) in matchingOptions"
-          :key="index"
-          :class="{highlighted: index == highlightedIndex}"
-          @mouseenter="setHighlightedOption(index)"
-          @mousedown="select(option)"
-        >
-          <p>{{ option.label }}</p>
-        </li>
-        <li key="no-results" v-if="!hasMatchingOptions">
-          <i class="ghost">No results for "{{searchTerm}}"</i>
-        </li>
-      </transition-group>
-    </div>
+    <AutofinderDetails
+      v-if="optionsOpen"
+      :options="matchingOptions"
+      :highlightedIndex="highlightedIndex"
+      @selectItem="select"
+    />
   </div>
 </template>
 
 <script>
   /* eslint no-unused-expressions: 0 */
   import IconText from './IconText'
+  import AutofinderDetails from './AutofinderDetails'
+
+  import { flatten, sortBy } from 'lodash'
 
   export default {
     components: {
       IconText,
+      AutofinderDetails,
     },
     data() {
       return {
         searchTerm: '',
-        highlightedIndex: 0,
+        highlightedIndex: -1,
       }
     },
     props: {
-      options: {
-        type: Array,
-        required: true,
-      },
+      options: Array,
       placeholder: {
         type: String,
         default: 'find...',
@@ -68,6 +60,10 @@
       selectedItem: Object,
       isRequired: Boolean,
       errorMessage: String,
+      sortOrder: {
+        type: String,
+        default: 'alpha',
+      },
     },
     computed: {
       inputValue() {
@@ -75,13 +71,30 @@
           ? this.selectedItem.label
           : this.searchTerm
       },
+      flattenedOptions() {
+        return flatten(this.options)
+      },
+      optionsByIndex() {
+        return this.flattenedOptions
+      },
+      optionsByAlpha() {
+        return sortBy(this.flattenedOptions, 'label')
+      },
+      sortedOptions() {
+        return this.sortOrder === 'index'
+          ? this.optionsByIndex
+          : this.optionsByAlpha
+      },
       matchingOptions() {
-        return this.options.filter((option) => {
-          return option.label.toLowerCase().includes(this.searchTerm.toLowerCase())
-        }).map(option => {
-          option.isHighlighted = +option.id === +this.highlightedId
-          return option
-        })
+        return this.searchTerm
+          ? this.sortedOptions
+              .filter(option => {
+                return option.label.toLowerCase().includes(this.searchTerm.toLowerCase())
+              }).map(option => {
+                option.isHighlighted = +option.id === +this.highlightedIndex
+                return option
+              })
+          : this.sortedOptions
       },
       foundItem() {
         return this.selectedItem.id > 0
@@ -90,10 +103,10 @@
         return this.foundItem ? '#icon--checkbox--checked' : '#icon--checkbox--available'
       },
       optionsOpen() {
-        return this.searchTerm.length > 0 && !this.foundItem
+        return !this.foundItem && this.highlightedIndex >= 0 || this.searchTerm.length > 0
       },
       currentIndex() {
-        return this.matchingOptions.map(option => option.id).indexOf(this.highlightedId)
+        return this.matchingOptions.map(option => option.id).indexOf(this.highlightedIndex)
       },
       nextIndex() {
         return this.currentIndex < this.matchingOptions.length - 1
@@ -101,7 +114,7 @@
           : this.currentIndex
       },
       previousIndex() {
-        return this.currentIndex > 0
+        return this.currentIndex > -1
           ? this.currentIndex - 1
           : this.currentIndex
       },
@@ -112,15 +125,19 @@
     methods: {
       updateInput(event) {
         if (this.foundItem) {
-          this.$emit('clear')
-          this.highlightedId = -1
+          this.clear()
+          this.highlightedIndex = -1
         }
         this.searchTerm = event.target.value
       },
       blur() {
         if (!this.foundItem) {
           this.searchTerm = ''
+          this.highlightedIndex = -1
         }
+      },
+      clear() {
+        this.$emit('select', { id: -1 })
       },
       select(option) {
         if (option) {
@@ -128,10 +145,10 @@
         }
       },
       selectHighlighted() {
-          this.select(this.matchingOptions[this.highlightedIndex])
+        this.select(this.matchingOptions[this.highlightedIndex])
       },
       highlightPrevious() {
-        if (this.highlightedIndex > 0) {
+        if (this.highlightedIndex >= 0) {
           this.highlightedIndex -= 1
         }
       },
@@ -211,6 +228,7 @@
   &--visible-options {
   }
 
+  /*
   &--options {
     color: var(--autofinder-items-fg, var(--dark));
     background: var(--autofinder-items-bg, var(--lighter));
@@ -263,5 +281,6 @@
       }
     }
   }
+  */
 }
 </style>

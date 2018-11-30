@@ -95,6 +95,8 @@ export default {
     bookings() {
       return this.removeEventBookings(this.properties.bookings)
     },
+    scenarioRooms() {
+    },
     scenarioEquipment() {
       return [
         ...this.properties.event.sessions

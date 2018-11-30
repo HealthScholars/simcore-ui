@@ -36,7 +36,7 @@
 <script>
 import { filterAvailabilities } from '../utilities/filter-availabilities'
 import { deepClone } from '../utilities/deep-clone'
-import { chain } from 'lodash'
+import { chain, partition, filter } from 'lodash'
 
 import IconEventDuration from './IconEventDuration'
 import IconInstructor from './IconInstructor'
@@ -46,6 +46,9 @@ import IconControl from './IconControl'
 import CalendarHeader from './CalendarHeader'
 import CalendarBodyEvents from './CalendarBodyEvents'
 import SidebarCoordinator from './SidebarCoordinator'
+
+const warningIconUrl = 'data:image/svg+xml;utf8;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDI5NC45NTEgMjk0Ljk1MSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgMjk0Ljk1MSAyOTQuOTUxIiB3aWR0aD0iMjRweCIgaGVpZ2h0PSIyNHB4Ij4KICA8Zz4KICAgIDxnPgogICAgICA8cGF0aCBkPSJtMTQ3LjQ3NSwxMDMuMTAyYy01LjIyLDAtOC43MDEsMy40OC04LjcwMSw4LjcwMXY2Mi42NDRjMCw1LjIyIDMuNDgsOC43MDEgOC43MDEsOC43MDEgNS4yMiwwIDguNzAxLTMuNDggOC43MDEtOC43MDF2LTYyLjY0NGMwLTUuMjIxLTMuNDgxLTguNzAxLTguNzAxLTguNzAxeiIgZmlsbD0iI0ZGRkZGRiIvPgogICAgICA8cGF0aCBkPSJtMTUyLjY5NSwyMTIuNzNjLTMuNDgtMy40OC04LjcwMS0zLjQ4LTEyLjE4MSwwLTEuNzQsMS43NC0xLjc0LDUuMjItMS43NCw2Ljk2IDAsMy40OCAwLDUuMjIgMS43NCw2Ljk2IDEuNzQsMS43NCA1LjIyLDEuNzQgNi45NiwxLjc0IDEuNzQsMCA1LjIyLDAgMy40OC0xLjc0IDEuNzQtMS43NCAzLjQ4LTUuMjIgMy40OC02Ljk2IDAuMDAyLTMuNDggMC4wMDItNS4yMi0xLjczOS02Ljk2eiIgZmlsbD0iI0ZGRkZGRiIvPgogICAgICA8cGF0aCBkPSJtMjg4LjQyNSwyMTQuNDdsLTEwMi42NjctMTc5LjIzMmMtNi45Ni0xMy45MjEtMjIuNjIxLTIyLjYyMS0zOC4yODMtMjIuNjIxLTE1LjY2MSwwLTI5LjU4Miw4LjcwMS0zOC4yODMsMjIuNjIxbC0xMDIuNjY3LDE3OS4yMzJjLTguNzAxLDEzLjkyMS04LjcwMSwzMS4zMjItNS4zMjkwN2UtMTUsNDUuMjQzIDYuOTYsMTMuOTIxIDIyLjYyMSwyMi42MjEgMzguMjgzLDIyLjYyMWgyMDUuMzM0YzE3LjQwMSwwIDMxLjMyMi04LjcwMSAzOC4yODMtMjIuNjIxIDguNzAxLTEzLjkyMSA4LjcwMS0zMS4zMjIgMC00NS4yNDN6bS0xMy45MjEsMzguMjgzYy0zLjQ4LDguNzAxLTEyLjE4MSwxMy45MjEtMjIuNjIxLDEzLjkyMWgtMjA3LjA3NWMtOC43MDEsMC0xNy40MDEtNS4yMi0yMi42MjEtMTMuOTIxLTUuMjItOC43MDEtNS4yMi0xOS4xNDEgMC0yNy44NDJsMTAyLjY2Ny0xNzkuMjMzYzMuNDgtOC43MDEgMTIuMTgxLTEzLjkyMSAyMi42MjEtMTMuOTIxIDEwLjQ0MSwwIDE5LjE0MSw1LjIyIDI0LjM2MiwxMy45MjFsMTAyLjY2NywxNzkuMjMyYzUuMjIxLDguNzAxIDUuMjIxLDE5LjE0MiAwLDI3Ljg0M3oiIGZpbGw9IiNGRkZGRkYiLz4KICAgIDwvZz4KICA8L2c+Cjwvc3ZnPgo='
+
 
 export default {
   components: {
@@ -139,15 +142,27 @@ export default {
         .value()
     },
     decoratedLookups() {
-      return Object.assign({}, this.lookups, {
-        matchingRooms: this.lookups.rooms.filter(room => {
-          return this.filters.roomAttributes.reduce((isMatch, attribute) => {
-            return isMatch && room.custom_attributes
-              .map(attribute => attribute.value)
-              .includes(attribute.value)
-          }, true)
-        })
+      const filters = deepClone(this.filters)
+      const rooms = partition(
+        this.lookups.rooms,
+        roomMatchesRoomAttributes(filters.roomAttributes),
+      )
+      rooms[1] = rooms[1].map(room => {
+        room.category = 'Not a match'
+        room.iconUrl = warningIconUrl
+        return room
       })
+      return Object.assign({}, this.lookups, { rooms })
+
+      function roomMatchesRoomAttributes(roomAttributes) {
+        return function roomMatchesAttribute(room) {
+            return roomAttributes.reduce((isMatch, attribute) => {
+              return isMatch && room.custom_attributes
+                .map(attribute => attribute.value)
+                .includes(attribute.value)
+            }, true)
+        }
+      }
     },
   },
   methods: {

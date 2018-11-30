@@ -31,6 +31,7 @@
               <AutoFinder
                 slot-scope="slotProps"
                 placeholder="Type to search"
+                sortOrder="index"
                 :options="slotProps.availableItems"
                 :selectedItem="slotProps.item"
                 :canRemove="slotProps.selectedItems.length > 1"
@@ -145,6 +146,9 @@ export default {
     h5 {
       margin-bottom: 0;
     }
+  }
+  img {
+    fill: white;
   }
 }
 </style>
