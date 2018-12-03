@@ -3,19 +3,21 @@
     <div v-if="errorMessage" class="error-message" :title="errorMessage">!</div>
     <label class="sim-autofinder--search">
       <IconText :icon="icon" icon-type="svg" />
-      <input type="text" class="sim-autofinder--search--input"
-        ref="input"
-        :placeholder="placeholder"
-        :value="inputValue"
-        :required="isRequired"
-        @input="updateInput"
-        @blur="blur"
-        @keydown.down="highlightNext"
-        @keydown.up="highlightPrevious"
-        @keydown.enter.prevent="selectHighlighted"
-        @keydown.tab.exact="selectHighlighted"
-        @keyup.esc="blur"
-      />
+      <div>
+        <input type="text" class="sim-autofinder--search--input"
+          ref="input"
+          :placeholder="placeholder"
+          :value="inputValue"
+          :required="isRequired"
+          @input="updateInput"
+          @blur="blur"
+          @keydown.down="highlightNext"
+          @keydown.up="highlightPrevious"
+          @keydown.enter.prevent="selectHighlighted"
+          @keydown.tab.exact="selectHighlighted"
+          @keyup.esc="blur"
+        />
+      </div>
       <IconText
         v-if="canRemove"
         class="sim-autofinder--remove-item"
@@ -140,6 +142,7 @@
         this.$emit('select', { id: -1 })
       },
       select(option) {
+        this.highlightedIndex = -1
         if (option) {
           this.$emit('select', option)
         }

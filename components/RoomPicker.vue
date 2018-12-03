@@ -4,43 +4,28 @@
       <IconText
         icon="fa-square"
         icon-type="fa"
-        :text="`Room Attributes: ${selectedAttributeCount}`"
+        :text="`Room Attributes: ${selectedItemCount}`"
       />
     </header>
     <TagList
-      :options="attributes"
-      :selectedTags="selectedAttributes"
-      @updateTagList="updateRoomAttributes"
+      :options="options"
+      :selectedTags="selected"
+      @updateTagList="setSelected"
     />
   </section>
 </template>
 
 <script>
-  import Vue from 'vue'
   import IconText from './IconText'
-  import Autofinder from './Autofinder'
   import TagList from './TagList'
+  import Picker from './Picker'
 
   export default {
     components: {
       IconText,
-      Autofinder,
       TagList,
     },
-    props: {
-      attributes: Array,
-      selectedAttributes: Array,
-    },
-    computed: {
-      selectedAttributeCount() {
-        return this.selectedAttributes.length;
-      },
-    },
-    methods: {
-      updateRoomAttributes(attributes) {
-        this.$emit('setRoomAttributes', attributes)
-      },
-    },
+    extends: Picker,
   }
 </script>
 

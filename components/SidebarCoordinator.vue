@@ -6,29 +6,16 @@
     <div class="sim-calendar--aside--body">
       <TimeMeter
         :duration="filters.duration"
-        @setDuration="setDuration"
+        @setDuration="setFilter('duration', ...arguments)"
       />
       <div class="filters sim-flex--2">
-        <InstructorPicker
-          :instructors="instructors"
-          :selectedInstructors="filters.instructors"
-          @setInstructors="setInstructors"
-        />
-        <LearnerPicker
-          :learners="learners"
-          :selectedLearners="filters.learners"
-          @setLearners="setLearners"
-        />
-        <EquipmentPicker
-          :availableItems="filteredEquipment"
-          :selectedItems="filters.equipment"
-          @addEquipment="addEquipment"
-          @removeEquipment="removeEquipment"
-        />
-        <RoomPicker
-          :attributes="decoratedRoomAttributes"
-          :selectedAttributes="filters.roomAttributes"
-          @setRoomAttributes="setRoomAttributes"
+        <Component
+           v-for="(picker, index) in pickers"
+           :key="index"
+           :is="picker.component"
+           :options="picker.options"
+           :selected="filters[picker.key]"
+           @setSelected="setFilter(picker.key, ...arguments)"
         />
       </div>
     </div>
@@ -41,6 +28,7 @@
   import LearnerPicker from './LearnerPicker'
   import EquipmentPicker from './EquipmentPicker'
   import RoomPicker from './RoomPicker'
+
   import { deepClone } from '../utilities/deep-clone'
 
   export default {
@@ -55,55 +43,38 @@
       filters: Object,
       instructors: Array,
       learners: Array,
-      isDisabled: Boolean,
       equipment: Array,
       roomAttributes: Array,
+      isDisabled: Boolean,
     },
     computed: {
       decoratedRoomAttributes() {
         return this.roomAttributes.map(attribute => Object.assign({ label: attribute.value }, attribute))
       },
-      filteredEquipment() {
-        const ids = this.filters.equipment.map(equipment => equipment.id)
-        return this.equipment.filter(equipment => !(ids.includes(equipment.id)))
+      pickers() {
+        return [{
+          options: this.instructors,
+          key: 'instructors',
+          component: 'InstructorPicker',
+        },{
+          options: this.learners,
+          key: 'learners',
+          component: 'LearnerPicker',
+        },{
+          options: this.equipment,
+          key: 'equipment',
+          component: 'EquipmentPicker',
+        },{
+          options: this.decoratedRoomAttributes,
+          key: 'roomAttributes',
+          component: 'RoomPicker',
+        }]
       },
     },
     methods: {
-      setDuration(duration) {
+      setFilter(key, value) {
         const filters = deepClone(this.filters)
-        filters.duration = duration
-        this.$emit('updateFilters', filters)
-      },
-      setInstructors(instructors) {
-        const filters = deepClone(this.filters)
-        filters.instructors = instructors
-        this.$emit('updateFilters', filters)
-      },
-      setLearners(learners) {
-        const filters = deepClone(this.filters)
-        filters.learners = learners
-        this.$emit('updateFilters', filters)
-      },
-      addEquipment(equipment) {
-        const filters = deepClone(this.filters)
-        filters.equipment = filters.equipment.reduce((list, item, index) => {
-          if (+item.id === -1) {
-            list[index] = equipment
-          }
-          return list
-        }, filters.equipment)
-        filters.equipment.push({ id: -1 })
-        this.$emit('updateFilters', filters)
-      },
-      removeEquipment(newEquipment) {
-        const filters = deepClone(this.filters)
-        filters.equipment = this.filters.equipment
-          .filter(oldEquipment => +oldEquipment.id !== +newEquipment.id)
-        this.$emit('updateFilters', filters)
-      },
-      setRoomAttributes(newAttributes) {
-        const filters = deepClone(this.filters)
-        filters.roomAttributes = newAttributes
+        filters[key] = value
         this.$emit('updateFilters', filters)
       },
     },

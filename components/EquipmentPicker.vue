@@ -1,59 +1,32 @@
 <template>
   <section class="equipment-picker">
-    <header class="filter-molecule--heading text--green">
+    <Picker
+      placeholder="Select an item"
+      :selected="selected"
+      :options="options"
+      @setSelected="setSelected"
+    >
       <IconText
+        slot="icon"
+        slot-scope="{ selectedItemCount }"
         icon="fa-wrench"
         icon-type="fa"
         :text="`Equipment: ${selectedItemCount}`"
       />
-    </header>
-    <ul>
-      <li
-        v-for="(selectedItem, index) in selectedItems"
-        :key="index"
-      >
-        <AutoFinder
-          :options="availableItems"
-          :selectedItem="selectedItem"
-          :canRemove="index !== selectedItems.length - 1"
-          placeholder="Select a piece of equipment"
-          @select="addEquipment"
-          @remove="removeEquipment(selectedItem)"
-        />
-      </li>
-    </ul>
+    </Picker>
   </section>
 </template>
 
 <script>
 import IconText from './IconText'
-import AutoFinder from './Autofinder'
+import Picker from './Picker'
 
 export default {
   components: {
     IconText,
-    AutoFinder,
+    Picker,
   },
-  props: {
-    selectedItems: {
-      type: Array,
-      default: () => [{}],
-    },
-    availableItems: Array,
-  },
-  computed: {
-    selectedItemCount() {
-      return this.selectedItems.length - 1
-    },
-  },
-  methods: {
-    addEquipment(item){
-      this.$emit('addEquipment', item)
-    },
-    removeEquipment(item){
-      this.$emit('removeEquipment', item)
-    },
-  },
+  extends: Picker,
 }
 </script>
 
@@ -62,6 +35,12 @@ export default {
   header {
     .fa-wrench {
       font-size: 2em;
+    }
+  }
+  .equipment-list {
+    max-width: 100%;
+    li {
+      max-width: 100%;
     }
   }
 }
