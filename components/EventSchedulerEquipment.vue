@@ -35,9 +35,6 @@ export default {
     AutoFinderList,
     AutoFinder,
   },
-  mounted() {
-    console.log(this.availableEquipment)
-  },
   props: {
     scenarioEquipment: Array,
     selectedEquipment: Array,

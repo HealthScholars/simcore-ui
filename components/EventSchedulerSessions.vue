@@ -46,9 +46,9 @@ export default {
       const sessions = deepClone(this.sessions)
       sessions.push({
         scenario: {},
-        rooms: [],
-        learners: [],
-        instructors: [],
+        rooms: [{ id: -1 }],
+        learners: [{ id: -1 }],
+        instructors: [{ id: -1 }],
       })
       this.$emit('update', sessions)
     },
