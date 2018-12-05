@@ -25,7 +25,7 @@
             <h5>{{section.label}}</h5>
             <AutoFinderList
               :selectedItems="session[section.key]"
-              :availableItems="lookups[section.key]"
+              :options="lookups[section.key]"
               @setSelectedList="update(section.key, ...arguments)"
             >
               <AutoFinder
