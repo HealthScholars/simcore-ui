@@ -3,7 +3,7 @@
     <h4>Equipment</h4>
     <AutoFinderList
       :selectedItems="adjustedScenarioEquipment"
-      :availableItems="availableEquipment"
+      :options="availableEquipment"
       @setSelectedList="update"
     >
       <AutoFinder
@@ -34,6 +34,9 @@ export default {
   components: {
     AutoFinderList,
     AutoFinder,
+  },
+  mounted() {
+    console.log(this.availableEquipment)
   },
   props: {
     scenarioEquipment: Array,
