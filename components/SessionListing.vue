@@ -2,7 +2,7 @@
   <section class="session-listing">
     <header>
       <AutoFinder
-        :options="lookups.scenarios"
+        :options="scenariosByDepartment"
         :selectedItem="session.scenario"
         :canRemove="true"
         :isFocused="false"
@@ -56,6 +56,7 @@ import AutoFinderList from './AutofinderList'
 import AutoFinder from './Autofinder'
 
 import { deepClone } from '../utilities/deep-clone'
+import { filter } from 'lodash'
 
 export default {
   components: {
@@ -85,6 +86,11 @@ export default {
     },
     eventTimes() {
       return this.splitTimes(this.event.startTime, this.event.duration)
+    },
+    scenariosByDepartment() {
+      return this.event.department.id > 0
+        ? filter(this.lookups.scenarios, { department_id: this.event.department.id })
+        : this.lookups.scenarios
     },
   },
   methods: {

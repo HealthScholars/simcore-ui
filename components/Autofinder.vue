@@ -3,7 +3,7 @@
     <div v-if="errorMessage" class="error-message" :title="errorMessage">!</div>
     <label class="sim-autofinder--search">
       <IconText :icon="icon" icon-type="svg" />
-      <div>
+      <div class="input-container">
         <input type="text" class="sim-autofinder--search--input"
           ref="input"
           :placeholder="placeholder"
@@ -16,6 +16,11 @@
           @keydown.enter.prevent="selectHighlighted"
           @keydown.tab.exact="selectHighlighted"
           @keyup.esc="blur"
+        />
+        <img
+          v-if="selectedItem.iconUrl"
+          :src="selectedItem.iconUrl"
+          :alt="selectedItem.category"
         />
       </div>
       <IconText
@@ -174,6 +179,15 @@
 .sim-autofinder {
   flex: 1;
   position: relative;
+
+  .input-container {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100%;
+    img {
+      height: 1rem;
+    }
+  }
 
   .error-message {
     position: absolute;
