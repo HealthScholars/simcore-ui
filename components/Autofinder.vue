@@ -153,6 +153,7 @@
         }
       },
       selectHighlighted() {
+        this.searchTerm = ''
         this.select(this.matchingOptions[this.highlightedIndex])
       },
       highlightPrevious() {
