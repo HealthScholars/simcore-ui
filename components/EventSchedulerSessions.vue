@@ -28,7 +28,8 @@
 <script>
 import SessionListing from './SessionListing'
 import IconText from './IconText'
-import { deepClone } from '../utilities/deep-clone'
+
+import { isEqual, reject, cloneDeep } from 'lodash'
 
 export default {
   components: {
@@ -43,7 +44,7 @@ export default {
   },
   methods: {
     add() {
-      const sessions = deepClone(this.sessions)
+      const sessions = cloneDeep(this.sessions)
       sessions.push({
         scenario: {},
         rooms: [{ id: -1 }],
@@ -53,13 +54,15 @@ export default {
       this.$emit('update', sessions)
     },
     setSession(index, session) {
-      const sessions = deepClone(this.sessions)
+      const sessions = cloneDeep(this.sessions)
       sessions[index] = session
       this.$emit('update', sessions)
     },
     removeSession(sessionToRemove) {
-      const sessions = this.sessions
-        .filter(session => session === sessionToRemove)
+      const sessions = reject(
+        cloneDeep(this.sessions),
+        session => isEqual(session, sessionToRemove),
+      )
       this.$emit('update', sessions)
     },
   },
