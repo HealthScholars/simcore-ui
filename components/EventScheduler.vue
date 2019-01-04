@@ -103,6 +103,8 @@ export default {
         equipment: this.equipmentOptions,
         instructors: this.instructorOptions,
         learners: this.learnerOptions,
+        scenarios: this.properties.lookups.scenarios,
+        departments: this.properties.lookups.departments,
       }
     },
     instructorOptions() {

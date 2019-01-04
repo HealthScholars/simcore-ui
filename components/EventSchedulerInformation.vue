@@ -34,6 +34,7 @@
       id="department"
       class="department-finder"
       placeholder="Type to search departments"
+      sortOrder="alpha"
       :isRequired="true"
       :options="departments"
       :canRemove="false"
@@ -57,6 +58,9 @@ export default {
     department: Object,
     departments: Array,
     // category: Object,
+  },
+  mounted() {
+    console.log('d', this.departments)
   },
   computed: {
     categories() {

@@ -380,7 +380,7 @@
       decorateEvent(event) {
         event.day = event.day || dayjs(event.date)
         event.attachments = event.attachments.map(attachment => {
-          attachment.location = attachment.filePath
+          attachment.location = attachment.location
           return attachment
         })
         event.department.label = event.department.name
@@ -416,6 +416,8 @@
               equipment: this.lookups['equipment'],
               instructors: this.lookups['instructors'],
               learners: this.lookups['learners'],
+              departments: this.lookups['departments'],
+              scenarios: this.lookups['scenarios'],
             },
             bookings: this.getBookings(event.day),
             filters: this.filters,

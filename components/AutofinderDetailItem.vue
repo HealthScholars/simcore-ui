@@ -1,6 +1,6 @@
 <template>
   <div class="autofinder-detail-item">
-    <p>{{label}}</p>
+    <p v-html="label"></p>
     <div class="type">
       <p>{{category}}</p>
       <img :src="iconUrl" :alt="category" />

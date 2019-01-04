@@ -2,7 +2,7 @@
   <fieldset>
     <h4>Sessions</h4>
     <ul class="session-list">
-      <li v-for="(session, index) in sessions">
+      <li v-for="(session, index) in dynamicSessions">
         <SessionListing
           :session="session"
           :lookups="nonSelfLookups"
@@ -32,7 +32,7 @@ import IconText from './IconText'
 import {
   isEqual, reject, cloneDeep, omit, assign, flatten,
   flatMap, flow, difference, includes, isArray, map, filter,
-  some, partial,
+  some, partial, find,
 } from 'lodash/fp'
 
 export default {
@@ -45,6 +45,56 @@ export default {
     lookups: Object,
     bookings: Object,
     event: Object,
+  },
+  computed: {
+    nonSelfLookups() {
+      const lookups = cloneDeep(this.lookups)
+
+      return assign(lookups, {
+        rooms: this.getUnusedItems('rooms'),
+        learners: this.getUnusedItems('learners'),
+        instructors: this.getUnusedItems('instructors'),
+        scenarios: this.lookups.scenarios,
+      })
+    },
+    dynamicSessions() { // This exists because the icons are added dynamically from the lookups
+      return this.sessions.map(session => {
+        session.learners = session.learners.map(learner => {
+          if (learner.id > 0) {
+            const matchedLearner = find({ id: learner.id })(flatten(this.lookups.learners))
+            return assign(learner, {
+              category: matchedLearner.category,
+              iconUrl: matchedLearner.iconUrl,
+            })
+          } else {
+            return learner
+          }
+        })
+        session.instructors = session.instructors.map(instructor => {
+          if (instructor.id > 0) {
+            const matchedInstructor = find({ id: instructor.id })(flatten(this.lookups.instructors))
+            return assign(instructor, {
+              category: matchedInstructor.category,
+              iconUrl: matchedInstructor.iconUrl,
+            })
+          } else {
+            return instructor
+          }
+        })
+        session.rooms = session.rooms.map(room => {
+          if (room.id > 0) {
+            const matchedRoom = find({ id: room.id })(flatten(this.lookups.rooms))
+            return assign(room, {
+              category: matchedRoom.category,
+              iconUrl: matchedRoom.iconUrl,
+            })
+          } else {
+            return room
+          }
+        })
+        return session
+      })
+    },
   },
   methods: {
     add() {
@@ -87,17 +137,6 @@ export default {
     },
     getSingleItem(availableIds, collection) {
       return reject(item => includes(availableIds)(item.id))(collection)
-    },
-  },
-  computed: {
-    nonSelfLookups() {
-      const lookups = cloneDeep(this.lookups)
-
-      return assign(lookups, {
-        rooms: this.getUnusedItems('rooms'),
-        learners: this.getUnusedItems('learners'),
-        instructors: this.getUnusedItems('instructors'),
-      })
     },
   },
 }

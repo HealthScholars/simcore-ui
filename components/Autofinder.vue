@@ -43,7 +43,7 @@
   import IconText from './IconText'
   import AutofinderDetails from './AutofinderDetails'
 
-  import { flatten, sortBy } from 'lodash'
+  import { flatten, sortBy, unescape } from 'lodash'
 
   export default {
     components: {
@@ -73,7 +73,7 @@
     computed: {
       inputValue() {
         return this.foundItem
-          ? this.selectedItem.label
+          ? unescape(this.selectedItem.label)
           : this.searchTerm
       },
       flattenedOptions() {

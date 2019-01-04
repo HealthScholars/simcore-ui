@@ -70,6 +70,10 @@ export default {
     bookings: Object,
     event: Object,
   },
+  watch: {
+    eventTimes() {
+    },
+  },
   computed: {
     sections() {
       return [{
