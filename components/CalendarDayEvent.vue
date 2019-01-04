@@ -36,16 +36,17 @@
       class="local--day--blocks local--day--aggregate-blocks"
       @click="expandWeek"
      >
-      <template v-if="availabilities.length">
-        <div v-for="(block, index) in availabilities">
+      <template v-if="blocks">
+        <div v-for="(block, index) in blocks">
+          <!--
           <TimeBlockSpecificAvailability
             v-if="hasOnlySpecificInstructors(block)"
             :key="index"
             :block="block"
             @click.native="createPendingEvent(block.startTime)"
           />
+          -->
           <TimeBlockAggregateAvailability
-            v-else
             :key="index"
             :block="block"
             @click.native="createPendingEvent(block.startTime)"
@@ -65,6 +66,8 @@
   import TimeBlockPendingEvent from './TimeBlockPendingEvent'
   import TimeBlockEvent from './TimeBlockEvent'
   import TimeBlockNull from './TimeBlockNull'
+
+  import { map } from 'lodash/fp'
 
   export default {
     components: {
@@ -93,6 +96,14 @@
       },
       showTimelines() {
         return this.isSelected && this.showExpandedWeek
+      },
+      blocks() {
+        return map(availability => {
+          return {
+            startTime: availability,
+            duration: 0.5,
+          }
+        })(this.availabilities)
       },
     },
     methods: {

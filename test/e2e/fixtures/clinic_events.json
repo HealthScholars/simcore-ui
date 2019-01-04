@@ -43,22 +43,22 @@
         "event_id": 5,
         "rooms": [
           {
-            "id": 2,
-            "institution_id": 110,
-            "name": "Alaska Room 1",
+            "id": 50,
+            "institution_id": 5776,
+            "name": "Room 1408",
             "is_multiinstitutional": 1,
             "pivot": {
               "session_id": 1648,
-              "room_id": 2
+              "room_id": 50
             }
           }
         ],
         "learners": [
           {
-            "id": 12,
+            "id": 1,
             "username": "bgillett@email.com",
-            "firstname": "Brian",
-            "lastname": "Gillett",
+            "firstname": "Adam",
+            "lastname": "Birch",
             "role": 50,
             "learner_type_id": null,
             "learner_experience": 0,

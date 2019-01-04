@@ -36,7 +36,6 @@
                 :selectedItem="slotProps.item"
                 :canRemove="slotProps.selectedItems.length > 1"
                 :isFocused="slotProps.index === slotProps.selectedItems.length - 1"
-                :errorMessage="getErrorMessage(section, slotProps.item)"
                 @select="slotProps.select(slotProps.index, ...arguments)"
                 @clear="slotProps.clear(slotProps.index)"
                 @remove="slotProps.remove(slotProps.index)"
@@ -98,25 +97,6 @@ export default {
       const session = deepClone(this.session)
       session[property] = value
       this.$emit('update', session)
-    },
-    getErrorMessage(section, item) {
-      if (['learners', 'instructors'].includes(section.key)) {
-        return this.getPeopleErrorMessage(item)
-      }
-      const bookedTimes = this.bookings[section.key][item.id]
-
-      return bookedTimes && this.eventTimes
-        .filter(eventTime => bookedTimes.includes(eventTime)).length > 0
-        ? `This ${section.key} is currently booked during this time`
-        : ''
-    },
-    getPeopleErrorMessage(person) {
-      const bookedTimes = this.bookings.people[person.id]
-
-      return bookedTimes && this.eventTimes
-        .filter(eventTime => bookedTimes.includes(eventTime)).length > 0
-        ? `This person is currently booked during this time or has not indicated availability`
-        : ''
     },
     splitTimes(startTime, duration) {
       const times = []

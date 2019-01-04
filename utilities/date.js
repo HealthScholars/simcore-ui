@@ -1,5 +1,7 @@
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
+import { times, flow, zipObject, times, constant, mapValues } from 'lodash/fp'
+import { expandAvailability } from './expand-availability'
 
 dayjs.extend(advancedFormat)
 
@@ -71,4 +73,23 @@ export function getHour(datetime) {
     ? 0
     : 0.5
   return +datetime.format('H') + halfHour
+}
+
+export function getDaysInMonth(date) {
+  const daysInMonth = []
+  let dateCounter = dayjs(date).startOf('month')
+
+  times(count => {
+     daysInMonth.push(dateCounter.format('YYYY-MM-DD'))
+     dateCounter = dateCounter.add(1, 'day')
+  })(dateCounter.daysInMonth());
+  return daysInMonth
+}
+
+export function initializeMonth(days){
+  return flow([
+    zipObject,
+    day => day(times(constant([]), days.length)),
+    mapValues(day => expandAvailability(0.5, 24)),
+  ])(days)
 }

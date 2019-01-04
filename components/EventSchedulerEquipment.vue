@@ -9,11 +9,11 @@
       <AutoFinder
         slot-scope="slotProps"
         placeholder="Type to search"
+        sortOrder="index"
         :options="slotProps.availableItems"
         :selectedItem="slotProps.item"
-        :canRemove="slotProps.selectedItems.length > 1"
+        :canRemove="true"
         :isFocused="slotProps.index === slotProps.selectedItems.length - 1"
-        :errorMessage="getErrorMessage(slotProps.item)"
         @select="slotProps.select(slotProps.index, ...arguments)"
         @clear="slotProps.clear(slotProps.index)"
         @remove="slotProps.remove(slotProps.index)"
@@ -27,8 +27,8 @@
 import AutoFinderList from './AutofinderList'
 import AutoFinder from './Autofinder'
 
-import { deepClone } from '../utilities/deep-clone'
 import { differenceWith, isEqual } from 'lodash'
+import { map, reject, includes } from 'lodash/fp'
 
 export default {
   components: {
@@ -50,10 +50,10 @@ export default {
   },
   computed: {
     availableEquipment() {
-      return this.equipmentList.filter(equipment => {
-        return !this.selectedEquipment
-          .find(selectedEquipment => +selectedEquipment.id === +equipment.id)
-      })
+      const selectedIds = map('id')(this.selectedEquipment)
+      const matchesSelectedId = ({ id }) => includes(id)(selectedIds)
+
+      return reject(matchesSelectedId)(this.equipmentList)
     },
     adjustedScenarioEquipment() {
       const equipmentWithRemovals = this.scenarioEquipment.filter(item => {
@@ -63,9 +63,6 @@ export default {
         ...equipmentWithRemovals,
         ...this.manuallyAddedEquipment,
       ]
-    },
-    eventTimes() {
-      return this.splitTimes(this.event.startTime, this.event.duration)
     },
     adjustedScenarioEquipmentIds() {
       return this.adjustedScenarioEquipment.map(item => item.id)
@@ -108,21 +105,6 @@ export default {
       })
       this.manuallyAddedEquipment = primaryList
       this.manuallyRemovedEquipment = secondaryList
-    },
-    getErrorMessage(equipment) {
-      const bookedTimes = this.equipmentBookings[equipment.id]
-
-      return bookedTimes && this.eventTimes
-        .filter(eventTime => bookedTimes.includes(eventTime)).length > 0
-        ? 'This equipment is currently booked during this time'
-        : ''
-    },
-    splitTimes(startTime, duration) {
-      const times = []
-      for (let i = 0; i <= duration; i += 0.5) {
-        times.push(startTime + i)
-      }
-      return times
     },
   },
 }

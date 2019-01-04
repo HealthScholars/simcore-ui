@@ -5,7 +5,7 @@
       <li v-for="(session, index) in sessions">
         <SessionListing
           :session="session"
-          :lookups="lookups"
+          :lookups="nonSelfLookups"
           :canRemove="true"
           :bookings="bookings"
           :event="event"
@@ -29,7 +29,11 @@
 import SessionListing from './SessionListing'
 import IconText from './IconText'
 
-import { isEqual, reject, cloneDeep } from 'lodash'
+import {
+  isEqual, reject, cloneDeep, omit, assign, flatten,
+  flatMap, flow, difference, includes, isArray, map, filter,
+  some, partial,
+} from 'lodash/fp'
 
 export default {
   components: {
@@ -60,10 +64,40 @@ export default {
     },
     removeSession(sessionToRemove) {
       const sessions = reject(
-        cloneDeep(this.sessions),
         session => isEqual(session, sessionToRemove),
-      )
+      )(cloneDeep(this.sessions))
       this.$emit('update', sessions)
+    },
+    getUnusedItems(label) {
+      const items = this.lookups[label]
+      const allIds = flatMap('id')(items)
+      const eventIds = flow([
+        flatMap(label),
+        map('id'),
+      ])(this.event.sessions)
+      const availableIds = difference(allIds, eventIds)
+
+      // Pack if not a nested collection
+      return some(isArray)(items)
+        ? this.getMultipleItems(availableIds, items)
+        : this.getSingleItem(availableIds, [items])
+    },
+    getMultipleItems(availableIds, collections) {
+      return map(partial(this.getSingleItem, [availableIds]))(collections)
+    },
+    getSingleItem(availableIds, collection) {
+      return reject(item => includes(availableIds)(item.id))(collection)
+    },
+  },
+  computed: {
+    nonSelfLookups() {
+      const lookups = cloneDeep(this.lookups)
+
+      return assign(lookups, {
+        rooms: this.getUnusedItems('rooms'),
+        learners: this.getUnusedItems('learners'),
+        instructors: this.getUnusedItems('instructors'),
+      })
     },
   },
 }

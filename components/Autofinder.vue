@@ -1,6 +1,5 @@
 <template>
   <div class="sim-autofinder sim-autofinder--visible-options">
-    <div v-if="errorMessage" class="error-message" :title="errorMessage">!</div>
     <label class="sim-autofinder--search">
       <IconText :icon="icon" icon-type="svg" />
       <div class="input-container">
@@ -66,7 +65,6 @@
       canRemove: Boolean,
       selectedItem: Object,
       isRequired: Boolean,
-      errorMessage: String,
       sortOrder: {
         type: String,
         default: 'alpha',
@@ -190,21 +188,6 @@
     }
   }
 
-  .error-message {
-    position: absolute;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 1em;
-    opacity: 0.7;
-    right: 0;
-    top: -1.5em;
-    width: 2em;
-    text-align: center;
-    padding: 4px;
-    color: white;
-    background-color: orange;
-    z-index: 1000;
-  }
   .sim-autofinder--search {
     display: flex;
 
