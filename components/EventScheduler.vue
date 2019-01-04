@@ -72,7 +72,7 @@ import { expandAvailability } from '../utilities/expand-availability'
 import {
   flow, every, omit, map, partition, includes,
   filter, intersection, mapValues, assign, sortBy,
-  inRange, some, cloneDeep,
+  inRange, some, cloneDeep, flatten
 } from 'lodash/fp'
 import warningIconUrl from '../utilities/warning-icon'
 
@@ -145,14 +145,16 @@ export default {
 
       return this.getOptions(this.getStandardCategories, equipmentSets)
     },
-    scenarioRooms() {
-    },
     scenarioEquipment() {
       return [
         ...this.properties.event.sessions
           .map(session => session.scenario)
           .filter(this.isNotEmpty)
           .map(scenario => scenario.equipment)
+          .map(equipment => {
+            equipment[0].label = equipment[0].name // I don't know why this won't unpack
+            return equipment
+          })
           .reduce(this.accumulateEquipment, []),
         ...this.properties.event.equipment,
       ]
@@ -255,7 +257,7 @@ export default {
       return map(this.decorateOptions)(categories(sets))
     },
     isNotEmpty(object) {
-      return !Object.keys(object).length === 0 && object.constructor === Object
+      return !(Object.keys(object).length === 0 && object.constructor === Object)
     },
     saveDraft() {
       this.$emit('saveDraft', this.event)
