@@ -14,7 +14,7 @@
       >
         <li
           v-for="(item, index) in selected"
-          :key="index"
+          :key="item.id"
         >
           <Autofinder
             :options="availableItems"

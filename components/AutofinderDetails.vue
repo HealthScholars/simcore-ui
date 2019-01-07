@@ -3,7 +3,7 @@
     <transition-group appear name="list" tag="ul" mode="in-out">
       <li
         v-for="(item, index) in options"
-        :key="index"
+        :key="item.id"
         @mousedown="selectItem(item)"
       >
         <AutofinderDetailItem

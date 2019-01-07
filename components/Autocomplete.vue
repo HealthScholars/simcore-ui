@@ -24,7 +24,7 @@
     <div class="sim-autocomplete--items" v-show="isOpen">
       <transition-group appear name="list" tag="ul" mode="in-out">
         <li v-for="(option, index) in this.filteredOptions"
-            :key="index"
+            :key="option.id"
             :class="{highlighted: index === position}"
             @mouseenter="position = index"
             @mousedown="clickSelect"
