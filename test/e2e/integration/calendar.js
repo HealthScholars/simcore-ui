@@ -1,7 +1,7 @@
 /* global describe, before, it, cy */
 /* eslint prefer-arrow-callback: 0, newline-per-chained-call: 0, func-names: 0 */
 
-function initializeServer(){
+function initializeServer() {
   cy.server()
 
   cy.fixture('purview_users').as('purviewUsers')

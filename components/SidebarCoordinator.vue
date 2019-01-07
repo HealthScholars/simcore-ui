@@ -1,27 +1,22 @@
 <template>
-  <aside class="sim-calendar--aside sim-calendar--filters" :class="{'sim-calendar--filters--disabled': isDisabled}">
+  <aside class="sidebar-coordinator sim-calendar--aside sim-calendar--filters" :class="{'sim-calendar--filters--disabled': isDisabled}">
     <div class="sim-calendar--aside--header">
       <span><b>Filters</b></span>
     </div>
     <div class="sim-calendar--aside--body">
       <TimeMeter
         :duration="filters.duration"
-        @setDuration="setDuration"
+        @setDuration="setFilter('duration', ...arguments)"
       />
-      <div class="sim-flex--2">
-        <InstructorPicker
-          :instructors="instructors"
-          :selectedInstructors="filters.instructors"
-          @setInstructors="setInstructors"
+      <div class="filters sim-flex--2">
+        <Component
+           v-for="(picker, index) in pickers"
+           :key="index"
+           :is="picker.component"
+           :options="picker.options"
+           :selected="filters[picker.key]"
+           @setSelected="setFilter(picker.key, ...arguments)"
         />
-        <!--
-        <EquipmentPicker
-          :availableItems="filteredEquipment"
-          :selectedItems="filters.equipment"
-          @addEquipment="addEquipment"
-          @removeEquipment="removeEquipment"
-        />
-        -->
       </div>
     </div>
   </aside>
@@ -30,55 +25,68 @@
 <script>
   import TimeMeter from './TimeMeter'
   import InstructorPicker from './InstructorPicker'
+  import LearnerPicker from './LearnerPicker'
   import EquipmentPicker from './EquipmentPicker'
+  import RoomPicker from './RoomPicker'
+
   import { deepClone } from '../utilities/deep-clone'
 
   export default {
     components: {
       TimeMeter,
       InstructorPicker,
+      LearnerPicker,
       EquipmentPicker,
+      RoomPicker,
     },
     props: {
       filters: Object,
       instructors: Array,
-      isDisabled: Boolean,
+      learners: Array,
       equipment: Array,
+      roomAttributes: Array,
+      isDisabled: Boolean,
     },
     computed: {
-      filteredEquipment() {
-        const ids = this.filters.equipment.map(equipment => equipment.id)
-        return this.equipment.filter(equipment => !(ids.includes(equipment.id)))
+      decoratedRoomAttributes() {
+        return this.roomAttributes.map(attribute => Object.assign({ label: attribute.value }, attribute))
+      },
+      pickers() {
+        return [{
+          options: this.instructors,
+          key: 'instructors',
+          component: 'InstructorPicker',
+        },{
+          options: this.learners,
+          key: 'learners',
+          component: 'LearnerPicker',
+        },{
+          options: this.equipment,
+          key: 'equipment',
+          component: 'EquipmentPicker',
+        },{
+          options: this.decoratedRoomAttributes,
+          key: 'roomAttributes',
+          component: 'RoomPicker',
+        }]
       },
     },
     methods: {
-      setDuration(duration) {
+      setFilter(key, value) {
         const filters = deepClone(this.filters)
-        filters.duration = duration
-        this.$emit('updateFilters', filters)
-      },
-      setInstructors(instructors) {
-        const filters = deepClone(this.filters)
-        filters.instructors = instructors
-        this.$emit('updateFilters', filters)
-      },
-      addEquipment(equipment) {
-        const filters = deepClone(this.filters)
-        filters.equipment = filters.equipment.reduce((list, item, index) => {
-          if (+item.id === -1) {
-            list[index] = equipment
-          }
-          return list
-        }, filters.equipment)
-        filters.equipment.push({ id: -1 })
-        this.$emit('updateFilters', filters)
-      },
-      removeEquipment(newEquipment) {
-        const filters = deepClone(this.filters)
-        filters.equipment = this.filters.equipment
-          .filter(oldEquipment => +oldEquipment.id !== +newEquipment.id)
+        filters[key] = value
         this.$emit('updateFilters', filters)
       },
     },
   }
 </script>
+
+<style lang="scss">
+.sidebar-coordinator {
+  .filters {
+    section {
+      margin-bottom: 1rem;
+    }
+  }
+}
+</style>

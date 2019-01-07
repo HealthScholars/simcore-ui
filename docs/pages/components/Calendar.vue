@@ -32,6 +32,7 @@
 
 <script>
   import { normalize } from '../../../utilities/filter-availabilities'
+  import { chain } from 'lodash'
   import Demobox from '../../utility/Demobox'
   import CalendarEvents from '../../../components/CalendarEvents'
 
@@ -69,7 +70,11 @@
           rooms: this.$store.getters.list({ list: 'rooms', value: 'name' }),
           scenarios: this.$store.getters.list({ list: 'scenarios', value: 'name' }),
           departments: this.$store.getters.list({ list: 'departments', value: 'name' }),
+          roomAttributes: this.roomAttributes,
         }
+      },
+      roomAttributes() {
+        return _.chain(this.$store.rooms).map().value()
       },
       currentUser() {
         return this.$store.state.currentUser

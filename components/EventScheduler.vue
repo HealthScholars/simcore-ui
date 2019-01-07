@@ -31,6 +31,7 @@
         </li>
         <li>
           <EventSchedulerEquipment
+            :scenarioEquipment="scenarioEquipment"
             :equipmentList="lookups.equipment"
             :selectedEquipment="event.equipment"
             :equipmentBookings="bookings.equipment"
@@ -67,8 +68,13 @@ import EventSchedulerAttachments from './EventSchedulerAttachments'
 import EventSchedulerEquipment from './EventSchedulerEquipment'
 import EventSchedulerFooter from './EventSchedulerFooter'
 
-import { deepClone } from '../utilities/deep-clone'
-import { omit } from 'lodash'
+import { expandAvailability } from '../utilities/expand-availability'
+import {
+  flow, every, omit, map, partition, includes,
+  filter, intersection, mapValues, assign, sortBy,
+  inRange, some, cloneDeep, flatten
+} from 'lodash/fp'
+import warningIconUrl from '../utilities/warning-icon'
 
 export default {
   components: {
@@ -88,16 +94,176 @@ export default {
     event() {
       return this.properties.event
     },
-    lookups() {
-      return this.properties.lookups
-    },
     bookings() {
-      return this.removeEventBookings(this.properties.bookings)
+      return this.properties.bookings
+    },
+    lookups() {
+      return {
+        rooms: this.roomOptions,
+        equipment: this.equipmentOptions,
+        instructors: this.instructorOptions,
+        learners: this.learnerOptions,
+        scenarios: this.properties.lookups.scenarios,
+        departments: this.properties.lookups.departments,
+      }
+    },
+    instructorOptions() {
+      const instructorSets = this.getBooked(
+        this.properties.lookups.instructors,
+        this.properties.bookings.people,
+      )
+
+      return this.getOptions(this.getBookedCategories, instructorSets)
+    },
+    learnerOptions() {
+      const learnerSets = this.getBooked(
+        this.properties.lookups.learners,
+        this.properties.bookings.people,
+      )
+
+      return this.getOptions(this.getBookedCategories, learnerSets)
+    },
+    roomOptions() {
+      const roomSets = this.getMatchedBookedMatrix(
+        this.properties.lookups.rooms,
+        filter(item => item.id > 0)(this.properties.filters.roomAttributes),
+        this.bookings.rooms,
+        this.isTagMatch,
+        'custom_attributes',
+      )
+
+      return this.getOptions(this.getStandardCategories, roomSets)
+    },
+    equipmentOptions() {
+      const equipmentSets = this.getMatchedBookedMatrix(
+        this.properties.lookups.equipment,
+        filter(item => item.id > 0)(this.properties.filters.equipment),
+        this.bookings.equipment,
+        this.isItemMatch,
+        'id',
+      )
+
+      return this.getOptions(this.getStandardCategories, equipmentSets)
+    },
+    scenarioEquipment() {
+      return [
+        ...this.properties.event.sessions
+          .map(session => session.scenario)
+          .filter(this.isNotEmpty)
+          .map(scenario => scenario.equipment)
+          .map(equipment => {
+            equipment[0].label = equipment[0].name // I don't know why this won't unpack
+            return equipment
+          })
+          .reduce(this.accumulateEquipment, []),
+        ...this.properties.event.equipment,
+      ]
     },
   },
   methods: {
+    getStandardCategories({
+      isNotBookedMatched,
+      isNotBookedNotMatched,
+      isBookedMatched,
+      isBookedNotMatched,
+    }){
+      return [{
+        category: '',
+        iconUrl: '',
+        data: isNotBookedMatched,
+      }, {
+        category: 'Not a match',
+        iconUrl: warningIconUrl,
+        data: isNotBookedNotMatched,
+      }, {
+        category: 'Booked',
+        iconUrl: warningIconUrl,
+        data: isBookedMatched,
+      }, {
+        category: 'Booked, not a match',
+        iconUrl: warningIconUrl,
+        data: isBookedNotMatched,
+      }]
+    },
+    getBookedCategories({ isNotBooked, isBooked }){
+      return [{
+        category: '',
+        iconUrl: '',
+        data: isNotBooked,
+      }, {
+        category: 'Booked',
+        iconUrl: warningIconUrl,
+        data: isBooked,
+      }]
+    },
+    getBooked(items, bookings) {
+      const state = map(item => {
+        return assign(item, {
+          isBooked: this.isDuringEvent(bookings[item.id]),
+          isBooked: bookings[item.id] ? this.isDuringEvent(bookings[item.id]) : false,
+        })
+      })(items)
+
+      const [isNotBooked, isBooked] = partition(item => !item.isBooked)(state)
+      return {
+        isNotBooked,
+        isBooked,
+      }
+
+    },
+    getMatchedBookedMatrix(items, activeFilters, bookings, matchingFunction, matchingLabel) {
+      const state = map(item => {
+        return assign(item, {
+          isMatched: activeFilters.length === 0 || matchingFunction(item[matchingLabel], activeFilters),
+          isBooked: bookings[item.id] ? this.isDuringEvent(bookings[item.id]) : false,
+        })
+      })(items)
+
+      const [isNotBooked, isBooked] = partition(item => !item.isBooked)(state)
+      const [isMatched, isNotMatched] = partition(item => item.isMatched)(state)
+
+      return {
+        isNotBookedMatched: intersection(isNotBooked, isMatched),
+        isNotBookedNotMatched: intersection(isNotBooked, isNotMatched),
+        isBookedMatched: intersection(isBooked, isMatched),
+        isBookedNotMatched: intersection(isBooked, isNotMatched)
+      }
+    },
+    isItemMatch(id, equipment) {
+      const ids = map('id')(equipment)
+      return includes(id)(ids)
+    },
+    isTagMatch(rawAttributes, roomsToFilterFor) {
+      const tags = map('value')(roomsToFilterFor)
+      const attributes = map('value')(rawAttributes)
+      const includesTag = every(tag => {
+        return includes(tag)(attributes)
+      })
+      return includesTag(tags)
+    },
+    isDuringEvent(times) {
+      const { startTime, duration } = this.event
+      const duringEvent = inRange(startTime, startTime + duration + 0.5)
+
+      return some(duringEvent)(times)
+    },
+    decorateOptions({ data, iconUrl, category }) {
+      return flow([
+        map(item => assign(item, { category, iconUrl })),
+        sortBy('label'),
+      ])(data)
+    },
+    getOptions(categories, sets) {
+      return map(this.decorateOptions)(categories(sets))
+    },
+    isNotEmpty(object) {
+      return !(Object.keys(object).length === 0 && object.constructor === Object)
+    },
     saveDraft() {
       this.$emit('saveDraft', this.event)
+    },
+    accumulateEquipment(accumulatedEquipment, scenarioEquipment) {
+      return [ ...accumulatedEquipment, ...scenarioEquipment ]
     },
     submitEvent() {
       this.$emit('submitEvent', this.properties.event)
@@ -110,33 +276,6 @@ export default {
     },
     setSessions(sessions) {
       this.$set(this.properties.event, "sessions", sessions)
-    },
-    removeEventBookings(bookings) {
-      const currentEquipment = Object.keys(bookings.equipment).filter(item => {
-        return this.event.equipment
-          .map(item => item.id)
-          .includes(+item)
-      }).map(item => item.id)
-      bookings.equipment = omit(bookings.equipment, currentEquipment)
-
-      const currentRooms = Object.keys(bookings.rooms).filter(room => {
-        return this.event.sessions
-          .map(session => session.rooms)
-          .map(room => room.id)
-          .includes(room.id)
-      })
-      bookings.rooms = omit(bookings.rooms, currentRooms)
-
-      const currentPeople = Object.keys(bookings.people).filter(person => {
-        return this.event.sessions
-          .map(session => {
-            return [session.instructors, session.learners].flat()
-          }).map(person => person.id)
-          .includes(person.id)
-      })
-      bookings.people = omit(bookings.people, currentPeople)
-
-      return bookings
     },
   },
 }

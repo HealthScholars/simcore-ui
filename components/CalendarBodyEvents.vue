@@ -31,42 +31,41 @@
       @submitEvent="submitEvent"
       @deleteEvent="deleteEvent"
     />
-    <!--
-      <EventScheduler
-        :event="pendingEvent"
-        :lookups="lookups"
-        @submitEvent="submitEvent"
-        @updateEventProperty="updateEventProperty"
-      />
-      <EventListing
-        :event="selectedEvent"
-      />
-    -->
   </CalendarBody>
 </template>
 
 <script>
   /* eslint no-nested-ternary: 0 */
-  import dayjs from 'dayjs'
-  import Vue from 'vue'
-
   import CalendarBody from './CalendarBody'
   import CalendarDayEvent from './CalendarDayEvent'
-  import EventListing from './EventListing'
   import Bubble from './Bubble'
-  import EventScheduler from './EventScheduler'
 
-  import { formatTimesForDisplay, formatBlockHoursForDisplay } from '../utilities/date'
-  import { deepClone } from '../utilities/deep-clone'
+  import importedEvents from '../test/e2e/fixtures/clinic_events.json'
+
+  import dayjs from 'dayjs'
   import { mixin as clickaway } from 'vue-clickaway'
+  import { expandAvailability } from '../utilities/expand-availability'
+  import { filterAvailabilities } from '../utilities/filter-availabilities'
+  import {
+    getEquipmentAvailability,
+    getRoomAvailability,
+    getPersonActualAvailability,
+  } from '../utilities/actual-availability'
+  import { getDaysInMonth, initializeMonth } from '../utilities/date'
+  import { partition } from 'lodash'
+  import {
+    cloneDeep, map, reduce, uniq, partial, intersection,
+    mapValues, flow, filter, partialRight, includes,
+    differenceWith, isEqual, flatMap, flatten, assign,
+  } from 'lodash/fp'
+  import warningIconUrl from '../utilities/warning-icon'
+  const mapValuesWithKey = mapValues.convert({ 'cap': false });
 
   export default {
     components: {
       CalendarBody,
       CalendarDayEvent,
       Bubble,
-      EventScheduler,
-      EventListing,
     },
     extends: CalendarBody,
     mixins: [ clickaway ],
@@ -78,43 +77,97 @@
       }
     },
     props: {
-      filteredAvailabilities: Array,
+      totalAvailabilities: Array,
       showExpandedWeek: Boolean,
       lookups: Object,
       user: Object,
       events: Array,
       filters: Object,
     },
+    mounted() {
+    },
     computed: {
-      isBubbleOpen() {
-        return this.$store.state.services.bubble.isOpen
+      dateService() {
+        return this.$store.state.services.date
       },
-      getEquipmentIds(){
-        return this.event.equipment
-          .map(this.getIds)
-          .filter(this.getNonBlanks)
+      decoratedFilters() {
+        const filters = cloneDeep(this.filters)
+        filters.instructorCount = filters.instructors.length
+        filters.instructors = filters.instructors
+          .map(instructor => instructor.id)
+          .filter(id => id > 0)
+        return filters
       },
-      getNonBlanks(item) {
-        return +item >= 0
+      daysInMonth() {
+        return getDaysInMonth(this.dateService.selectedDate)
       },
-      getIds(item) {
-        return item.id
+      initialMonthAvailabilities() {
+        return initializeMonth(this.daysInMonth)
+      },
+      equipmentIds() {
+        return flow([
+          map('id'),
+          filter(id => id > 0)
+        ])(this.filters.equipment)
+      },
+      roomTags() {
+        return map('value')(this.filters.roomAttributes)
+      },
+      peopleIds() {
+        return flow([
+          map('id'),
+          uniq,
+          filter(id => id > 0)
+        ])([...this.filters.learners, ...this.filters.instructors])
+      },
+      roomAvailability() {
+        return partialRight(
+          getRoomAvailability,
+          [this.daysInMonth, this.events, this.lookups.rooms],
+        )
+      },
+      equipmentAvailability() {
+        return partialRight(
+          getEquipmentAvailability,
+          [this.daysInMonth, this.events],
+        )
+      },
+      peopleAvailability() {
+        return partialRight(
+          getPersonActualAvailability,
+          [this.daysInMonth, this.events], // Also need their stated availabilities
+        )
+      },
+      filteredAvailabilities() {
+        return flow([
+          partial(this.getAvailabilities, [this.roomAvailability, this.roomTags]),
+          partial(this.getAvailabilities, [this.equipmentAvailability, this.equipmentIds]),
+          partial(this.getAvailabilities, [this.peopleAvailability, this.peopleIds]),
+        ])(this.initialMonthAvailabilities)
       },
     },
     methods: {
-      getEventAvailabilitiesForDay(date) {
-        const matchingDay = this.filteredAvailabilities
-          .find(day => date.isSame(day.date, 'day'))
-        return matchingDay
-          ? matchingDay.availabilities
-          : []
+      getAvailabilities(filteringFunction, ids, initialState) {
+        return reduce(
+          this.accumulateAvailabilities(filteringFunction),
+          initialState,
+        )(ids)
       },
-      splitTimes(startTime, duration) {
-        const times = []
-        for (let i = 0; i <= duration; i += 0.5) {
-          times.push(startTime + i)
+      accumulateAvailabilities(itemAvailabilityForDate) {
+        return (cumulativeAvailabiltities, id) => {
+          return flow([
+            this.getDayMatches,
+            mapValuesWithKey,
+          ])(itemAvailabilityForDate(id))(cumulativeAvailabiltities)
         }
-        return times
+      },
+      getDayMatches(itemAvailabilties) {
+        return (dayAvailabilities, date) => {
+          return intersection(dayAvailabilities, itemAvailabilties[date])
+        }
+      },
+      getEventAvailabilitiesForDay(day) {
+        return this.filteredAvailabilities[day.format('YYYY-MM-DD')] || []
       },
       addTimes(totalList, initialList, times) {
         return totalList.reduce((list, item) => {
@@ -122,37 +175,45 @@
             ? list[item].push(...times)
             : list[item] = [ ...times ]
           return list
-        }, initialList)
+        }, cloneDeep(initialList))
       },
       getBookings(day) {
-        return this.events
-          .filter(event => event.date === day.format('YYYY-MM-DD'))
-          .reduce((bookings, event) => {
-            const times = this.splitTimes(event.startTime, event.duration)
+        const date = day.format('YYYY-MM-DD')
+        const bookings = flow([
+          filter(event => event.date === date),
+          reduce((bookings, event) => {
+            const times = expandAvailability(event.startTime, event.duration)
+            const getIds = flatMap('id')
 
-            bookings.equipment = this.addTimes(event.equipment.map(this.getId), bookings.equipment, times)
-            const rooms = event.sessions
-              .map(session => session.rooms.map(this.getId)).flat()
-            bookings.rooms = this.addTimes(rooms, bookings.rooms, times)
-            const people = event.sessions.map(session => [
-              session.instructors.map(this.getId),
-              session.learners.map(this.getId),
-            ].flat())
-            .flat()
-            bookings.people = this.addTimes(people, bookings.people, times)
+            const equipment = getIds(event.equipment)
+            const rooms = flow([
+              flatMap('rooms'),
+              getIds,
+            ])(event.sessions)
+            const people = flatten(flatMap(session => [
+              getIds(session.instructors),
+              getIds(session.learners),
+            ])(event.sessions))
 
-            return bookings
-          }, {
+            return assign(cloneDeep(bookings), {
+              equipment: this.addTimes(equipment, bookings.equipment, times),
+              rooms: this.addTimes(rooms, bookings.rooms, times),
+              people: this.addTimes(people, bookings.people, times),
+            })
+          })({
             rooms: {},
             people: {},
             equipment: {},
           })
+        ])(this.events)
+
+        return bookings
       },
       getEvents(day) {
         const date = day.format('YYYY-MM-DD')
         return this.events.filter(event => event.date === date)
       },
-      CalendarEvent({ day, startTime, duration, user }) {
+      CalendarEvent({ day, startTime, duration, user, instructors, equipment, learners }) {
         return {
           day,
           startTime,
@@ -163,9 +224,7 @@
           isApproved: false,
           institution: user.institution,
             note: '',
-          equipment: [{
-            id: -1
-          }],
+          equipment,
           attachments: [{
             id: -1
           }],
@@ -174,12 +233,8 @@
             rooms: [{
               id: -1,
             }],
-            learners: [{
-              id: -1,
-            }],
-            instructors: [{
-              id: -1,
-            }]
+            learners,
+            instructors,
           }],
         }
       },
@@ -188,12 +243,12 @@
           day,
           startTime,
           duration: this.filters.duration,
+          instructors: this.filters.instructors,
+          learners: this.filters.learners,
+          equipment: this.filters.equipment,
           user: this.user,
         })
         this.selectPendingEvent(this.pendingEvent);
-      },
-      getInstructor(id){
-        return this.lookups.instructors.find(instructor => +instructor.id === +id)
       },
       closeBubble() {
         this.resetBubbleContent()
@@ -312,6 +367,7 @@
             : undefined
           : undefined
       },
+      /*
       selectEvent(event) {
         this.bubbleContent = {
           component: 'EventListing',
@@ -320,10 +376,11 @@
           },
         }
       },
+      */
       decorateEvent(event) {
         event.day = event.day || dayjs(event.date)
         event.attachments = event.attachments.map(attachment => {
-          attachment.location = attachment.filePath
+          attachment.location = attachment.location
           return attachment
         })
         event.department.label = event.department.name
@@ -337,7 +394,7 @@
             return room
           }) || [])
           session.instructors = (session.instructors && session.instructors.map(instructor => {
-            instructor.label = instructor.name
+            instructor.label = `${instructor.firstname} ${instructor.lastname}`
             return instructor
           }) || [])
           session.learners = (session.learners && session.learners.map(learner => {
@@ -354,8 +411,16 @@
           component: 'EventScheduler',
           props: {
             event: this.decorateEvent(event),
-            lookups: this.lookups,
+            lookups: {
+              rooms: this.lookups['rooms'],
+              equipment: this.lookups['equipment'],
+              instructors: this.lookups['instructors'],
+              learners: this.lookups['learners'],
+              departments: this.lookups['departments'],
+              scenarios: this.lookups['scenarios'],
+            },
             bookings: this.getBookings(event.day),
+            filters: this.filters,
           },
         }
       },

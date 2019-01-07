@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <article>
       <!-- <svg id="hs-logo" viewbox="0 0 415.4 200.65">
         <defs>
@@ -28,6 +28,7 @@
 
     <h2 class="library--section-title">{{ msg }}</h2>
 
+    <!--
     <demobox :open="true">
 
         <template slot="intro">
@@ -217,6 +218,7 @@
           </section>
         </template>
       </demobox>
+      -->
 
   </article>
 </template>

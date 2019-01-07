@@ -25,6 +25,7 @@
   import IconText from './IconText'
   import EventScheduler from './EventScheduler'
   import EventListing from './EventListing'
+  import { cloneDeep } from 'lodash/fp'
 
   export default {
     components: {
@@ -35,7 +36,6 @@
     props: {
       content: Object,
       position: Object,
-      props: Object,
     },
     mounted() {
       this.setBubbleOpen(true)

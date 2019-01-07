@@ -8,7 +8,7 @@
     <CalendarHeader />
     <div class="sim-calendar--body">
         <CalendarBodyEvents
-          :filteredAvailabilities="filteredAvailabilities"
+          :totalAvailabilities="totalAvailabilities"
           :lookups="lookups"
           :bubbleIsOpen="bubbleIsOpen"
           :showExpandedWeek="showExpandedWeek"
@@ -22,6 +22,9 @@
         />
         <SidebarCoordinator
           :instructors="lookups.instructors"
+          :learners="lookups.instructors"
+          :equipment="lookups.equipment"
+          :roomAttributes="roomAttributes"
           :filters="filters"
           :isDisabled="isBubbleOpen"
           @updateFilters="updateFilters"
@@ -31,8 +34,7 @@
 </template>
 
 <script>
-import { filterAvailabilities } from '../utilities/filter-availabilities'
-import { deepClone } from '../utilities/deep-clone'
+import { cloneDeep, chain, partition, filter } from 'lodash'
 
 import IconEventDuration from './IconEventDuration'
 import IconInstructor from './IconInstructor'
@@ -42,6 +44,9 @@ import IconControl from './IconControl'
 import CalendarHeader from './CalendarHeader'
 import CalendarBodyEvents from './CalendarBodyEvents'
 import SidebarCoordinator from './SidebarCoordinator'
+
+import warningIconUrl from '../utilities/warning-icon'
+
 
 export default {
   components: {
@@ -72,6 +77,13 @@ export default {
         instructors: [{
           id: -1,
         }],
+        learners: [{
+          id: -1,
+        }],
+        equipment: [{
+          id: -1,
+        }],
+        roomAttributes: [],
       },
     }
   },
@@ -99,17 +111,6 @@ export default {
       }
       return classes
     },
-    decoratedFilters() {
-      const filters = deepClone(this.filters)
-      filters.instructorCount = filters.instructors.length
-      filters.instructors = filters.instructors
-        .map(instructor => instructor.id)
-        .filter(id => id > 0)
-      return filters
-    },
-    filteredAvailabilities() {
-      return filterAvailabilities([...this.totalAvailabilities], this.decoratedFilters)
-    },
     selectedDateAvailabilities() {
       const selectedDate = this.selectedDate.format('YYYY-MM-DD')
       return this.user.availabilities[selectedDate] || []
@@ -119,6 +120,13 @@ export default {
     },
     isBubbleOpen() {
       return this.bubbleService.isOpen
+    },
+    roomAttributes() {
+      return chain(this.lookups.rooms)
+        .map('custom_attributes')
+        .flatten()
+        .uniqBy('id')
+        .value()
     },
   },
   methods: {
@@ -297,6 +305,5 @@ export default {
     }
   }
 }
-
 
 </style>

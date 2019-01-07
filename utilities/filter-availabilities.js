@@ -1,4 +1,5 @@
 const { deepClone } = require('./deep-clone')
+const { normalize } = require('./normalize-availabilities')
 
 function filterAvailabilities(instructors, filters) {
   if (!(instructors instanceof Array)){
@@ -11,46 +12,6 @@ function filterAvailabilities(instructors, filters) {
     .reduce(aggregateDaysWithSpecificUsers(filters.instructors), [])
     .map(filterEnoughInstructors(filters.instructorCount))
     .map(filterRequiredInstructors(filters.instructors))
-}
-
-// Reorganizes the API response to something workable
-function normalize(unnormalizedUsers) {
-  return Object.keys(unnormalizedUsers).map(id => {
-    return {
-      id: +id,
-      days: unnormalizedUsers[id].map(dayAvailability => {
-        const date = Object.keys(dayAvailability)[0]
-        return {
-          date: stripTime(date),
-          startTime: dayAvailability[date].startTime,
-          duration: dayAvailability[date].duration,
-        }
-      })
-    }
-  }).map(user => {
-    user.days = stripKeys(user.days.reduce(groupUserDays, {}))
-    return user
-  })
-
-  function groupUserDays(groupedAvailabilities, availability) {
-    groupedAvailabilities[availability.date]
-      ? groupedAvailabilities[availability.date].availabilities.push({
-        startTime: availability.startTime,
-        duration: availability.duration,
-      })
-      : groupedAvailabilities[availability.date] = initializeAvailabilityDate(availability)
-    return groupedAvailabilities
-
-    function initializeAvailabilityDate(availability) {
-      return {
-        date: availability.date,
-        availabilities: [{
-          startTime: availability.startTime,
-          duration: availability.duration,
-        }]
-      }
-    }
-  }
 }
 
 function filterDuration(duration) {

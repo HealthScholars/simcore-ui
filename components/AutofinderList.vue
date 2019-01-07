@@ -38,6 +38,7 @@
   import Autofinder from './Autofinder'
 
   import { deepClone } from '../utilities/deep-clone'
+  import { differenceBy, flatten } from 'lodash'
 
   export default {
     components: {
@@ -46,11 +47,22 @@
     },
     props: {
       selectedItems: Array,
-      availableItems: Array,
+      options: Array,
+    },
+    watch: {
+      availableItems(value){
+      }
     },
     computed: {
-      selectedItemCount(){
+      selectedItemCount() {
         return this.selectedItems.length
+      },
+      availableItems() {
+        return differenceBy(
+          flatten(this.options),
+          this.selectedItems,
+          'id',
+        )
       },
     },
     methods: {

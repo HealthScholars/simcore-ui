@@ -2,13 +2,14 @@
   <section class="session-listing">
     <header>
       <AutoFinder
-        :options="lookups.scenarios"
+        :options="scenariosByDepartment"
         :selectedItem="session.scenario"
-        :canRemove="false"
+        :canRemove="true"
         :isFocused="false"
         placeholder="Type to search scenarios"
         @select="update('scenario', ...arguments)"
         @clear="update('scenario', {})"
+        @remove="update('scenario', {})"
       />
       <IconText
         v-if="canRemove"
@@ -24,17 +25,17 @@
             <h5>{{section.label}}</h5>
             <AutoFinderList
               :selectedItems="session[section.key]"
-              :availableItems="lookups[section.key]"
+              :options="lookups[section.key]"
               @setSelectedList="update(section.key, ...arguments)"
             >
               <AutoFinder
                 slot-scope="slotProps"
                 placeholder="Type to search"
+                sortOrder="index"
                 :options="slotProps.availableItems"
                 :selectedItem="slotProps.item"
                 :canRemove="slotProps.selectedItems.length > 1"
                 :isFocused="slotProps.index === slotProps.selectedItems.length - 1"
-                :errorMessage="getErrorMessage(section, slotProps.item)"
                 @select="slotProps.select(slotProps.index, ...arguments)"
                 @clear="slotProps.clear(slotProps.index)"
                 @remove="slotProps.remove(slotProps.index)"
@@ -54,6 +55,7 @@ import AutoFinderList from './AutofinderList'
 import AutoFinder from './Autofinder'
 
 import { deepClone } from '../utilities/deep-clone'
+import { filter } from 'lodash'
 
 export default {
   components: {
@@ -67,6 +69,10 @@ export default {
     lookups: Object,
     bookings: Object,
     event: Object,
+  },
+  watch: {
+    eventTimes() {
+    },
   },
   computed: {
     sections() {
@@ -84,31 +90,17 @@ export default {
     eventTimes() {
       return this.splitTimes(this.event.startTime, this.event.duration)
     },
+    scenariosByDepartment() {
+      return this.event.department.id > 0
+        ? filter(this.lookups.scenarios, { department_id: this.event.department.id })
+        : this.lookups.scenarios
+    },
   },
   methods: {
     update(property, value){
       const session = deepClone(this.session)
       session[property] = value
       this.$emit('update', session)
-    },
-    getErrorMessage(section, item) {
-      if (['learners', 'instructors'].includes(section.key)) {
-        return this.getPeopleErrorMessage(item)
-      }
-      const bookedTimes = this.bookings[section.key][item.id]
-
-      return bookedTimes && this.eventTimes
-        .filter(eventTime => bookedTimes.includes(eventTime)).length > 0
-        ? `This ${section.key} is currently booked during this time`
-        : ''
-    },
-    getPeopleErrorMessage(person) {
-      const bookedTimes = this.bookings.people[person.id]
-
-      return bookedTimes && this.eventTimes
-        .filter(eventTime => bookedTimes.includes(eventTime)).length > 0
-        ? `This person is currently booked during this time or has not indicated availability`
-        : ''
     },
     splitTimes(startTime, duration) {
       const times = []
@@ -144,6 +136,9 @@ export default {
     h5 {
       margin-bottom: 0;
     }
+  }
+  img {
+    fill: white;
   }
 }
 </style>

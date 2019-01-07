@@ -2,18 +2,18 @@
   <fieldset class="event-scheduler-equipment">
     <h4>Equipment</h4>
     <AutoFinderList
-      :selectedItems="selectedEquipment"
-      :availableItems="availableEquipment"
+      :selectedItems="adjustedScenarioEquipment"
+      :options="availableEquipment"
       @setSelectedList="update"
     >
       <AutoFinder
         slot-scope="slotProps"
         placeholder="Type to search"
+        sortOrder="index"
         :options="slotProps.availableItems"
         :selectedItem="slotProps.item"
-        :canRemove="slotProps.selectedItems.length > 1"
+        :canRemove="true"
         :isFocused="slotProps.index === slotProps.selectedItems.length - 1"
-        :errorMessage="getErrorMessage(slotProps.item)"
         @select="slotProps.select(slotProps.index, ...arguments)"
         @clear="slotProps.clear(slotProps.index)"
         @remove="slotProps.remove(slotProps.index)"
@@ -27,7 +27,8 @@
 import AutoFinderList from './AutofinderList'
 import AutoFinder from './Autofinder'
 
-import { deepClone } from '../utilities/deep-clone'
+import { differenceWith, isEqual } from 'lodash'
+import { map, reject, includes } from 'lodash/fp'
 
 export default {
   components: {
@@ -35,40 +36,76 @@ export default {
     AutoFinder,
   },
   props: {
+    scenarioEquipment: Array,
     selectedEquipment: Array,
     equipmentList: Array,
     equipmentBookings: Object,
     event: Object,
   },
+  data() {
+    return {
+      manuallyAddedEquipment: [],
+      manuallyRemovedEquipment: [],
+    }
+  },
   computed: {
     availableEquipment() {
-      return this.equipmentList.filter(equipment => {
-        return !this.selectedEquipment
-          .find(selectedEquipment => +selectedEquipment.id === +equipment.id)
-      })
+      const selectedIds = map('id')(this.selectedEquipment)
+      const matchesSelectedId = ({ id }) => includes(id)(selectedIds)
+
+      return reject(matchesSelectedId)(this.equipmentList)
     },
-    eventTimes() {
-      return this.splitTimes(this.event.startTime, this.event.duration)
+    adjustedScenarioEquipment() {
+      console.log('check', this.scenarioEquipment)
+      const equipmentWithRemovals = this.scenarioEquipment.filter(item => {
+        return !this.manuallyRemovedEquipmentIds.includes(item.id)
+      })
+      return [
+        ...equipmentWithRemovals,
+        ...this.manuallyAddedEquipment,
+      ]
+    },
+    adjustedScenarioEquipmentIds() {
+      return this.adjustedScenarioEquipment.map(item => item.id)
+    },
+    manuallyRemovedEquipmentIds() {
+      return this.manuallyRemovedEquipment.map(item => item.id)
     },
   },
   methods: {
     update(equipment) {
+      this.add(equipment)
+      this.remove(equipment.filter(item => item.id > -1))
+
       this.$emit('update', equipment)
     },
-    getErrorMessage(equipment) {
-      const bookedTimes = this.equipmentBookings[equipment.id]
-
-      return bookedTimes && this.eventTimes
-        .filter(eventTime => bookedTimes.includes(eventTime)).length > 0
-        ? 'This equipment is currently booked during this time'
-        : ''
-    },
-    splitTimes(startTime, duration) {
-      const times = []
-      for (let i = 0; i <= duration; i += 0.5) {
-        times.push(startTime + i)
+    adjust({ itemsToAdjust, primaryManualAdjustments, secondaryManualAdjustments }) {
+      return {
+        primaryList: primaryManualAdjustments
+          .filter(item => !itemsToAdjust.map(item => item.id).includes(item.id)),
+        secondaryList: [
+          ...secondaryManualAdjustments,
+          ...differenceWith(itemsToAdjust, this.scenarioEquipment, isEqual),
+        ],
       }
-      return times
+    },
+    add(equipment) {
+      const { primaryList, secondaryList } = this.adjust({
+        itemsToAdjust: differenceWith(equipment, this.adjustedScenarioEquipment, isEqual),
+        primaryManualAdjustments: this.manuallyRemovedEquipment,
+        secondaryManualAdjustments: this.manuallyAddedEquipment,
+      })
+      this.manuallyRemovedEquipment = primaryList
+      this.manuallyAddedEquipment = secondaryList
+    },
+    remove(equipment) {
+      const { primaryList, secondaryList } = this.adjust({
+        itemsToAdjust: differenceWith(this.adjustedScenarioEquipment, equipment, isEqual),
+        primaryManualAdjustments: this.manuallyAddedEquipment,
+        secondaryManualAdjustments: this.manuallyRemovedEquipment,
+      })
+      this.manuallyAddedEquipment = primaryList
+      this.manuallyRemovedEquipment = secondaryList
     },
   },
 }

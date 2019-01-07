@@ -29,6 +29,11 @@ import DocSelection from '../pages/components/Selection'
 import DocSummaryBlock from '../pages/components/SummaryBlock'
 import DocSwitch from '../pages/components/Switch'
 import DocTag from '../pages/components/Tag'
+import DocTagListItem from '../pages/components/TagListItem'
+import DocTagList from '../pages/components/TagList'
+import DocAutofinder from '../pages/components/Autofinder'
+import DocAutofinderDetails from '../pages/components/AutofinderDetails'
+import DocAutofinderDetailItem from '../pages/components/AutofinderDetailItem'
 import DocTimePicker from '../pages/components/TimePicker'
 import DocTooltip from '../pages/components/Tooltip'
 
@@ -230,6 +235,46 @@ export default new Router({
           label: 'Tag',
           components: {
             details: DocTag,
+          },
+        },
+        {
+          path: 'tag-list-item',
+          name: 'tag-list-item',
+          label: 'TagListItem',
+          components: {
+            details: DocTagListItem,
+          },
+        },
+        {
+          path: 'tag-list',
+          name: 'tag-list',
+          label: 'TagList',
+          components: {
+            details: DocTagList,
+          },
+        },
+        {
+          path: 'autofinder',
+          name: 'autofinder',
+          label: 'Autofinder',
+          components: {
+            details: DocAutofinder,
+          },
+        },
+        {
+          path: 'autofinder-details',
+          name: 'autofinder-details',
+          label: 'AutofinderDetails',
+          components: {
+            details: DocAutofinderDetails,
+          },
+        },
+        {
+          path: 'autofinder-detail-item',
+          name: 'autofinder-detail-item',
+          label: 'AutofinderDetailItem',
+          components: {
+            details: DocAutofinderDetailItem,
           },
         },
         {
