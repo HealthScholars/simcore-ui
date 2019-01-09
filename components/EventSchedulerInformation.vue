@@ -59,9 +59,6 @@ export default {
     departments: Array,
     // category: Object,
   },
-  mounted() {
-    console.log('d', this.departments)
-  },
   computed: {
     categories() {
       return [{

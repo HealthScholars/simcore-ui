@@ -31,9 +31,6 @@ export default {
   props: {
     scenarios: Array,
   },
-  mounted(){
-    console.log('asdf', this.scenarios)
-  },
   computed: {
     allScenarios(){
       return [{
