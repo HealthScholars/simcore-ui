@@ -49,7 +49,7 @@
     },
     computed: {
       decoratedRoomAttributes() {
-        return this.roomAttributes.map(attribute => Object.assign({ label: attribute.value }, attribute))
+        return this.roomAttributes.map(attribute => Object.assign({ label: attribute.name }, attribute))
       },
       pickers() {
         return [{

@@ -2,8 +2,12 @@
   <div class="autofinder-detail-item">
     <p v-html="label"></p>
     <div class="type">
-      <p>{{category}}</p>
-      <img :src="iconUrl" :alt="category" />
+      <p v-if="category">{{category}}</p>
+      <img
+        v-if="iconUrl"
+        :src="iconUrl"
+        :alt="category"
+      />
     </div>
   </div>
 </template>

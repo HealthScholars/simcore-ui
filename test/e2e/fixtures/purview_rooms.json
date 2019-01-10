@@ -30,10 +30,10 @@
     },
     "custom_attributes": [{
       "id": 1,
-      "value": "Wall Gas"
+      "name": "Wall Gas"
     }, {
       "id": 2,
-      "value": "TV"
+      "name": "TV"
     }]
   },
   {
@@ -67,10 +67,10 @@
     },
     "custom_attributes": [{
       "id": 1,
-      "value": "Wall Gas"
+      "name": "Wall Gas"
     }, {
       "id": 3,
-      "value": "Paddles"
+      "name": "Paddles"
     }]
   }
 ]

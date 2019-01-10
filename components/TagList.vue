@@ -68,6 +68,7 @@ export default {
   .tag-input {
     max-width: 20rem;
     padding: 1rem;
+    margin-top: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     background-color: inherit;
