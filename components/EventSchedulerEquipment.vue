@@ -56,7 +56,6 @@ export default {
       return reject(matchesSelectedId)(this.equipmentList)
     },
     adjustedScenarioEquipment() {
-      console.log('check', this.scenarioEquipment)
       const equipmentWithRemovals = this.scenarioEquipment.filter(item => {
         return !this.manuallyRemovedEquipmentIds.includes(item.id)
       })

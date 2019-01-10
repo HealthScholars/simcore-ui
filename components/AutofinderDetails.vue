@@ -44,6 +44,7 @@ export default {
 .autofinder-details {
   max-width: 25rem;
   box-shadow: 4px 4px 5px #111;
+  background-color: #333;
   li {
     padding: 0;
     margin: 0;

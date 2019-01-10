@@ -19,6 +19,7 @@
   import IconText from './IconText'
   import dayjs from 'dayjs'
   import weekOfYear from 'dayjs/plugin/weekOfYear'
+  import { isSameWeek } from 'date-fns'
 
   dayjs.extend(weekOfYear)
 
@@ -41,10 +42,12 @@
         return this.dateService.selectedDate.isSame(this.day, 'day')
       },
       isInActiveWeek() {
-        // Need to offset by a day to account for Sunday-start weeks
-        const currentWeek = this.dateService.selectedDate.add(1, 'day').week()
-        const dayWeek = this.day.add(1, 'day').week()
-        return currentWeek === dayWeek
+        // This is due to a bug in day js that doesn't do DST dates correctly
+        // date-fns has the same bug, but its `isSameWeek` function will work
+        // correctly if you set the time to noon
+        const selectedDate = this.dateService.selectedDate.add(12, 'hour').toDate()
+        const thisDate = this.day.add(12, 'hour').toDate()
+        return isSameWeek(selectedDate, thisDate)
       },
       dayLabel() {
         return this.day.format('D')
