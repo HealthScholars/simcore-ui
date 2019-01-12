@@ -31,8 +31,6 @@
 </template>
 
 <script>
-  import { normalize } from '../../../utilities/filter-availabilities'
-  import { chain } from 'lodash'
   import Demobox from '../../utility/Demobox'
   import CalendarEvents from '../../../components/CalendarEvents'
 
@@ -73,9 +71,6 @@
           roomAttributes: this.roomAttributes,
         }
       },
-      roomAttributes() {
-        return _.chain(this.$store.rooms).map().value()
-      },
       currentUser() {
         return this.$store.state.currentUser
       },
@@ -83,7 +78,7 @@
         return this.$store.state.events
       },
       totalAvailabilities() {
-        return normalize(this.$store.state.purviewAvailabilities)
+        return this.$store.state.purviewAvailabilities
       },
     },
     methods: {

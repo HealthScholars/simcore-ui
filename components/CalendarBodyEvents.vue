@@ -77,7 +77,7 @@
       }
     },
     props: {
-      totalAvailabilities: Array,
+      totalAvailabilities: Object,
       showExpandedWeek: Boolean,
       lookups: Object,
       user: Object,
@@ -135,7 +135,7 @@
       peopleAvailability() {
         return partialRight(
           getPersonActualAvailability,
-          [this.daysInMonth, this.events], // Also need their stated availabilities
+          [this.daysInMonth, this.events, this.totalAvailabilities],
         )
       },
       filteredAvailabilities() {

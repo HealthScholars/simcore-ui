@@ -8,7 +8,7 @@
     <CalendarHeader />
     <div class="sim-calendar--body">
         <CalendarBodyEvents
-          :totalAvailabilities="totalAvailabilities"
+          :totalAvailabilities="formattedAvailabilities"
           :lookups="lookups"
           :bubbleIsOpen="bubbleIsOpen"
           :showExpandedWeek="showExpandedWeek"
@@ -34,7 +34,11 @@
 </template>
 
 <script>
-import { cloneDeep, chain, partition, filter } from 'lodash'
+import { chain, partition, filter } from 'lodash'
+import { cloneDeep, union, map, keyBy, groupBy, flow, flatMap, mapValues, flatten } from 'lodash/fp'
+const mapWithKey = map.convert({ cap: false })
+import { expandAvailability } from '../utilities/expand-availability'
+import { stripTime } from '../utilities/date'
 
 import IconEventDuration from './IconEventDuration'
 import IconInstructor from './IconInstructor'
@@ -61,7 +65,7 @@ export default {
   props: {
     user: Object,
     lookups: Object,
-    totalAvailabilities: Array,
+    totalAvailabilities: Object,
     events: Array,
     instructors: Array,
   },
@@ -127,6 +131,21 @@ export default {
         .flatten()
         .uniqBy('id')
         .value()
+    },
+    formattedAvailabilities() {
+      return mapValues(user => {
+        return flow([
+          map(mapWithKey(({ startTime, duration }, dateTime) => {
+            return {
+              date: stripTime(dateTime),
+              availabilities: expandAvailability(startTime, duration),
+            }
+          })),
+          flatten,
+          groupBy('date'),
+          mapValues(flatMap('availabilities')),
+        ])(user)
+      })(this.totalAvailabilities)
     },
   },
   methods: {

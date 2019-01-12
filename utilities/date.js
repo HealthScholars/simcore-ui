@@ -93,3 +93,7 @@ export function initializeMonth(days){
     mapValues(day => expandAvailability(0.5, 24)),
   ])(days)
 }
+
+export function stripTime(datetime) {
+  return datetime.split(' ')[0]
+}

@@ -98,7 +98,7 @@ function removeConflicts(id, events, conflictFilter, possibleAvailabilities){
 function removeNoAvailability(id, statedAvailabilities, possibleAvailabilities){
   return isEmpty(statedAvailabilities)
     ? possibleAvailabilities
-    : getAvailabilityIntersection(possibleAvailabilities, normalizeAvailabilities(statedAvailabilities, id))
+    : getAvailabilityIntersection(possibleAvailabilities, statedAvailabilities[id])
 }
 
 function getAvailabilityIntersection(first, second) {
