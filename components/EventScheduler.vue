@@ -72,7 +72,7 @@ import { expandAvailability } from '../utilities/expand-availability'
 import {
   flow, every, omit, map, partition, includes,
   filter, intersection, mapValues, assign, sortBy,
-  inRange, some, cloneDeep, flatten
+  inRange, some, cloneDeep, flatten, flatMap, reduce,
 } from 'lodash/fp'
 import warningIconUrl from '../utilities/warning-icon'
 
@@ -146,17 +146,15 @@ export default {
       return this.getOptions(this.getStandardCategories, equipmentSets)
     },
     scenarioEquipment() {
-      return [
-        ...this.properties.event.sessions
-          .map(session => session.scenario)
-          .filter(this.isNotEmpty)
-          .map(scenario => scenario.equipment)
-          .map(equipment => {
-            equipment[0].label = equipment[0].name // I don't know why this won't unpack
-            return equipment
-          })
-          .reduce(this.accumulateEquipment, []),
-      ]
+      return flow([
+        flatMap('scenario'),
+        filter(this.isNotEmpty),
+        flatMap('equipment'),
+        map(equipment => {
+          return assign(equipment, { label: equipment.name })
+        }),
+        reduce(this.accumulateEquipment, []),
+      ])(this.properties.event.sessions)
     },
   },
   methods: {
@@ -262,7 +260,7 @@ export default {
       this.$emit('saveDraft', this.event)
     },
     accumulateEquipment(accumulatedEquipment, scenarioEquipment) {
-      return [ ...accumulatedEquipment, ...scenarioEquipment ]
+      return [ ...accumulatedEquipment, scenarioEquipment ]
     },
     submitEvent() {
       this.$emit('submitEvent', this.properties.event)
