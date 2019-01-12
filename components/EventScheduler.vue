@@ -156,7 +156,6 @@ export default {
             return equipment
           })
           .reduce(this.accumulateEquipment, []),
-        ...this.properties.event.equipment,
       ]
     },
   },

@@ -27,7 +27,10 @@
             @next="next(index)"
           />
         </li>
-        <li key="add">
+        <li
+          key="add"
+          v-if="!hasEmptySlot"
+        >
           <IconText
             class="control--add-item"
             icon="#icon--control--add"
@@ -45,6 +48,7 @@
   import Autofinder from './Autofinder'
 
   import { cloneDeep, map, differenceBy } from 'lodash'
+  import { find } from 'lodash/fp'
 
   export default {
     components: {
@@ -65,6 +69,9 @@
       },
       availableItems() {
         return differenceBy(this.options, this.selected, 'id')
+      },
+      hasEmptySlot() {
+        return !!find({ id: -1 })(this.selected)
       },
     },
     methods: {

@@ -2,7 +2,7 @@
   <fieldset class="event-scheduler-equipment">
     <h4>Equipment</h4>
     <AutoFinderList
-      :selectedItems="adjustedScenarioEquipment"
+      :selectedItems="totalSelectedEquipment"
       :options="availableEquipment"
       @setSelectedList="update"
     >
@@ -27,8 +27,7 @@
 import AutoFinderList from './AutofinderList'
 import AutoFinder from './Autofinder'
 
-import { differenceWith, isEqual } from 'lodash'
-import { map, reject, includes } from 'lodash/fp'
+import { flow, cloneDeep, map, reject, includes, xorBy, first, find, unionBy } from 'lodash/fp'
 
 export default {
   components: {
@@ -49,6 +48,9 @@ export default {
     }
   },
   computed: {
+    totalSelectedEquipment() {
+      return unionBy('id')(this.adjustedScenarioEquipment, this.selectedEquipment)
+    },
     availableEquipment() {
       const selectedIds = map('id')(this.selectedEquipment)
       const matchesSelectedId = ({ id }) => includes(id)(selectedIds)
@@ -56,55 +58,39 @@ export default {
       return reject(matchesSelectedId)(this.equipmentList)
     },
     adjustedScenarioEquipment() {
-      const equipmentWithRemovals = this.scenarioEquipment.filter(item => {
-        return !this.manuallyRemovedEquipmentIds.includes(item.id)
-      })
-      return [
-        ...equipmentWithRemovals,
-        ...this.manuallyAddedEquipment,
-      ]
-    },
-    adjustedScenarioEquipmentIds() {
-      return this.adjustedScenarioEquipment.map(item => item.id)
+      return flow([
+        reject(item => includes(item.id)(this.manuallyRemovedEquipmentIds)),
+        reject(item => includes(item.id)(this.manuallyAddedEquipmentIds)),
+      ])(this.scenarioEquipment)
     },
     manuallyRemovedEquipmentIds() {
-      return this.manuallyRemovedEquipment.map(item => item.id)
+      return map('id')(this.manuallyRemovedEquipment)
+    },
+    manuallyAddedEquipmentIds() {
+      return map('id')(this.manuallyAddedEquipment)
     },
   },
   methods: {
     update(equipment) {
-      this.add(equipment)
-      this.remove(equipment.filter(item => item.id > -1))
+      const changedItem = flow([
+        xorBy('id', this.totalSelectedEquipment),
+        first,
+      ])(equipment)
+      equipment.length > this.totalSelectedEquipment.length
+        ? this.add(changedItem)
+        : this.remove(changedItem)
 
       this.$emit('update', equipment)
     },
-    adjust({ itemsToAdjust, primaryManualAdjustments, secondaryManualAdjustments }) {
-      return {
-        primaryList: primaryManualAdjustments
-          .filter(item => !itemsToAdjust.map(item => item.id).includes(item.id)),
-        secondaryList: [
-          ...secondaryManualAdjustments,
-          ...differenceWith(itemsToAdjust, this.scenarioEquipment, isEqual),
-        ],
-      }
+    add(item) {
+      find({ id: item.id })(this.manuallyRemovedEquipment)
+        ? this.manuallyRemovedEquipment = reject({ id: item.id })(this.manuallyRemovedEquipment)
+        : this.manuallyAddedEquipment = [...this.manuallyAddedEquipment, item]
     },
-    add(equipment) {
-      const { primaryList, secondaryList } = this.adjust({
-        itemsToAdjust: differenceWith(equipment, this.adjustedScenarioEquipment, isEqual),
-        primaryManualAdjustments: this.manuallyRemovedEquipment,
-        secondaryManualAdjustments: this.manuallyAddedEquipment,
-      })
-      this.manuallyRemovedEquipment = primaryList
-      this.manuallyAddedEquipment = secondaryList
-    },
-    remove(equipment) {
-      const { primaryList, secondaryList } = this.adjust({
-        itemsToAdjust: differenceWith(this.adjustedScenarioEquipment, equipment, isEqual),
-        primaryManualAdjustments: this.manuallyAddedEquipment,
-        secondaryManualAdjustments: this.manuallyRemovedEquipment,
-      })
-      this.manuallyAddedEquipment = primaryList
-      this.manuallyRemovedEquipment = secondaryList
+    remove(item) {
+      find({ id: item.id })(this.manuallyAddedEquipment)
+        ? this.manuallyAddedEquipment = reject({ id: item.id })(this.manuallyAddedEquipment)
+        : this.manuallyRemovedEquipment = [...this.manuallyRemovedEquipment, item]
     },
   },
 }
