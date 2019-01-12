@@ -380,7 +380,7 @@
       decorateEvent(event) {
         event.day = event.day || dayjs(event.date)
         event.attachments = event.attachments.map(attachment => {
-          attachment.location = attachment.location
+          attachment.location = attachment.filePath
           return attachment
         })
         event.department.label = event.department.name

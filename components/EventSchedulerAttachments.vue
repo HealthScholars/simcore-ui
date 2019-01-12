@@ -51,6 +51,7 @@ export default {
       attachments[index] = {
         id: 1,
         location: url,
+        file_path: url,
       }
       this.$emit("update", attachments)
     },
