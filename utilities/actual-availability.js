@@ -101,7 +101,7 @@ function removeNoAvailability(id, statedAvailabilities, possibleAvailabilities){
     : getAvailabilityIntersection(possibleAvailabilities, statedAvailabilities[id])
 }
 
-function getAvailabilityIntersection(first, second) {
+function getAvailabilityIntersection(first = {}, second = {}) {
   return mapValuesWithKey((day, key) => {
     return intersection(day, second[key])
   })(first)
