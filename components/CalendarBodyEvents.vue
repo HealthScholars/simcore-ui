@@ -102,7 +102,15 @@
         return getDaysInMonth(this.dateService.selectedDate)
       },
       initialMonthAvailabilities() {
-        return initializeMonth(this.daysInMonth)
+        return flow([
+          values,
+          reduce((totalAvailabilities, userAvailabilities) => {
+            forOwnWithKey((availabilities, day) => {
+              totalAvailabilities[day] = union(availabilities)(totalAvailabilities[day] || [])
+            })(userAvailabilities)
+            return totalAvailabilities
+          })({}),
+        ])(this.totalAvailabilities)
       },
       equipmentIds() {
         return flow([
