@@ -85,4 +85,13 @@
 
 <style lang="scss">
   @import '../styles/calendar-day';
+  .sim-calendar-day {
+    .sim-calendar--grid--date {
+      padding: 1em;
+    }
+    .local--day--blocks {
+      width: 100%;
+      height: 100%;
+    }
+  }
 </style>

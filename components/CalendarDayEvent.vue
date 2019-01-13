@@ -4,56 +4,58 @@
     :showExpandedWeek="showExpandedWeek"
     :day="day"
   >
-    <TimeLines
-      v-if="showTimelines"
-      slot="timelines"
-      class="sim-calendar--grid--day--timelines"
-      :showHalfHourTicks="false"
-      @createTimeBlock="createPendingEvent"
-    />
-    <div class="local--day--blocks local--day--event-blocks">
-      <template v-for="(event, index) in events">
-        <TimeBlockEvent
-          :block="event"
-          ref="timeBlockEvent"
-          @updatePosition="updateBlockPosition('event', index)"
-          @click.native.stop="selectEvent(event, index)"
-        />
-      </template>
-    </div>
-    <div class="local--day--blocks local--day--pending-blocks">
-      <TimeBlockPendingEvent
-        v-if="pendingEvent"
-        ref="pendingEvent"
-        :block="pendingEvent"
-        @click.native.stop="selectPendingEvent(pendingEvent)"
-        @updatePosition="updateBlockPosition('pendingEvent')"
-        @updateTimeBlock="updatePendingEvent"
-        @clearPendingEvent="$emit('clearPendingEvent')"
+    <div class="day-blocks">
+      <TimeLines
+        v-if="showTimelines"
+        slot="timelines"
+        class="sim-calendar--grid--day--timelines"
+        :showHalfHourTicks="false"
+        @createTimeBlock="createPendingEvent"
       />
-    </div>
-    <div
-      class="local--day--blocks local--day--aggregate-blocks"
-      @click="expandWeek"
-     >
-      <template v-if="blocks">
-        <div v-for="(block, index) in blocks">
-          <!--
-          <TimeBlockSpecificAvailability
-            v-if="hasOnlySpecificInstructors(block)"
-            :key="index"
-            :block="block"
-            @click.native="createPendingEvent(block.startTime)"
+      <div class="local--day--blocks local--day--event-blocks">
+        <template v-for="(event, index) in events">
+          <TimeBlockEvent
+            :block="event"
+            ref="timeBlockEvent"
+            @updatePosition="updateBlockPosition('event', index)"
+            @click.native.stop="selectEvent(event, index)"
           />
-          -->
-          <TimeBlockAggregateAvailability
-            :key="index"
-            :block="block"
-            @click.native="createPendingEvent(block.startTime)"
-          />
-        </div>
-      </template>
-      <template v-else><TimeBlockNull /></template>
+        </template>
+      </div>
+      <div class="local--day--blocks local--day--pending-blocks">
+        <TimeBlockPendingEvent
+          v-if="pendingEvent"
+          ref="pendingEvent"
+          :block="pendingEvent"
+          @click.native.stop="selectPendingEvent(pendingEvent)"
+          @updatePosition="updateBlockPosition('pendingEvent')"
+          @updateTimeBlock="updatePendingEvent"
+          @clearPendingEvent="$emit('clearPendingEvent')"
+        />
+      </div>
+      <div
+        class="local--day--blocks local--day--aggregate-blocks"
+        @click="expandWeek"
+       >
+        <template v-if="blocks">
+          <div v-for="(block, index) in blocks">
+            <!--
+            <TimeBlockSpecificAvailability
+              v-if="hasOnlySpecificInstructors(block)"
+              :key="index"
+              :block="block"
+              @click.native="createPendingEvent(block.startTime)"
+            />
+            -->
+            <TimeBlockAggregateAvailability
+              :key="index"
+              :block="block"
+              @click.native="createPendingEvent(block.startTime)"
+            />
+          </div>
+        </template>
+        <template v-else><TimeBlockNull /></template>
+      </div>
     </div>
   </CalendarDay>
 </template>
@@ -145,9 +147,15 @@
   @import '../styles/calendar-day';
   .local--day--event-blocks, .local--day--pending-blocks {
     position: absolute;
-    width: 50%;
+    width: 100%;
     height: 100%;
-    left: 50% !important;
     margin: 0 !important;
+  }
+  .sim-calendar-day {
+    .day-blocks {
+      width: 100%;
+      margin-left: 20%;
+      position: relative;
+    }
   }
 </style>

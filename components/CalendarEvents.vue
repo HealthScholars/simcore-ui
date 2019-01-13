@@ -175,6 +175,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../styles/_base';
 @import '../styles/calendar';
 
 .sim-flex--handoff {flex: 1;display: flex;}
@@ -252,16 +253,11 @@ export default {
     .sim-calendar--aside {
       width: 28em;
     }
-    .sim-calendar--grid--day--timelines {
-      left: 3em;
-    }
   }
 
   .local--day--pending-blocks {
     position: absolute;
     top: 0;
-    left: 3em;
-    right: 2em;
     bottom: 0;
 
     .sim-timeblock {
