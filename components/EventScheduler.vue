@@ -73,6 +73,7 @@ import {
   flow, every, omit, map, partition, includes,
   filter, intersection, mapValues, assign, sortBy,
   inRange, some, cloneDeep, flatten, flatMap, reduce,
+  omitBy, union, toNumber,
 } from 'lodash/fp'
 import warningIconUrl from '../utilities/warning-icon'
 
@@ -95,7 +96,39 @@ export default {
       return this.properties.event
     },
     bookings() {
-      return this.properties.bookings
+      const bookings = this.properties.bookings
+      const sessions = this.properties.event.sessions
+      const equipment = this.properties.event.equipment
+      const getIds = flow([
+        map('id'),
+        map(toNumber),
+      ])
+
+      const {
+        instructors, learners, rooms
+      } = reduce((collection, item) => {
+        collection[item] = getIds(flatMap(item)(sessions))
+        return collection
+      })({})(['instructors', 'learners', 'rooms'])
+      const bookedEquipment = getIds(equipment)
+
+      const data = [{
+        label: 'rooms',
+        bookedItems: rooms,
+      },{
+        label: 'people',
+        bookedItems: union(instructors, learners),
+      },{
+        label: 'equipment',
+        bookedItems: bookedEquipment,
+      }]
+
+      return reduce((newBookings, {label, bookedItems}) => {
+        newBookings[label] = omitBy((_, id) => {
+          return includes(+id)(bookedItems)
+        })(bookings[label])
+        return newBookings
+      })({})(data)
     },
     lookups() {
       return {
@@ -110,7 +143,7 @@ export default {
     instructorOptions() {
       const instructorSets = this.getBooked(
         this.properties.lookups.instructors,
-        this.properties.bookings.people,
+        this.bookings.people,
       )
 
       return this.getOptions(this.getBookedCategories, instructorSets)
@@ -118,7 +151,7 @@ export default {
     learnerOptions() {
       const learnerSets = this.getBooked(
         this.properties.lookups.learners,
-        this.properties.bookings.people,
+        this.bookings.people,
       )
 
       return this.getOptions(this.getBookedCategories, learnerSets)
@@ -196,7 +229,6 @@ export default {
     getBooked(items, bookings) {
       const state = map(item => {
         return assign(item, {
-          isBooked: this.isDuringEvent(bookings[item.id]),
           isBooked: bookings[item.id] ? this.isDuringEvent(bookings[item.id]) : false,
         })
       })(items)

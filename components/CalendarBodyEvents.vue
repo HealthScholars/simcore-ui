@@ -57,9 +57,11 @@
     cloneDeep, map, reduce, uniq, partial, intersection,
     mapValues, flow, filter, partialRight, includes,
     differenceWith, isEqual, flatMap, flatten, assign,
+    values, forOwn, union,
   } from 'lodash/fp'
   import warningIconUrl from '../utilities/warning-icon'
   const mapValuesWithKey = mapValues.convert({ 'cap': false });
+  const forOwnWithKey = forOwn.convert({ 'cap': false });
 
   export default {
     components: {
