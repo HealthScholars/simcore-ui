@@ -87,7 +87,7 @@
   @import '../styles/calendar-day';
   .sim-calendar-day {
     .sim-calendar--grid--date {
-      padding: 1em;
+      padding: 0.1rem 0.25rem;
     }
     .local--day--blocks {
       width: 100%;
