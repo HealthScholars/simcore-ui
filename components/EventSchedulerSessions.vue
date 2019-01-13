@@ -58,13 +58,14 @@ export default {
       })
     },
     dynamicSessions() { // This exists because the icons are added dynamically from the lookups
-      return this.sessions.map(session => {
+      const sessions = cloneDeep(this.sessions)
+      return sessions.map(session => {
         session.learners = session.learners.map(learner => {
           if (learner.id > 0) {
-            const matchedLearner = find({ id: learner.id })(flatten(this.lookups.learners))
+            const { category, iconUrl } = find({ id: learner.id })(flatten(this.lookups.learners))
             return assign(learner, {
-              category: matchedLearner.category,
-              iconUrl: matchedLearner.iconUrl,
+              category,
+              iconUrl,
             })
           } else {
             return learner
@@ -72,10 +73,10 @@ export default {
         })
         session.instructors = session.instructors.map(instructor => {
           if (instructor.id > 0) {
-            const matchedInstructor = find({ id: instructor.id })(flatten(this.lookups.instructors))
+            const { category, iconUrl } = find({ id: instructor.id })(flatten(this.lookups.instructors))
             return assign(instructor, {
-              category: matchedInstructor.category,
-              iconUrl: matchedInstructor.iconUrl,
+              category,
+              iconUrl,
             })
           } else {
             return instructor
@@ -83,10 +84,10 @@ export default {
         })
         session.rooms = session.rooms.map(room => {
           if (room.id > 0) {
-            const matchedRoom = find({ id: room.id })(flatten(this.lookups.rooms))
+            const { category, iconUrl } = find({ id: room.id })(flatten(this.lookups.rooms))
             return assign(room, {
-              category: matchedRoom.category,
-              iconUrl: matchedRoom.iconUrl,
+              category,
+              iconUrl,
             })
           } else {
             return room
@@ -124,7 +125,7 @@ export default {
       const eventIds = flow([
         flatMap(label),
         map('id'),
-      ])(this.event.sessions)
+      ])(this.sessions)
       const availableIds = difference(allIds, eventIds)
 
       // Pack if not a nested collection

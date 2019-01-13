@@ -57,9 +57,11 @@
     cloneDeep, map, reduce, uniq, partial, intersection,
     mapValues, flow, filter, partialRight, includes,
     differenceWith, isEqual, flatMap, flatten, assign,
+    values, forOwn, union,
   } from 'lodash/fp'
   import warningIconUrl from '../utilities/warning-icon'
   const mapValuesWithKey = mapValues.convert({ 'cap': false });
+  const forOwnWithKey = forOwn.convert({ 'cap': false });
 
   export default {
     components: {
@@ -102,7 +104,15 @@
         return getDaysInMonth(this.dateService.selectedDate)
       },
       initialMonthAvailabilities() {
-        return initializeMonth(this.daysInMonth)
+        return flow([
+          values,
+          reduce((totalAvailabilities, userAvailabilities) => {
+            forOwnWithKey((availabilities, day) => {
+              totalAvailabilities[day] = union(availabilities)(totalAvailabilities[day] || [])
+            })(userAvailabilities)
+            return totalAvailabilities
+          })({}),
+        ])(this.totalAvailabilities)
       },
       equipmentIds() {
         return flow([
@@ -380,7 +390,7 @@
       decorateEvent(event) {
         event.day = event.day || dayjs(event.date)
         event.attachments = event.attachments.map(attachment => {
-          attachment.location = attachment.location
+          attachment.location = attachment.filePath
           return attachment
         })
         event.department.label = event.department.name
