@@ -1,0 +1,144 @@
+// base styles
+
+body {
+  background: var(--base-bg);
+  color: var(--base-color);
+  font-family: var(--base-font);
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,.h1,
+h2,.h2,
+h3,.h3,
+h4,.h4,
+h5,.h5,
+h6,.h6 {
+  line-height: 1.4;
+  margin-top: 0;
+
+  small {
+    font-size: 60%;
+  }
+}
+
+p {
+  line-height: 1.6;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  & + * {
+        margin-top: 1.5rem;
+  }
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: var(--action);
+
+  &.router-link-exact-active {
+    color: var(--medium-grey);
+  }
+
+  svg {
+    line-height: 0;
+  }
+}
+
+img {
+  max-width: 100%;
+}
+
+.accent {
+  color: var(--accent);
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    padding: .5em 0;
+
+    li {
+      padding: .5em 0 .5em 1em;
+    }
+  }
+}
+
+pre {
+  -moz-osx-font-smoothing: initial;
+  -webkit-font-smoothing: initial;
+}
+
+::selection {
+  background: var(--blue-film-heavy);
+  color: var(--lightest);
+}
+
+::-moz-selection {
+  background: var(--blue-film-heavy);
+  color: var(--lightest);
+}
+
+// buttons
+
+button,
+.button {
+  background: var(--color);
+  border: 0;
+  border-radius: .2em;
+  box-shadow: 0 0 0 1px var(--line) inset;
+  color: var(--light);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  padding: .4em .7em;
+  transition: transform .15s ease-out;
+  will-change: transform;
+
+  &:active {
+    transform: scale(.95);
+  }
+
+  &:active,
+  &:focus {
+    box-shadow: 0 0 0 1px var(--line) inset, 0 0 2px 1px var(--action);
+  }
+
+  &.secondary {
+    background: var(--edge);
+    color: var(--action);
+
+    &:hover {
+      background: var(--dust);
+    }
+  }
+
+  &.link {
+    background: transparent;
+    color: var(--action);
+
+    &:not(:focus):not(:active) {
+      box-shadow: none;
+    }
+  }
+
+  &.danger {
+    --color: var(--danger);
+    // background: var(--danger);
+  }
+}
+
+// modifiers
+
+.border-top--lighy-grey {
+  border-top: 1px solid var(--light-grey);
+}
+
+.border-bottom--lighy-grey {
+  border-bottom: 1px solid var(--light-grey);
+}

@@ -111,6 +111,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import '../styles/_base';
 @import '../styles/calendar';
 
 .sim-flex--handoff {flex: 1;display: flex;}
@@ -221,7 +222,7 @@ export default {
       }
     }
   }
-  
+
   &--filters {
     --ms-lodestar: 600ms;
     --selection-color: var(--green);
