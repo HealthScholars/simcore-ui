@@ -4,7 +4,7 @@ const {
   constant, mapValues, find, keyBy, get, flatten,
   uniq, intersection, map, reduce, reject, any,
   intersectionWith, isEqual, cloneDeep, differenceWith,
-  omit, some, identity, omitBy, eq,
+  omit, some, identity, omitBy, eq, add,
 } = require('lodash/fp')
 const mapValuesWithKey = mapValues.convert({ 'cap': false });
 const mapWithKey = map.convert({ 'cap': false });
@@ -42,7 +42,9 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
       }),
       mapValuesWithKey((users, date) => {
         return mapValuesWithKey((availabilities, user) => {
-          return difference(availabilities)(bookings[date][user])
+          return bookings[date][user]
+            ? difference(bookings[date][user] || [])(availabilities)
+            : availabilities
         })(users)
       }),
       mapValues(omitBy(isEmpty)),
@@ -52,8 +54,9 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
   function filterDatesForEnoughUsers(requiredCount, statedAvailabilities) {
     return remainingDays => { // This is the remaining availabilities
       return mapValuesWithKey((availabilities, date) => { // This is each day
+        console.log('xx', availabilities)
         return filter(availability => { // This is filtering each individual availability
-          return getAvailabilityCount(statedAvailabilities[date], availability) > requiredCount
+          return getAvailabilityCount(statedAvailabilities[date], availability) >= requiredCount
         })(availabilities)
       })(remainingDays)
     }
@@ -63,7 +66,7 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
     return reduce((count, availabilities) => {
       return eq(availability)(availabilities)
         ? count
-        : count += 1
+        : add(count, 1)
     })(0)(userAvailabilities)
   }
 
