@@ -7,7 +7,7 @@ const methods = {
   addEvent(userId) {
     return `${baseUrl}/users/${userId}/events`
   },
-  updateEvent(userId) {
+  updateEvent(userId, eventId) {
     return `${baseUrl}/users/${userId}/events/${eventId}`
   },
   deleteEvent(userId, eventId) {

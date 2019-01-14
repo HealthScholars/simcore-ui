@@ -325,6 +325,7 @@
       },
       prepareEvent(event) {
         return {
+          id: event.id || -1,
           title: event.title,
           description: event.description,
           date: event.day.format('YYYY-MM-DD'),
