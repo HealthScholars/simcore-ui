@@ -37,10 +37,6 @@
   &--pending-blocks {
     z-index: 2;
   }
-
-  > .local--day--blocks + .local--day--blocks {
-    margin: 0 0 0 1em;
-  }
 }
 
 .is-coordinator-context {
