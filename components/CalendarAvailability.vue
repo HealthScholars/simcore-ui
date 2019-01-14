@@ -197,7 +197,6 @@ export default {
   .local--day--pending-blocks {
     position: absolute;
     top: 0;
-    left: 3em;
     right: 2em;
     bottom: 0;
 

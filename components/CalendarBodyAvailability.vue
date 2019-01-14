@@ -3,6 +3,7 @@
     @toggleExpandedWeek="toggleExpandedWeek"
   >
     <CalendarDayAvailability v-for="(day, index) in daysInCurrentMonth"
+      class="calendar-body-availability"
       :key="index"
       slot="day"
       :day="day"
@@ -46,3 +47,10 @@
   }
 </script>
 
+<style lang="scss">
+  .sim-calendar-day {
+    .local--day--blocks {
+      width: 50%!important;
+    }
+  }
+</style>
