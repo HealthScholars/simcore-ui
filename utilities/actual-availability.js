@@ -3,20 +3,16 @@ const {
   filter, partial, includes, zipObject, times,
   constant, mapValues, find, keyBy, get, flatten,
   uniq, intersection, map, reduce, reject, any,
+  intersectionWith, isEqual, cloneDeep, differenceWith,
+  omit, some, identity, omitBy, eq,
 } = require('lodash/fp')
 const mapValuesWithKey = mapValues.convert({ 'cap': false });
+const mapWithKey = map.convert({ 'cap': false });
+const omitWithKey = omit.convert({ 'cap': false });
 
 const { expandAvailability } = require('./expand-availability')
 const { normalize } = require('./normalize-availabilities')
 const { initializeMonth } = require('./date')
-
-function getPeopleActualAvailability(ids, days, events, statedAvailabilities = {}) {
-  const totalAvailability = map(id => {
-    return getPersonActualAvailability(id, days, events, statedAvailabilities)
-  })(ids)
-
-  // are there enough? Need a new predicate?
-}
 
 function getPersonActualAvailability(id, days, events, statedAvailabilities = {}) {
   const personFilter = partial(containsSession)([['learners', 'instructors'], id])
@@ -28,6 +24,76 @@ function getPersonActualAvailability(id, days, events, statedAvailabilities = {}
     removeConflictsForThisUser,
     removeNoAvailabilityForThisUser,
   ])(days)
+}
+
+function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
+  const flippedAvailabilities = removeBookedUsers(
+    bookings,
+    flipAvailabilities(statedAvailabilities),
+  )
+
+  return filterDatesForEnoughUsers(count, flippedAvailabilities)(days)
+
+  function removeBookedUsers(bookings, flippedAvailabilities) {
+    return flow([
+      omitWithKey((users, date) => bookings[date]),
+      mapValuesWithKey((users, date) => {
+        return omitWithKey((availabilities, user) => bookings[date][user])(users)
+      }),
+      mapValuesWithKey((users, date) => {
+        return mapValuesWithKey((availabilities, user) => {
+          return difference(availabilities)(bookings[date][user])
+        })(users)
+      }),
+      mapValues(omitBy(isEmpty)),
+    ])(flippedAvailabilities)
+  }
+
+  function filterDatesForEnoughUsers(requiredCount, statedAvailabilities) {
+    return remainingDays => { // This is the remaining availabilities
+      return mapValuesWithKey((availabilities, date) => { // This is each day
+        return filter(availability => { // This is filtering each individual availability
+          return getAvailabilityCount(statedAvailabilities[date], availability) > requiredCount
+        })(availabilities)
+      })(remainingDays)
+    }
+  }
+
+  function getAvailabilityCount(userAvailabilities, availability) {
+    return reduce((count, availabilities) => {
+      return eq(availability)(availabilities)
+        ? count
+        : count += 1
+    })(0)(userAvailabilities)
+  }
+
+  function enoughUsers(count) {
+    return availabilities => flow([
+      some(availabilities => size(availabilities) >= count),
+    ])(availabilities)
+  }
+
+  function flipAvailabilities(statedAvailabilities) {
+    return flow([
+      mapWithKey((dates, user) => mapWithKey((availabilities, date) => {
+        return {
+          date,
+          user,
+          availabilities,
+        }
+      })(dates)),
+      flatten,
+      groupBy('date'),
+      mapValues(groupBy('user')),
+      mapValues(mapValues(flatMap('availabilities'))),
+    ])(statedAvailabilities)
+  }
+}
+
+function removeNotEnoughInstructors(events) {
+  return days => {
+    return days
+  }
 }
 
 function getEquipmentAvailability(id, days, events) {
@@ -54,6 +120,7 @@ module.exports = {
   getPersonActualAvailability,
   getEquipmentAvailability,
   getRoomAvailability,
+  getEnoughUsers,
 }
 
 function filterAvailabilitiesByRoomMatches(matchingRooms, events, availabilities){

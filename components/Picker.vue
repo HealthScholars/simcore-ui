@@ -29,7 +29,7 @@
         </li>
         <li
           key="add"
-          v-if="!hasEmptySlot"
+          v-if="allowsMultipleBlanks || !hasEmptySlot"
         >
           <IconText
             class="control--add-item"
@@ -61,6 +61,10 @@
       placeholder: {
         type: String,
         default: 'Please select an item',
+      },
+      allowsMultipleBlanks: {
+        type: Boolean,
+        default: false,
       },
     },
     computed: {
