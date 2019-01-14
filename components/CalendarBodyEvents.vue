@@ -50,6 +50,7 @@
     getEquipmentAvailability,
     getRoomAvailability,
     getPersonActualAvailability,
+    getEnoughUsers,
   } from '../utilities/actual-availability'
   import { getDaysInMonth, initializeMonth } from '../utilities/date'
   import { partition } from 'lodash'
@@ -57,7 +58,7 @@
     cloneDeep, map, reduce, uniq, partial, intersection,
     mapValues, flow, filter, partialRight, includes,
     differenceWith, isEqual, flatMap, flatten, assign,
-    values, forOwn, union,
+    values, forOwn, union, keyBy,
   } from 'lodash/fp'
   import warningIconUrl from '../utilities/warning-icon'
   const mapValuesWithKey = mapValues.convert({ 'cap': false });
@@ -153,15 +154,24 @@
           partial(this.getAvailabilities, [this.roomAvailability, this.roomTags]),
           partial(this.getAvailabilities, [this.equipmentAvailability, this.equipmentIds]),
           partial(this.getAvailabilities, [this.peopleAvailability, this.peopleIds]),
+          this.getEnoughUsers,
         ])(this.initialMonthAvailabilities)
       },
     },
     methods: {
+      getEnoughUsers(days) {
+        const instructorCount = this.filters.instructors.length
+        const daysInMonth = map(dayjs)(this.daysInMonth)
+        const labeledDaysInMonth = keyBy(day => day.format('YYYY-MM-DD'))(daysInMonth)
+        const allBookings = mapValues(this.getBookings)(labeledDaysInMonth)
+        const peopleBookings = mapValues('people')(allBookings)
+
+        return this.getAvailabilities(partialRight(getEnoughUsers, [
+          days, peopleBookings, this.totalAvailabilities, instructorCount,
+        ]), [0], days)
+      },
       getAvailabilities(filteringFunction, ids, initialState) {
-        return reduce(
-          this.accumulateAvailabilities(filteringFunction),
-          initialState,
-        )(ids)
+        return reduce(this.accumulateAvailabilities(filteringFunction))(initialState)(ids)
       },
       accumulateAvailabilities(itemAvailabilityForDate) {
         return (cumulativeAvailabiltities, id) => {
@@ -320,7 +330,7 @@
           date: event.day.format('YYYY-MM-DD'),
           start_time: +event.startTime,
           duration: +event.duration,
-          institution_id: 1,//+event.institution.id,
+          institution_id: event.institution && +event.institution.id || 1,
           department_id: +event.department.id,
           equipment: event.equipment.map(this.getId).filter(this.isValidId),
           attachments: Object.assign([], event.attachments).filter(attachment => attachment.id > 0),

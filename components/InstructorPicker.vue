@@ -4,6 +4,7 @@
       placeholder="Select an instructor"
       :selected="selected"
       :options="options"
+      :allowsMultipleBlanks="allowsMultipleBlanks"
       @setSelected="setSelected"
     >
       <IconText

@@ -15,6 +15,7 @@
            :is="picker.component"
            :options="picker.options"
            :selected="filters[picker.key]"
+           :allowsMultipleBlanks="picker.allowsMultipleBlanks"
            @setSelected="setFilter(picker.key, ...arguments)"
         />
       </div>
@@ -56,18 +57,22 @@
           options: this.instructors,
           key: 'instructors',
           component: 'InstructorPicker',
+          allowsMultipleBlanks: true,
         },{
           options: this.learners,
           key: 'learners',
           component: 'LearnerPicker',
+          allowsMultipleBlanks: false,
         },{
           options: this.equipment,
           key: 'equipment',
           component: 'EquipmentPicker',
+          allowsMultipleBlanks: false,
         },{
           options: this.decoratedRoomAttributes,
           key: 'roomAttributes',
           component: 'RoomPicker',
+          allowsMultipleBlanks: false,
         }]
       },
     },
