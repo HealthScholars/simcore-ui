@@ -320,7 +320,7 @@
           date: event.day.format('YYYY-MM-DD'),
           start_time: +event.startTime,
           duration: +event.duration,
-          institution_id: 1,//+event.institution.id,
+          institution_id: event.institution && +event.institution.id || 1,
           department_id: +event.department.id,
           equipment: event.equipment.map(this.getId).filter(this.isValidId),
           attachments: Object.assign([], event.attachments).filter(attachment => attachment.id > 0),
