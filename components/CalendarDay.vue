@@ -90,8 +90,10 @@
       padding: 0.1rem 0.25rem;
     }
     .local--day--blocks {
-      width: 100%;
+      width: 50%;
       height: 100%;
+      position: absolute;
+      right: 0;
     }
   }
 </style>
