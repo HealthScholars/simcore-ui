@@ -144,6 +144,7 @@ export default {
       const instructorSets = this.getBooked(
         this.properties.lookups.instructors,
         this.bookings.people,
+        this.properties.totalAvailabilities,
       )
 
       return this.getOptions(this.getBookedCategories, instructorSets)
@@ -152,6 +153,7 @@ export default {
       const learnerSets = this.getBooked(
         this.properties.lookups.learners,
         this.bookings.people,
+        this.properties.totalAvailabilities,
       )
 
       return this.getOptions(this.getBookedCategories, learnerSets)
@@ -215,7 +217,7 @@ export default {
         data: isBookedNotMatched,
       }]
     },
-    getBookedCategories({ isNotBooked, isBooked }){
+    getBookedCategories({ isNotBooked, isBooked, isNotAvailable }){
       return [{
         category: '',
         iconUrl: '',
@@ -224,6 +226,10 @@ export default {
         category: 'Booked',
         iconUrl: warningIconUrl,
         data: isBooked,
+      }, {
+        category: 'Not Available',
+        iconUrl: warningIconUrl,
+        data: isNotAvailable,
       }]
     },
     getBooked(items, bookings) {
@@ -233,12 +239,23 @@ export default {
         })
       })(items)
 
-      const [isNotBooked, isBooked] = partition(item => !item.isBooked)(state)
+      const [mayNotBeBooked, isBooked] = partition(item => !item.isBooked)(state)
+
+      const secondSplit = map(item => {
+        const date = this.event.day.format('YYYY-MM-DD')
+        return assign(item, {
+          isNotAvailable: this.properties.totalAvailabilities[item.id]
+            && this.isDuringEvent(this.properties.totalAvailabilities[item.id][date]),
+        })
+      })(mayNotBeBooked)
+
+      const [isNotAvailable, isNotBooked] = partition(item => !item.isNotAvailable)(secondSplit)
+
       return {
         isNotBooked,
         isBooked,
+        isNotAvailable,
       }
-
     },
     getMatchedBookedMatrix(items, activeFilters, bookings, matchingFunction, matchingLabel) {
       const state = map(item => {

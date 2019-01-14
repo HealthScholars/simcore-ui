@@ -431,6 +431,7 @@
             },
             bookings: this.getBookings(event.day),
             filters: this.filters,
+            totalAvailabilities: this.totalAvailabilities,
           },
         }
       },
