@@ -54,7 +54,6 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
   function filterDatesForEnoughUsers(requiredCount, statedAvailabilities) {
     return remainingDays => { // This is the remaining availabilities
       return mapValuesWithKey((availabilities, date) => { // This is each day
-        console.log('xx', availabilities)
         return filter(availability => { // This is filtering each individual availability
           return getAvailabilityCount(statedAvailabilities[date], availability) >= requiredCount
         })(availabilities)
