@@ -13,7 +13,7 @@
           :bubbleIsOpen="bubbleIsOpen"
           :showExpandedWeek="showExpandedWeek"
           :user="user"
-          :events="events"
+          :events="eventsWithScenarios"
           :filters="filters"
           @toggleExpandedWeek="toggleExpandedWeek"
           @expandWeek="expandWeek"
@@ -35,7 +35,7 @@
 
 <script>
 import { chain, partition, filter } from 'lodash'
-import { cloneDeep, union, map, keyBy, groupBy, flow, flatMap, mapValues, flatten } from 'lodash/fp'
+import { cloneDeep, union, map, keyBy, groupBy, flow, flatMap, mapValues, flatten, assign, find } from 'lodash/fp'
 const mapWithKey = map.convert({ cap: false })
 import { expandAvailability } from '../utilities/expand-availability'
 import { stripTime } from '../utilities/date'
@@ -92,6 +92,16 @@ export default {
     }
   },
   computed: {
+    eventsWithScenarios() {
+      return map(event => {
+        event.sessions = map(session => {
+          return assign(session, {
+            scenario: find({id: session.scenarioId})(this.lookups.scenarios)
+          })
+        })(event.sessions)
+        return event
+      })(this.events)
+    },
     dateService() {
       return this.$store.state.services.date
     },
