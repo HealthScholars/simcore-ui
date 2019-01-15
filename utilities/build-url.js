@@ -32,7 +32,7 @@ const methods = {
     return `${baseUrl}/users/${userId}/purview_users?scope=canInstruct`
   },
   availabilities(userId, { startDate, endDate }) {
-    return `${baseUrl}/users/${userId}/availabilities?state_date=${startDate}&end_date=${endDate}`
+    return `${baseUrl}/users/${userId}/availabilities?start_date=${startDate}&end_date=${endDate}`
   },
   userAvailabilities(userId, { startDate, endDate }) {
     return `${baseUrl}/users/${userId}/purview_availabilities?start_date=${startDate}&end_date=${endDate}&key_by=user_id`
