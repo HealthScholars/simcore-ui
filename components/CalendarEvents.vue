@@ -13,7 +13,7 @@
           :bubbleIsOpen="bubbleIsOpen"
           :showExpandedWeek="showExpandedWeek"
           :user="user"
-          :events="eventsWithScenarios"
+          :events="events"
           :filters="filters"
           @toggleExpandedWeek="toggleExpandedWeek"
           @expandWeek="expandWeek"
@@ -92,16 +92,6 @@ export default {
     }
   },
   computed: {
-    eventsWithScenarios() {
-      return map(event => {
-        event.sessions = map(session => {
-          return assign(session, {
-            scenario: find({id: session.scenarioId})(this.lookups.scenarios)
-          })
-        })(event.sessions)
-        return event
-      })(this.events)
-    },
     dateService() {
       return this.$store.state.services.date
     },
