@@ -151,8 +151,8 @@
         }
       },
       selectHighlighted() {
-        this.searchTerm = ''
         this.select(this.matchingOptions[this.highlightedIndex])
+        this.searchTerm = ''
       },
       highlightPrevious() {
         if (this.highlightedIndex >= 0) {
