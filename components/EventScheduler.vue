@@ -73,7 +73,7 @@ import {
   flow, every, omit, map, partition, includes,
   filter, intersection, mapValues, assign, sortBy,
   inRange, some, cloneDeep, flatten, flatMap, reduce,
-  omitBy, union, toNumber,
+  omitBy, union, toNumber, isEmpty, reject,
 } from 'lodash/fp'
 import warningIconUrl from '../utilities/warning-icon'
 
@@ -183,7 +183,7 @@ export default {
     scenarioEquipment() {
       return flow([
         flatMap('scenario'),
-        filter(this.isNotEmpty),
+        reject(isEmpty),
         flatMap('equipment'),
         map(equipment => {
           return assign(equipment, { label: equipment.name })
@@ -301,9 +301,6 @@ export default {
     },
     getOptions(categories, sets) {
       return map(this.decorateOptions)(categories(sets))
-    },
-    isNotEmpty(object) {
-      return !(Object.keys(object).length === 0 && object.constructor === Object)
     },
     saveDraft() {
       this.$emit('saveDraft', this.event)

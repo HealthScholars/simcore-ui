@@ -3,7 +3,7 @@
     <header>
       <AutoFinder
         :options="scenariosByDepartment"
-        :selectedItem="session.scenario"
+        :selectedItem="sessionScenario || {}"
         :canRemove="true"
         :isFocused="false"
         placeholder="Type to search scenarios"
@@ -56,6 +56,7 @@ import AutoFinder from './Autofinder'
 
 import { deepClone } from '../utilities/deep-clone'
 import { filter } from 'lodash'
+import { assign, find } from 'lodash/fp'
 
 export default {
   components: {
@@ -94,6 +95,9 @@ export default {
       return this.event.department.id > 0
         ? filter(this.lookups.scenarios, { department_id: this.event.department.id })
         : this.lookups.scenarios
+    },
+    sessionScenario() {
+      return find({id: this.session.scenarioId})(this.lookups.scenarios)
     },
   },
   methods: {
