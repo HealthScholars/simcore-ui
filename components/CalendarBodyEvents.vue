@@ -311,7 +311,7 @@
       },
       prepareSession(session) {
         return {
-          scenario_id: session.scenario.id || -1,
+          scenario_id: session.scenarioId || -1,
           instructors: session.instructors
             .map(this.getId)
             .filter(this.isValidId),

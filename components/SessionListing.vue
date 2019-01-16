@@ -7,9 +7,9 @@
         :canRemove="true"
         :isFocused="false"
         placeholder="Type to search scenarios"
-        @select="update('scenario', ...arguments)"
-        @clear="update('scenario', {})"
-        @remove="update('scenario', {})"
+        @select="updateScenario(...arguments)"
+        @clear="updateScenario(null)"
+        @remove="updateScenario(null)"
       />
       <IconText
         v-if="canRemove"
@@ -104,6 +104,11 @@ export default {
     update(property, value){
       const session = deepClone(this.session)
       session[property] = value
+      this.$emit('update', session)
+    },
+    updateScenario(value){
+      const session = deepClone(this.session)
+      session.scenarioId = value.id
       this.$emit('update', session)
     },
     splitTimes(startTime, duration) {
