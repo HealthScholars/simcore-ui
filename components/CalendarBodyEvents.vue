@@ -58,7 +58,7 @@
     cloneDeep, map, reduce, uniq, partial, intersection,
     mapValues, flow, filter, partialRight, includes,
     differenceWith, isEqual, flatMap, flatten, assign,
-    values, forOwn, union, keyBy,
+    values, forOwn, union, keyBy, reject,
   } from 'lodash/fp'
   import warningIconUrl from '../utilities/warning-icon'
   const mapValuesWithKey = mapValues.convert({ 'cap': false });
@@ -197,10 +197,11 @@
           return list
         }, cloneDeep(initialList))
       },
-      getBookings(day) {
+      getBookings(day, eventIdToIgnore = null) {
         const date = day.format('YYYY-MM-DD')
         const bookings = flow([
           filter(event => event.date === date),
+          reject({ id: eventIdToIgnore }),
           reduce((bookings, event) => {
             const times = expandAvailability(event.startTime, event.duration)
             const getIds = flatMap('id')
@@ -440,7 +441,7 @@
               departments: this.lookups['departments'],
               scenarios: this.lookups['scenarios'],
             },
-            bookings: this.getBookings(event.day),
+            bookings: this.getBookings(event.day, event.id),
             filters: this.filters,
             totalAvailabilities: this.totalAvailabilities,
           },

@@ -96,39 +96,7 @@ export default {
       return this.properties.event
     },
     bookings() {
-      const bookings = this.properties.bookings
-      const sessions = this.properties.event.sessions
-      const equipment = this.properties.event.equipment
-      const getIds = flow([
-        map('id'),
-        map(toNumber),
-      ])
-
-      const {
-        instructors, learners, rooms
-      } = reduce((collection, item) => {
-        collection[item] = getIds(flatMap(item)(sessions))
-        return collection
-      })({})(['instructors', 'learners', 'rooms'])
-      const bookedEquipment = getIds(equipment)
-
-      const data = [{
-        label: 'rooms',
-        bookedItems: rooms,
-      },{
-        label: 'people',
-        bookedItems: union(instructors, learners),
-      },{
-        label: 'equipment',
-        bookedItems: bookedEquipment,
-      }]
-
-      return reduce((newBookings, {label, bookedItems}) => {
-        newBookings[label] = omitBy((_, id) => {
-          return includes(+id)(bookedItems)
-        })(bookings[label])
-        return newBookings
-      })({})(data)
+      return this.properties.bookings
     },
     lookups() {
       return {
