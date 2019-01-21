@@ -30,6 +30,7 @@
     </select>
     -->
     <label>Department</label>
+    <!--
     <AutoFinder
       id="department"
       class="department-finder"
@@ -42,15 +43,29 @@
       @select="updateEventProperty('department', ...arguments)"
       @clear="updateEventProperty('department', {})"
     />
+    -->
+    <SingleSelector
+      class="department-finder"
+      :items="departmentsWithFacility"
+      :groupingTypes="{ heading: 'facility' }"
+      :set-department="partial(updateEventProperty)(['department'])"
+      placeholder="Type to search departments"
+    >
+      <template slot="option" slot-scope="{ option }">{{option.name}}</template>
+    </SingleSelector>
   </fieldset>
 </template>
 
 <script>
 import AutoFinder from './Autofinder'
+import SingleSelector from './SingleSelector'
+
+import { partial, map, assign } from 'lodash/fp'
 
 export default {
   components: {
     AutoFinder,
+    SingleSelector,
   },
   props: {
     title: String,
@@ -60,6 +75,16 @@ export default {
     // category: Object,
   },
   computed: {
+    departmentsWithFacility() {
+      return map(department => {
+        return assign(department)({
+          facility: department.institution.name,
+        })
+      })(this.departments)
+    },
+    partial() {
+      return partial
+    },
     categories() {
       return [{
         id: 1,
