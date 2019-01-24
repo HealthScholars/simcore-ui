@@ -51,6 +51,7 @@
     getRoomAvailability,
     getPersonActualAvailability,
     getEnoughUsers,
+    getEnoughDuration,
   } from '../utilities/actual-availability'
   import { getDaysInMonth, initializeMonth } from '../utilities/date'
   import { partition } from 'lodash'
@@ -155,10 +156,14 @@
           partial(this.getAvailabilities, [this.equipmentAvailability, this.equipmentIds]),
           partial(this.getAvailabilities, [this.peopleAvailability, this.peopleIds]),
           this.getEnoughUsers,
+          this.getEnoughDuration,
         ])(this.initialMonthAvailabilities)
       },
     },
     methods: {
+      getEnoughDuration(days) {
+        return getEnoughDuration(days, this.filters.duration)
+      },
       getEnoughUsers(days) {
         const instructorCount = this.filters.instructors.length
         const daysInMonth = map(dayjs)(this.daysInMonth)
