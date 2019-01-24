@@ -2,18 +2,26 @@
   <div class="autofinder-details">
     <transition-group appear name="list" tag="ul" mode="in-out">
       <li
-        v-for="(item, index) in options"
-        :key="item.id"
-        @mousedown="selectItem(item)"
+        v-for="(options, key) in groupedOptions"
+        :key="key"
       >
-        <AutofinderDetailItem
-          :label="item.label"
-          :category="item.category"
-          :iconUrl="item.iconUrl"
-          :class="{ selected: index === highlightedIndex }"
-        />
+        <h3>{{key}}</h3>
+        <ul>
+          <li
+            v-for="(item, index) in options"
+            :key="item.id"
+            @mousedown="selectItem(item)"
+          >
+            <AutofinderDetailItem
+              :label="item.label"
+              :category="item.category"
+              :iconUrl="item.iconUrl"
+              :class="{ selected: item.highlightIndex === highlightedIndex }"
+            />
+          </li>
+        </ul>
       </li>
-      <li key="no-results" v-if="options.length === 0">
+      <li key="no-results" v-if="groupedOptions.length === 0">
         <i class="ghost">No matches</i>
       </li>
     </transition-group>
@@ -28,9 +36,8 @@ export default {
     AutofinderDetailItem,
   },
   props: {
-    options: Array,
+    groupedOptions: Object,
     highlightedIndex: Number,
-    groupBy: String,
   },
   methods: {
     selectItem(item) {
@@ -54,6 +61,11 @@ export default {
         background-color: #555;
       }
     }
+  }
+  h3 {
+    padding: 0.5rem 0.25rem;
+    margin-bottom: 0;
+    font-size: 0.85rem;
   }
 }
 </style>
