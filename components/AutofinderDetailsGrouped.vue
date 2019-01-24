@@ -51,6 +51,8 @@ export default {
 
 .autofinder-details {
   max-width: 25rem;
+  max-height: 15rem;
+  overflow-y: auto;
   box-shadow: 4px 4px 5px #111;
   background-color: #333;
   li {
