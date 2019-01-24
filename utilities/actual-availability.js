@@ -9,6 +9,7 @@ const {
 const mapValuesWithKey = mapValues.convert({ 'cap': false });
 const mapWithKey = map.convert({ 'cap': false });
 const omitWithKey = omit.convert({ 'cap': false });
+const reduceWithIndex = reduce.convert({ 'cap': false });
 
 const { expandAvailability } = require('./expand-availability')
 const { normalize } = require('./normalize-availabilities')
@@ -92,6 +93,34 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
   }
 }
 
+function getEnoughDuration(days, duration) {
+  const durationSegmentCount = duration * 2
+
+  return mapValues(availabilities => {
+    const sortedAvailabilities = availabilities.sort()
+
+    return flow([
+      reduceWithIndex((possibleAvailabilities, availability, index) => {
+        const availabilitiesToMatch = expandAvailability(availability, duration)
+        for (
+          let currentMatchingIndex = 0, availabilityIndex = index;
+          currentMatchingIndex < availabilitiesToMatch.length;
+          currentMatchingIndex++, availabilityIndex++
+        ) {
+          if (availabilitiesToMatch[currentMatchingIndex] === sortedAvailabilities[availabilityIndex]) {
+            continue
+          } else {
+            return possibleAvailabilities
+          }
+        }
+        return [...possibleAvailabilities, ...availabilitiesToMatch]
+      })([]),
+      uniq,
+    ])(sortedAvailabilities)
+
+  })(days)
+}
+
 function removeNotEnoughInstructors(events) {
   return days => {
     return days
@@ -123,6 +152,7 @@ module.exports = {
   getEquipmentAvailability,
   getRoomAvailability,
   getEnoughUsers,
+  getEnoughDuration,
 }
 
 function filterAvailabilitiesByRoomMatches(matchingRooms, events, availabilities){
