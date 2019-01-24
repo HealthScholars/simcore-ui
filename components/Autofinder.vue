@@ -29,9 +29,15 @@
         icon="#icon--control--x" icon-type="svg"
       />
     </label>
+    <AutofinderDetailsGrouped
+      v-if="optionsOpen && !groupBy"
+      :groupedOptions="matchingOptionsGrouped"
+      :highlightedIndex="highlightedIndex"
+      @selectItem="select"
+    />
     <AutofinderDetails
-      v-if="optionsOpen"
-      :options="matchingOptions"
+      v-else-if="optionsOpen && groupBy"
+      :options="availableOptions"
       :highlightedIndex="highlightedIndex"
       @selectItem="select"
     />
@@ -42,13 +48,20 @@
   /* eslint no-unused-expressions: 0 */
   import IconText from './IconText'
   import AutofinderDetails from './AutofinderDetails'
+  import AutofinderDetailsGrouped from './AutofinderDetailsGrouped'
 
-  import { flatten, sortBy, unescape } from 'lodash'
+  import {
+    flatMap, identity, unescape, find,
+    filter, flatten, flow, map, sortBy,
+    groupBy, assign
+  } from 'lodash/fp'
+  const mapWithIndex = map.convert({ cap: false })
 
   export default {
     components: {
       IconText,
       AutofinderDetails,
+      AutofinderDetailsGrouped,
     },
     data() {
       return {
@@ -69,6 +82,7 @@
         type: String,
         default: 'alpha',
       },
+      groupBy: String,
     },
     computed: {
       inputValue() {
@@ -83,23 +97,36 @@
         return this.flattenedOptions
       },
       optionsByAlpha() {
-        return sortBy(this.flattenedOptions, 'label')
+        return sortBy('label')(this.flattenedOptions)
       },
       sortedOptions() {
         return this.sortOrder === 'index'
           ? this.optionsByIndex
           : this.optionsByAlpha
       },
-      matchingOptions() {
+      availableOptions() {
         return this.searchTerm
-          ? this.sortedOptions
-              .filter(option => {
-                return option.label.toLowerCase().includes(this.searchTerm.toLowerCase())
-              }).map(option => {
-                option.isHighlighted = +option.id === +this.highlightedIndex
-                return option
-              })
+          ? this.matchingOptions
           : this.sortedOptions
+      },
+      matchingOptions() {
+        return flow([
+          filter(option => {
+            return option.label.toLowerCase().includes(this.searchTerm.toLowerCase())
+          }),
+          map(option => {
+            return assign(option, {
+              isHighlighted: +option.id === +this.highlightedIndex
+            })
+          }),
+        ])(this.sortedOptions)
+      },
+      matchingOptionsGrouped() {
+        return flow([
+          sortBy(this.groupBy),
+          mapWithIndex(this.addHighlightIndex),
+          groupBy(this.groupBy),
+        ])(this.matchingOptions)
       },
       foundItem() {
         return this.selectedItem.id > 0
@@ -151,7 +178,14 @@
         }
       },
       selectHighlighted() {
-        this.select(this.matchingOptions[this.highlightedIndex])
+        const item = this.groupBy
+          ? flow([
+              flatMap(identity),
+              find({ highlightIndex: this.highlightedIndex }),
+            ])(this.matchingOptionsGrouped)
+          : this.matchingOptions[this.highlightedIndex]
+
+        this.select(item)
         this.searchTerm = ''
       },
       highlightPrevious() {
@@ -169,6 +203,11 @@
       },
       isHighlighted(index) {
         return index === this.highlightedIndex
+      },
+      addHighlightIndex(item, index) {
+        return assign(item, {
+          highlightIndex: index,
+        })
       },
     },
   }
