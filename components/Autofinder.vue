@@ -30,13 +30,13 @@
       />
     </label>
     <AutofinderDetailsGrouped
-      v-if="optionsOpen && !groupBy"
+      v-if="optionsOpen && groupBy"
       :groupedOptions="matchingOptionsGrouped"
       :highlightedIndex="highlightedIndex"
       @selectItem="select"
     />
     <AutofinderDetails
-      v-else-if="optionsOpen && groupBy"
+      v-else-if="optionsOpen && !groupBy"
       :options="availableOptions"
       :highlightedIndex="highlightedIndex"
       @selectItem="select"
