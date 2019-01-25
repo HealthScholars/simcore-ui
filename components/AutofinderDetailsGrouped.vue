@@ -3,7 +3,7 @@
     <transition-group appear name="list" tag="ul" mode="in-out">
       <li
         v-for="(options, key) in groupedOptions"
-        :key="key"
+        :key="`group-${key}`"
       >
         <h3>{{key}}</h3>
         <ul>
