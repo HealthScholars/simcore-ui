@@ -31,6 +31,7 @@ const store = new Vuex.Store({
     instructors: [],
     equipment: [],
     rooms: [],
+    purviewRoomAvailabilities: {},
     scenarios: [],
     learners: [],
     events: [],
@@ -64,6 +65,9 @@ const store = new Vuex.Store({
     updateCurrentUserAvailabilities(state, availabilities) {
       state.currentUser.availabilities = availabilities
     },
+    updateRoomAvailabilities(state, availabilities) {
+      state.purviewRoomAvailabilities = availabilities
+    },
     updateInstructorAvailabilities(state, availabilities) {
       state.purviewAvailabilities = availabilities
     },
@@ -93,6 +97,17 @@ const store = new Vuex.Store({
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
     },
+    async updateRoomAvailabilities({dispatch, state, commit}, {date, availabilities}) {
+      const url = buildUrl('updateRoomAvailabilities')(state.currentUser.id)
+      const payload = {
+        dates: {}
+      }
+      payload.dates[date] = availabilities
+      commit('updateCurrentUserAvailabilitiesByDate', {date, availabilities})
+      dispatch('services/loading/pushLoading')
+      await axios.post(url, payload).catch(error => console.error(error.message))
+      dispatch('services/loading/popLoading')
+    },
     async fetchCurrentUserAvailabilities({dispatch, state, commit}) {
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
       const url = buildUrl('availabilities')(state.currentUser.id, {startDate, endDate})
@@ -105,6 +120,19 @@ const store = new Vuex.Store({
         availabilities = {}
       }
       return commit('updateCurrentUserAvailabilities', availabilities)
+    },
+    async fetchRoomAvailabilities({dispatch, state, commit}) {
+      const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
+      const url = buildUrl('roomAvailabilities')(state.currentUser.id, {startDate, endDate})
+      dispatch('services/loading/pushLoading')
+      let availabilities = await axios.get(url)
+        .then(response => response.data.rooms)
+        .catch(error => console.error(error.message))
+      dispatch('services/loading/popLoading')
+      if (availabilities instanceof Array){
+        availabilities = {}
+      }
+      return commit('updateRoomAvailabilities', availabilities)
     },
     async fetchInstructorAvailabilities({dispatch, state, commit}) {
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)

@@ -13,6 +13,7 @@
         @click.native="loadNextMonth"
       />
     </div>
+    <slot />
     <div class="sim-calendar--header--controls sim-calendar--header--controls--days">
       <IconText
         icon="fa-arrow-left fa-fw"
