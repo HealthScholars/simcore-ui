@@ -35,7 +35,7 @@
 
 <script>
 import { chain, partition, filter } from 'lodash'
-import { cloneDeep, union, map, keyBy, groupBy, flow, flatMap, mapValues, flatten, assign, find } from 'lodash/fp'
+import { reduce, cloneDeep, union, map, keyBy, groupBy, flow, flatMap, mapValues, flatten, assign, find } from 'lodash/fp'
 const mapWithKey = map.convert({ cap: false })
 import { expandAvailability } from '../utilities/expand-availability'
 import { stripTime } from '../utilities/date'
@@ -134,17 +134,13 @@ export default {
     },
     formattedAvailabilities() {
       return mapValues(user => {
-        return flow([
-          map(mapWithKey(({ startTime, duration }, dateTime) => {
-            return {
-              date: stripTime(dateTime),
-              availabilities: expandAvailability(startTime, duration),
-            }
-          })),
-          flatten,
-          groupBy('date'),
-          mapValues(flatMap('availabilities')),
-        ])(user)
+        return mapValues(availabilities => {
+          return flatten(
+            reduce((totalAvailabilities, { startTime, duration }) => {
+              return [...totalAvailabilities, ...expandAvailability(startTime, duration)]
+            })([])(availabilities)
+          )
+        })(user)
       })(this.totalAvailabilities)
     },
   },
