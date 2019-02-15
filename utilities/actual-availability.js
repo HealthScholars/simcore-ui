@@ -4,7 +4,7 @@ const {
   constant, mapValues, find, keyBy, get, flatten,
   uniq, intersection, map, reduce, reject, any,
   intersectionWith, isEqual, cloneDeep, differenceWith,
-  omit, some, identity, omitBy, eq, add,
+  omit, some, identity, omitBy, eq, add, sortBy,
 } = require('lodash/fp')
 const mapValuesWithKey = mapValues.convert({ 'cap': false });
 const mapWithKey = map.convert({ 'cap': false });
@@ -39,12 +39,12 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
     return flow([
       omitWithKey((users, date) => bookings[date]),
       mapValuesWithKey((users, date) => {
-        return omitWithKey((availabilities, user) => bookings[date][user])(users)
+        return omitWithKey((availabilities, user) => get('[date][user]')(bookings))
       }),
       mapValuesWithKey((users, date) => {
         return mapValuesWithKey((availabilities, user) => {
-          return bookings[date][user]
-            ? difference(bookings[date][user] || [])(availabilities)
+          return get('[date][user]')(bookings)
+            ? difference(get('[date][user]')(bookings) || [])(availabilities)
             : availabilities
         })(users)
       }),
@@ -94,10 +94,8 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
 }
 
 function getEnoughDuration(days, duration) {
-  const durationSegmentCount = duration * 2
-
   return mapValues(availabilities => {
-    const sortedAvailabilities = availabilities.sort()
+    const sortedAvailabilities = sortBy(identity)(availabilities)
 
     return flow([
       reduceWithIndex((possibleAvailabilities, availability, index) => {

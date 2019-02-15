@@ -20,8 +20,9 @@ export default {
     },
   },
   actions: {
-    setDate(context, date){
-      context.commit('setDate', date)
+    setDate({ dispatch, commit }, date){
+      commit('setDate', date)
+      dispatch('fetchInstructorAvailabilities', null, { root: true })
     },
   }
 }

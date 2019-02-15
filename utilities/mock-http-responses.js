@@ -20,15 +20,11 @@ export default function mockHttpResponses(axios){
         data = instructors
         break
       }
-      case /\/purview_availabilities/.test(error.config.url): {
+      case /\/purview_current_availabilities/.test(error.config.url): {
         data = purviewAvailabilities
         break
       }
-      case /\/purview_room_availabilities/.test(error.config.url): {
-        data = purviewRoomAvailabilities
-        break
-      }
-      case /\/availabilities/.test(error.config.url): {
+      case /\/current_availabilities/.test(error.config.url): {
         data = availabilities
         break
       }
