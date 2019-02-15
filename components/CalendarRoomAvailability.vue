@@ -42,7 +42,8 @@ import CalendarHeader from './CalendarHeader'
 import CalendarBodyRoomAvailability from './CalendarBodyRoomAvailability'
 import SidebarInstructor from './SidebarInstructor'
 
-import { flow, map, get, extend, keys, values, groupBy, mapValues, flatten } from 'lodash/fp'
+import { flow, map, get, extend, keys, values, groupBy, mapValues, reduce, flatten } from 'lodash/fp'
+import { expandAvailability } from '../utilities/expand-availability'
 
 export default {
   components: {
@@ -72,11 +73,7 @@ export default {
       return this.selectedRoomId || this.firstRoomId
     },
     selectedRoomAvailabilities() {
-      return flow([
-        get(this.roomId),
-        map(this.normalizeAvailability),
-        groupBy('date'),
-      ])(this.roomAvailabilities)
+      return this.roomAvailabilities[this.roomId]
     },
     dateService() {
       return this.$store.state.services.date

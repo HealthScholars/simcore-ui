@@ -65,8 +65,11 @@ const store = new Vuex.Store({
     updateCurrentUserAvailabilities(state, availabilities) {
       state.currentUser.availabilities = availabilities
     },
-    updateRoomAvailabilities(state, availabilities) {
+    updateAllRoomAvailabilities(state, availabilities) {
       state.purviewRoomAvailabilities = availabilities
+    },
+    updateRoomAvailabilities(state, { date, availabilities }) {
+      Vue.set(state.purviewRoomAvailabilities, date, availabilities)
     },
     updateInstructorAvailabilities(state, availabilities) {
       state.purviewAvailabilities = availabilities
@@ -103,7 +106,7 @@ const store = new Vuex.Store({
         dates: {}
       }
       payload.dates[date] = availabilities
-      commit('updateCurrentUserAvailabilitiesByDate', {date, availabilities})
+      commit('updateRoomAvailabilities', {date, availabilities})
       dispatch('services/loading/pushLoading')
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
@@ -125,6 +128,7 @@ const store = new Vuex.Store({
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
       const url = buildUrl('roomAvailabilities')(state.currentUser.id, {startDate, endDate})
       dispatch('services/loading/pushLoading')
+
       let availabilities = await axios.get(url)
         .then(response => response.data.rooms)
         .catch(error => console.error(error.message))
@@ -132,7 +136,7 @@ const store = new Vuex.Store({
       if (availabilities instanceof Array){
         availabilities = {}
       }
-      return commit('updateRoomAvailabilities', availabilities)
+      return commit('updateAllRoomAvailabilities', availabilities)
     },
     async fetchInstructorAvailabilities({dispatch, state, commit}) {
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)

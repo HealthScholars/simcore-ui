@@ -41,7 +41,6 @@
         this.$emit('updateAvailabilities', date, availabilities)
       },
       getAvailabilitiesForDay(date) {
-        console.log( this.availabilities[date.format('YYYY-MM-DD')])
         return this.availabilities[date.format('YYYY-MM-DD')] || []
       },
     },

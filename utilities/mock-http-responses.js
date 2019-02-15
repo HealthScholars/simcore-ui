@@ -28,8 +28,8 @@ export default function mockHttpResponses(axios){
         data = availabilities
         break
       }
-      case /\/room_availabilities/.test(error.config.url): {
-        data = error.config.data
+      case /\/purview_room_availabilities/.test(error.config.url): {
+        data = purviewRoomAvailabilities
         break
       }
       case /\/purview_equipment/.test(error.config.url): {
@@ -53,6 +53,10 @@ export default function mockHttpResponses(axios){
         break
       }
       case /\/events/.test(error.config.url): {
+        data = error.config.data
+        break
+      }
+      case /\/room_availabilities/.test(error.config.url): {
         data = error.config.data
         break
       }

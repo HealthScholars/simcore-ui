@@ -41,7 +41,7 @@ const methods = {
     return `${baseUrl}/users/${userId}/purview_current_availabilities?start_date=${startDate}&end_date=${endDate}`
   },
   roomAvailabilities(userId, { startDate, endDate }) {
-    return `${baseUrl}/users/${userId}/purview_room_availabilities?start_date=${startDate}&end_date=${endDate}&key_by=user_id`
+    return `${baseUrl}/users/${userId}/purview_room_availabilities?start_date=${startDate}&end_date=${endDate}`
   },
 }
 
