@@ -39,7 +39,7 @@ function getEnoughUsers(_, days, bookings, statedAvailabilities, count) {
     return flow([
       omitWithKey((users, date) => bookings[date]),
       mapValuesWithKey((users, date) => {
-        return omitWithKey((availabilities, user) => get('[date][user]')(bookings))
+        return omitWithKey((availabilities, user) => get('[date][user]')(bookings))(users)
       }),
       mapValuesWithKey((users, date) => {
         return mapValuesWithKey((availabilities, user) => {
