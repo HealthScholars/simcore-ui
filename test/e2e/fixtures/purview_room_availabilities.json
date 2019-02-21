@@ -1,0 +1,23 @@
+{
+  "rooms": {
+    "50": {
+      "2018-07-13": [{
+        "startTime": 6,
+        "duration": 1
+      },{
+        "startTime": 9,
+        "duration": 1
+      }]
+    },
+    "51": {
+      "2018-07-13": [{
+        "startTime": 5,
+        "duration": 2
+      }],
+      "2018-07-14": [{
+        "startTime": 6,
+        "duration": 1
+      }]
+    }
+  }
+}

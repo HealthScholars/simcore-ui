@@ -4,6 +4,9 @@ const methods = {
   updateAvailabilities(userId) {
     return `${baseUrl}/users/${userId}/current_availabilities`
   },
+  updateRoomAvailabilities(userId, roomId) {
+    return `${baseUrl}/users/${userId}/room_availabilities/${roomId}`
+  },
   addEvent(userId) {
     return `${baseUrl}/users/${userId}/events`
   },
@@ -36,6 +39,9 @@ const methods = {
   },
   userAvailabilities(userId, { startDate, endDate }) {
     return `${baseUrl}/users/${userId}/purview_current_availabilities?start_date=${startDate}&end_date=${endDate}`
+  },
+  roomAvailabilities(userId, { startDate, endDate }) {
+    return `${baseUrl}/users/${userId}/purview_room_availabilities?start_date=${startDate}&end_date=${endDate}`
   },
 }
 

@@ -15,6 +15,7 @@ import DocBadges from '../pages/components/Badge'
 import DocBulkCheck from '../pages/components/BulkCheck'
 import DocCalendar from '../pages/components/Calendar'
 import Availability from '../pages/components/AvailabilityCalendar'
+import RoomAvailability from '../pages/components/RoomAvailabilityCalendar'
 import DocDatalist from '../pages/components/Datalist'
 import DocDatepicker from '../pages/components/Datepicker'
 import DocFilterBy from '../pages/components/FilterBy'
@@ -107,6 +108,14 @@ export default new Router({
           label: 'Calendar',
           components: {
             details: DocCalendar,
+          },
+        },
+        {
+          path: 'room-availability',
+          name: 'room-availability',
+          label: 'Room Availability',
+          components: {
+            details: RoomAvailability,
           },
         },
         {

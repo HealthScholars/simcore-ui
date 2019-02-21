@@ -31,11 +31,13 @@ const store = new Vuex.Store({
     instructors: [],
     equipment: [],
     rooms: [],
+    purviewRoomAvailabilities: {},
     scenarios: [],
     learners: [],
     events: [],
     departments: [],
     users: [],
+    selectedRoomId: 0,
   },
   getters: {
     list: (state) => ({list, value}) => {
@@ -64,11 +66,20 @@ const store = new Vuex.Store({
     updateCurrentUserAvailabilities(state, availabilities) {
       state.currentUser.availabilities = availabilities
     },
+    updateAllRoomAvailabilities(state, availabilities) {
+      state.purviewRoomAvailabilities = availabilities
+    },
+    updateRoomAvailabilities(state, { date, availabilities }) {
+      Vue.set(state.purviewRoomAvailabilities, date, availabilities)
+    },
     updateInstructorAvailabilities(state, availabilities) {
       state.purviewAvailabilities = availabilities
     },
     updateList(state, { key, list }) {
       state[key] = list
+    },
+    updateSelectedRoomId(state, roomId) {
+      state.selectedRoomId = +roomId
     },
   },
   actions: {
@@ -93,6 +104,17 @@ const store = new Vuex.Store({
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
     },
+    async updateRoomAvailabilities({dispatch, state, commit}, {date, availabilities, roomId}) {
+      const url = buildUrl('updateRoomAvailabilities')(state.currentUser.id, roomId)
+      const payload = {
+        dates: {}
+      }
+      payload.dates[date] = availabilities
+      commit('updateRoomAvailabilities', {date, availabilities})
+      dispatch('services/loading/pushLoading')
+      await axios.post(url, payload).catch(error => console.error(error.message))
+      dispatch('services/loading/popLoading')
+    },
     async fetchCurrentUserAvailabilities({dispatch, state, commit}) {
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
       const url = buildUrl('availabilities')(state.currentUser.id, {startDate, endDate})
@@ -105,6 +127,20 @@ const store = new Vuex.Store({
         availabilities = {}
       }
       return commit('updateCurrentUserAvailabilities', availabilities)
+    },
+    async fetchRoomAvailabilities({dispatch, state, commit}) {
+      const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
+      const url = buildUrl('roomAvailabilities')(state.currentUser.id, {startDate, endDate})
+      dispatch('services/loading/pushLoading')
+
+      let availabilities = await axios.get(url)
+        .then(response => response.data.rooms)
+        .catch(error => console.error(error.message))
+      dispatch('services/loading/popLoading')
+      if (availabilities instanceof Array){
+        availabilities = {}
+      }
+      return commit('updateAllRoomAvailabilities', availabilities)
     },
     async fetchInstructorAvailabilities({dispatch, state, commit}) {
       const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
@@ -153,6 +189,9 @@ const store = new Vuex.Store({
         .catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
       dispatch('fetchList', 'events')
+    },
+    updateSelectedRoomId({ commit }, roomId) {
+      commit('updateSelectedRoomId', roomId)
     },
   },
   modules: {
