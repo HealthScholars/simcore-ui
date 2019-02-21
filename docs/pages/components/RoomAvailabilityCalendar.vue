@@ -11,7 +11,9 @@
         <CalendarRoomAvailability
           :rooms="rooms"
           :roomAvailabilities="roomAvailabilities"
+          :selectedRoomId="selectedRoomId"
           @updateAvailabilities="updateAvailabilities"
+          @updateSelectedRoomId="updateSelectedRoomId"
         />
 
       </template>
@@ -53,13 +55,20 @@
       rooms() {
         return flatMap(identity)(this.$store.getters.list({ list: 'rooms', value: 'name' }))
       },
+      selectedRoomId() {
+        return this.$store.state.selectedRoomId
+      },
     },
     methods: {
-      updateAvailabilities(date, availabilities) {
+      updateAvailabilities(roomId, date, availabilities) {
         this.$store.dispatch('updateRoomAvailabilities', {
+          roomId,
           date: date.format('YYYY-MM-DD'),
           availabilities,
         })
+      },
+      updateSelectedRoomId(roomId) {
+        this.$store.dispatch('updateSelectedRoomId', roomId)
       },
     },
   }

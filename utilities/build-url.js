@@ -4,8 +4,8 @@ const methods = {
   updateAvailabilities(userId) {
     return `${baseUrl}/users/${userId}/current_availabilities`
   },
-  updateRoomAvailabilities(userId) {
-    return `${baseUrl}/users/${userId}/room_availabilities`
+  updateRoomAvailabilities(userId, roomId) {
+    return `${baseUrl}/users/${userId}/room_availabilities/${roomId}`
   },
   addEvent(userId) {
     return `${baseUrl}/users/${userId}/events`

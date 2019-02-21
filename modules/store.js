@@ -37,6 +37,7 @@ const store = new Vuex.Store({
     events: [],
     departments: [],
     users: [],
+    selectedRoomId: 0,
   },
   getters: {
     list: (state) => ({list, value}) => {
@@ -77,6 +78,9 @@ const store = new Vuex.Store({
     updateList(state, { key, list }) {
       state[key] = list
     },
+    updateSelectedRoomId(state, roomId) {
+      state.selectedRoomId = +roomId
+    },
   },
   actions: {
     async fetchList({ dispatch, state, commit }, key) {
@@ -100,8 +104,8 @@ const store = new Vuex.Store({
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
     },
-    async updateRoomAvailabilities({dispatch, state, commit}, {date, availabilities}) {
-      const url = buildUrl('updateRoomAvailabilities')(state.currentUser.id)
+    async updateRoomAvailabilities({dispatch, state, commit}, {date, availabilities, roomId}) {
+      const url = buildUrl('updateRoomAvailabilities')(state.currentUser.id, roomId)
       const payload = {
         dates: {}
       }
@@ -185,6 +189,9 @@ const store = new Vuex.Store({
         .catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
       dispatch('fetchList', 'events')
+    },
+    updateSelectedRoomId({ commit }, roomId) {
+      commit('updateSelectedRoomId', roomId)
     },
   },
   modules: {

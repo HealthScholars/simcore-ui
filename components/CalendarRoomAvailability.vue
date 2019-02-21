@@ -9,7 +9,7 @@
       <select
         class="rooms-list"
         :value="roomId"
-        @input="selectedRoomId = $event.target.value"
+        @input="updateSelectedRoomId($event.target.value)"
       >
         <option
           v-for="(room, index) in rooms"
@@ -58,11 +58,11 @@ export default {
   props: {
     rooms: Array,
     roomAvailabilities: Object,
+    selectedRoomId: Number,
   },
   data() {
     return {
       showExpandedWeek: false,
-      selectedRoomId: null,
     }
   },
   computed: {
@@ -108,10 +108,13 @@ export default {
       this.showExpandedWeek = !this.showExpandedWeek
     },
     updateAvailabilities(date, availabilities) {
-      this.$emit('updateAvailabilities', date, availabilities)
+      this.$emit('updateAvailabilities', this.roomId, date, availabilities)
     },
     expandWeek() {
       this.showExpandedWeek = true
+    },
+    updateSelectedRoomId(selectedRoomId) {
+      this.$emit('updateSelectedRoomId', selectedRoomId)
     },
   },
 }
