@@ -69,8 +69,9 @@ const store = new Vuex.Store({
     updateAllRoomAvailabilities(state, availabilities) {
       state.purviewRoomAvailabilities = availabilities
     },
-    updateRoomAvailabilities(state, { date, availabilities }) {
-      Vue.set(state.purviewRoomAvailabilities, date, availabilities)
+    updateRoomAvailabilities(state, { roomId, date, availabilities }) {
+      Vue.set(state.purviewRoomAvailabilities, roomId, state.purviewRoomAvailabilities[roomId] || {})
+      Vue.set(state.purviewRoomAvailabilities[roomId], date, availabilities)
     },
     updateInstructorAvailabilities(state, availabilities) {
       state.purviewAvailabilities = availabilities
@@ -110,7 +111,7 @@ const store = new Vuex.Store({
         dates: {}
       }
       payload.dates[date] = availabilities
-      commit('updateRoomAvailabilities', {date, availabilities})
+      commit('updateRoomAvailabilities', {roomId, date, availabilities})
       dispatch('services/loading/pushLoading')
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
@@ -219,3 +220,4 @@ function normalizeResponse(key){
 }
 
 export default store
+
