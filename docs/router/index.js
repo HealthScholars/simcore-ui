@@ -18,6 +18,7 @@ import Availability from '../pages/components/AvailabilityCalendar'
 import RoomAvailability from '../pages/components/RoomAvailabilityCalendar'
 import DocDatalist from '../pages/components/Datalist'
 import DocDatepicker from '../pages/components/Datepicker'
+import DocDataTable from '../pages/components/DataTable'
 import DocFilterBy from '../pages/components/FilterBy'
 import DocForm from '../pages/components/Form'
 import DocIconText from '../pages/components/IconText'
@@ -132,6 +133,14 @@ export default new Router({
           label: 'Datalist',
           components: {
             details: DocDatalist,
+          },
+        },
+        {
+          path: 'dataTable',
+          name: 'dataTable',
+          label: 'DataTable',
+          components: {
+            details: DocDataTable,
           },
         },
         {

@@ -64,7 +64,9 @@
           duration: this.timeBlockDefaultDuration,
         }
         const availabilities = [...this.availabilities]
+        console.log('before', availabilities)
         availabilities.push(newBlock)
+        console.log('after', availabilities)
         this.updateAvailabilities(this.day, availabilities)
       },
       updateAvailabilities(date, availabilities) {

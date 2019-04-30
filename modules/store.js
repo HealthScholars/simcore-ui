@@ -60,7 +60,7 @@ const store = new Vuex.Store({
     },
   },
   mutations: {
-    updateCurrentUserAvailabilitiesByDate(state, {date, availabilities}) {
+    updateCurrentUserAvailabilitiesByDate(state, { date, availabilities }) {
       Vue.set(state.currentUser.availabilities, date, availabilities)
     },
     updateCurrentUserAvailabilities(state, availabilities) {
@@ -94,18 +94,18 @@ const store = new Vuex.Store({
       dispatch('services/loading/popLoading')
       return commit('updateList', { key, list })
     },
-    async updateCurrentUserAvailabilities({dispatch, state, commit}, {date, availabilities}) {
+    async updateCurrentUserAvailabilities({ dispatch, state, commit }, { date, availabilities }) {
       const url = buildUrl('updateAvailabilities')(state.currentUser.id)
       const payload = {
         dates: {}
       }
       payload.dates[date] = availabilities
-      commit('updateCurrentUserAvailabilitiesByDate', {date, availabilities})
+      commit('updateCurrentUserAvailabilitiesByDate', { date, availabilities })
       dispatch('services/loading/pushLoading')
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
     },
-    async updateRoomAvailabilities({dispatch, state, commit}, {date, availabilities, roomId}) {
+    async updateRoomAvailabilities({ dispatch, state, commit }, { date, availabilities, roomId }) {
       const url = buildUrl('updateRoomAvailabilities')(state.currentUser.id, roomId)
       const payload = {
         dates: {}
@@ -116,36 +116,36 @@ const store = new Vuex.Store({
       await axios.post(url, payload).catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
     },
-    async fetchCurrentUserAvailabilities({dispatch, state, commit}) {
-      const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
-      const url = buildUrl('availabilities')(state.currentUser.id, {startDate, endDate})
+    async fetchCurrentUserAvailabilities({ dispatch, state, commit }) {
+      const { startDate, endDate } = getBoundariesOfMonth(state.services.date.selectedDate)
+      const url = buildUrl('availabilities')(state.currentUser.id, { startDate, endDate })
       dispatch('services/loading/pushLoading')
       let availabilities = await axios.get(url)
         .then(response => response.data.dates)
         .catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
-      if (availabilities instanceof Array){
+      if (availabilities instanceof Array) {
         availabilities = {}
       }
       return commit('updateCurrentUserAvailabilities', availabilities)
     },
-    async fetchRoomAvailabilities({dispatch, state, commit}) {
-      const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
-      const url = buildUrl('roomAvailabilities')(state.currentUser.id, {startDate, endDate})
+    async fetchRoomAvailabilities({ dispatch, state, commit }) {
+      const { startDate, endDate } = getBoundariesOfMonth(state.services.date.selectedDate)
+      const url = buildUrl('roomAvailabilities')(state.currentUser.id, { startDate, endDate })
       dispatch('services/loading/pushLoading')
 
       let availabilities = await axios.get(url)
         .then(response => response.data.rooms)
         .catch(error => console.error(error.message))
       dispatch('services/loading/popLoading')
-      if (availabilities instanceof Array){
+      if (availabilities instanceof Array) {
         availabilities = {}
       }
       return commit('updateAllRoomAvailabilities', availabilities)
     },
-    async fetchInstructorAvailabilities({dispatch, state, commit}) {
-      const {startDate, endDate} = getBoundariesOfMonth(state.services.date.selectedDate)
-      const url = buildUrl('userAvailabilities')(state.currentUser.id, {startDate, endDate})
+    async fetchInstructorAvailabilities({ dispatch, state, commit }) {
+      const { startDate, endDate } = getBoundariesOfMonth(state.services.date.selectedDate)
+      const url = buildUrl('userAvailabilities')(state.currentUser.id, { startDate, endDate })
       dispatch('services/loading/pushLoading')
       const availabilities = await axios.get(url)
         .then(response => response.data.users)
@@ -153,7 +153,7 @@ const store = new Vuex.Store({
       dispatch('services/loading/popLoading')
       return commit('updateInstructorAvailabilities', availabilities)
     },
-    async fetchInstructorList({dispatch, state, commit}) {
+    async fetchInstructorList({ dispatch, state, commit }) {
       const url = buildUrl('availabilities')(state.currentUser.id)
       dispatch('services/loading/pushLoading')
       const instructors = await axios.get(url)
@@ -164,7 +164,7 @@ const store = new Vuex.Store({
     },
     async fetchLearnerList() {
     },
-    async submitEvent({dispatch, state, commit}, event) {
+    async submitEvent({ dispatch, state, commit }, event) {
       const url = buildUrl('addEvent')(state.currentUser.id)
       dispatch('services/loading/pushLoading')
       const postedEvent = await axios.post(url, event)
@@ -173,7 +173,7 @@ const store = new Vuex.Store({
       dispatch('services/loading/popLoading')
       dispatch('fetchList', 'events')
     },
-    async updateEvent({dispatch, state, commit}, event) {
+    async updateEvent({ dispatch, state, commit }, event) {
       const url = buildUrl('updateEvent')(state.currentUser.id, event.id)
       dispatch('services/loading/pushLoading')
       const updatedEvent = await axios.put(url, event)
@@ -182,7 +182,7 @@ const store = new Vuex.Store({
       dispatch('services/loading/popLoading')
       dispatch('fetchList', 'events')
     },
-    async deleteEvent({dispatch, state, commit}, event) {
+    async deleteEvent({ dispatch, state, commit }, event) {
       const url = buildUrl('deleteEvent')(state.currentUser.id, event.id)
       dispatch('services/loading/pushLoading')
       const deletedEvent = await axios.delete(url, event)
@@ -200,7 +200,7 @@ const store = new Vuex.Store({
   },
 })
 
-function normalizeResponse(key){
+function normalizeResponse(key) {
   const transformations = {
     users: response => {
       return response.users.list

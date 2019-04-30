@@ -45,11 +45,11 @@
         <label><input type="radio" v-model="sortKey" value="item" /> by alpha</label>
         <input type="search" v-model="search" placeholder="filter..." />
       </p>
-      <transition-group tag="ul" name="list" mode="in-out">
+      <!-- <transition-group tag="ul" name="list" mode="in-out">
         <li v-for="(item, index) in filteredList" :key="index" :style="'--delay:' + index">
           {{index}}. {{item.item}} ({{item.index}})
         </li>
-      </transition-group>
+      </transition-group> -->
       <!-- <div
         v-for="n of randomInt(5, 10)"
         v-once
@@ -98,7 +98,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 article {
   margin-bottom: 1em;
 }
