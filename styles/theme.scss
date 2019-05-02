@@ -121,6 +121,10 @@
   --primary-font-medium: 'montserrat-500', var(--base-font);
 }
 
+html {
+  font-size: 100%;
+}
+
 .text {
   &--red {
     color: var(--red);

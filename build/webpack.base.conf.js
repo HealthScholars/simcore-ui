@@ -10,12 +10,11 @@ function resolve (dir) {
 module.exports = {
   entry: {
     app: ['babel-polyfill','./docs/main.js'],
+    vuetify: './node_modules/vuetify/dist/vuetify.min.css',
     theme: './styles/theme.scss',
     animations: './styles/animations.scss',
     'form-elements': './styles/form-elements.scss',
-    'override-css-variables': './styles/override-css-variables.scss',
-    'override-vuetify': './stylus/main.styl'
-
+    'override-css-variables': './styles/override-css-variables.scss'
   },
   output: {
     path: config.build.assetsRoot,
@@ -78,7 +77,7 @@ module.exports = {
       },
       {
         test: /\.styl$/,
-        loader: ['style-loader', 'css-loader', 'stylus-loader']
+        loader: 'stylus-loader'
       }
     ]
   }

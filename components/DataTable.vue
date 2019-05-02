@@ -1,8 +1,20 @@
 <template>
-  <v-app>
+  <v-card>
+    <v-card-title>
+      Nutrition
+      <v-spacer></v-spacer>
+      <v-text-field
+        v-model="search"
+        append-icon="search"
+        label="Search"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
     <v-data-table
       :headers="headers"
-      :items="desserts"
+      :items="rooms"
+      :search="search"
     >
       <template v-slot:items="props">
         <td>{{ props.item.name }}</td>
@@ -12,8 +24,13 @@
         <td class="text-xs-right">{{ props.item.protein }}</td>
         <td class="text-xs-right">{{ props.item.iron }}</td>
       </template>
+      <template v-slot:no-results>
+        <v-alert :value="true" color="error" icon="warning">
+          Your search for "{{ search }}" found no results.
+        </v-alert>
+      </template>
     </v-data-table>
-  </v-app>
+  </v-card>
 </template>
 
 <script>
@@ -29,7 +46,7 @@
         search: 'Search',
         headers: [
           {
-            text: 'Dessert (100g serving)',
+            text: 'Rooms',
             align: 'left',
             sortable: false,
             value: 'name'
@@ -40,7 +57,7 @@
           { text: 'Protein (g)', value: 'protein' },
           { text: 'Iron (%)', value: 'iron' }
         ],
-        desserts: [
+        rooms: [
           {
             name: 'Frozen Yogurt',
             calories: 159,

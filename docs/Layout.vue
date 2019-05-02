@@ -26,7 +26,6 @@
           class="toggle-button toggle-button--main-menu"
           toggle-button="main-menu"
           >
-          
             <span>Menu</span>
         </button>
       </div>

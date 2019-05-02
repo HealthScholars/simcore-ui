@@ -115,7 +115,12 @@ body {
 
 .library {
 
+  &--page-title {
+    margin-bottom: .1rem;
+  }
+
   > article {
+    padding-top: 1rem;
     position: relative;
     transition: all calc(var(--ms) / 2) ease-out;
   }
