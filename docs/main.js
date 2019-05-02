@@ -22,7 +22,10 @@ Vue.config.productionTip = false
 Vue.use(VueHighlightJS)
 
 Vue.use(Vuetify, {
-  iconfont: 'md'
+  iconfont: 'md',
+  theme: {
+
+  }
 })
 
 /* eslint-disable no-new, import/prefer-default-export */

@@ -13,7 +13,9 @@ module.exports = {
     theme: './styles/theme.scss',
     animations: './styles/animations.scss',
     'form-elements': './styles/form-elements.scss',
-    'override-css-variables': './styles/override-css-variables.scss'
+    'override-css-variables': './styles/override-css-variables.scss',
+    'override-vuetify': './stylus/main.styl'
+
   },
   output: {
     path: config.build.assetsRoot,
@@ -73,6 +75,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.styl$/,
+        loader: ['style-loader', 'css-loader', 'stylus-loader']
       }
     ]
   }
