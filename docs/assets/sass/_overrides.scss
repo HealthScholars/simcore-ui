@@ -1,8 +1,14 @@
 // overrides
 .hljs {
   background: none;
+  box-shadow: none;
   padding: 0;
   color: var(--dark);
+
+  &::before,
+  &::after {
+    //display: none;
+  }
 }
 
 .fa-events-icons-failed {

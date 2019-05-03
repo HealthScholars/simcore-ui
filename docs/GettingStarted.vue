@@ -99,14 +99,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-article {
-  margin-bottom: 1em;
-}
-li {
-  display: inline-block;
-  margin-right: 1ch;
-}
-p {
-  margin: .5em 0;
-}
+  article {
+    margin-bottom: 1em;
+  }
+
+  li {
+    display: inline-block;
+    margin-right: 1ch;
+  }
+
+  p {
+    margin: .5em 0;
+  }
 </style>

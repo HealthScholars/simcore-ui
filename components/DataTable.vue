@@ -1,149 +1,165 @@
 <template>
   <v-card>
     <v-card-title>
-      Nutrition
+      Schedule Training
       <v-spacer></v-spacer>
-      <v-text-field
-        v-model="search"
-        append-icon="search"
-        label="Search"
-        single-line
-        hide-details
-      ></v-text-field>
+      <v-text-field v-model="search" append-icon="search" label="Search" single-line hide-details></v-text-field>
     </v-card-title>
+
     <v-data-table
+      v-model="selected"
       :headers="headers"
       :items="rooms"
       :search="search"
+      :pagination.sync="pagination"
+      select-all
+      item-key="name"
     >
+      <template v-slot:headers="props">
+        <tr>
+          <th class="actions checkbox">
+            <v-checkbox
+              :input-value="props.all"
+              :indeterminate="props.indeterminate"
+              primary
+              hide-details
+              @click.stop="toggleAll"
+            ></v-checkbox>
+          </th>
+          <th
+            v-for="header in props.headers"
+            :key="header.text"
+            :class="['column sortable', pagination.descending ? 'desc' : 'asc', header.value === pagination.sortBy ? 'active' : '']"
+            @click="changeSort(header.value)"
+            class="text-xs-left"
+          >
+            {{ header.text }}
+            <v-icon small>arrow_upward</v-icon>
+          </th>
+        </tr>
+      </template>
+      <v-progress-linear v-slot:progress color="blue" indeterminate></v-progress-linear>
       <template v-slot:items="props">
-        <td>{{ props.item.name }}</td>
-        <td class="text-xs-right">{{ props.item.calories }}</td>
-        <td class="text-xs-right">{{ props.item.fat }}</td>
-        <td class="text-xs-right">{{ props.item.carbs }}</td>
-        <td class="text-xs-right">{{ props.item.protein }}</td>
-        <td class="text-xs-right">{{ props.item.iron }}</td>
+        <tr :active="props.selected" @click="props.selected = !props.selected">
+          <td class="actions checkbox">
+            <v-checkbox :input-value="props.selected" primary hide-details></v-checkbox>
+          </td>
+          <td>{{ props.item.name }}</td>
+          <td>{{ props.item.number }}</td>
+          <td>{{ props.item.day }}</td>
+          <td>{{ props.item.date }}</td>
+          <td>{{ props.item.time }}</td>
+        </tr>
       </template>
       <template v-slot:no-results>
-        <v-alert :value="true" color="error" icon="warning">
-          Your search for "{{ search }}" found no results.
-        </v-alert>
+        <v-alert
+          :value="true"
+          color="error"
+          icon="warning"
+        >Your search for "{{ search }}" found no results.</v-alert>
       </template>
     </v-data-table>
   </v-card>
 </template>
 
 <script>
-  import _ from 'lodash'
 
   export default {
     name: 'DataTable',
-    props: {
+    props: {},
 
-    },
-    data() {
-      return {
-        search: 'Search',
-        headers: [
-          {
-            text: 'Rooms',
-            align: 'left',
-            sortable: false,
-            value: 'name'
-          },
-          { text: 'Calories', value: 'calories' },
-          { text: 'Fat (g)', value: 'fat' },
-          { text: 'Carbs (g)', value: 'carbs' },
-          { text: 'Protein (g)', value: 'protein' },
-          { text: 'Iron (%)', value: 'iron' }
-        ],
-        rooms: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-          {
-            name: 'Eclair',
-            calories: 262,
-            fat: 16.0,
-            carbs: 23,
-            protein: 6.0,
-            iron: '7%'
-          },
-          {
-            name: 'Cupcake',
-            calories: 305,
-            fat: 3.7,
-            carbs: 67,
-            protein: 4.3,
-            iron: '8%'
-          },
-          {
-            name: 'Gingerbread',
-            calories: 356,
-            fat: 16.0,
-            carbs: 49,
-            protein: 3.9,
-            iron: '16%'
-          },
-          {
-            name: 'Jelly bean',
-            calories: 375,
-            fat: 0.0,
-            carbs: 94,
-            protein: 0.0,
-            iron: '0%'
-          },
-          {
-            name: 'Lollipop',
-            calories: 392,
-            fat: 0.2,
-            carbs: 98,
-            protein: 0,
-            iron: '2%'
-          },
-          {
-            name: 'Honeycomb',
-            calories: 408,
-            fat: 3.2,
-            carbs: 87,
-            protein: 6.5,
-            iron: '45%'
-          },
-          {
-            name: 'Donut',
-            calories: 452,
-            fat: 25.0,
-            carbs: 51,
-            protein: 4.9,
-            iron: '22%'
-          },
-          {
-            name: 'KitKat',
-            calories: 518,
-            fat: 26.0,
-            carbs: 65,
-            protein: 7,
-            iron: '6%'
-          }
-        ]
+    data: () => ({
+      search: '',
+      pagination: {
+        sortBy: 'name'
+      },
+      selected: [],
+      headers: [
+        { text: 'Room Name', value: 'name' },
+        { text: 'Room #', value: 'number' },
+        { text: 'Day', value: 'day' },
+        { text: 'Date', value: 'date' },
+        { text: 'Time', value: 'time' }
+      ],
+      rooms: [
+        {
+          name: 'Alaska Room',
+          number: '1',
+          day: 'Monday',
+          date: '2019-05-07',
+          time: '1:00PM'
+        },
+        {
+          name: 'Alaska Room',
+          number: '1',
+          day: 'Monday',
+          date: '2019-05-07',
+          time: '1:30PM'
+        },
+        {
+          name: 'Alaska Room',
+          number: '1',
+          day: 'Monday',
+          date: '2019-05-07',
+          time: '2:00PM'
+        },
+        {
+          name: 'Test Room',
+          number: '201',
+          day: 'Tuesday',
+          date: '2019-05-07',
+          time: '9:00AM'
+        },
+        {
+          name: 'Test Room',
+          number: '201',
+          day: 'Tuesday',
+          date: '2019-05-08',
+          time: '7:00AM'
+        },
+        {
+          name: 'Test Room',
+          number: '201',
+          day: 'Tuesday',
+          date: '2019-05-08',
+          time: '9:00AM'
+        },
+        {
+          name: 'Test Room',
+          number: '201',
+          day: 'Tuesday',
+          date: '2019-05-08',
+          time: '9:30AM'
+        }
+      ]
+    }),
+
+    methods: {
+      toggleAll() {
+        if (this.selected.length) this.selected = [];
+        else this.selected = this.desserts.slice();
+      },
+      changeSort(column) {
+        if (this.pagination.sortBy === column) {
+          this.pagination.descending = !this.pagination.descending;
+        } else {
+          this.pagination.sortBy = column;
+          this.pagination.descending = false;
+        }
       }
     }
   }
 </script>
 
 <style lang="scss">
+  .theme--light.v-input:not(.v-input--is-disabled) input {
+    box-shadow: none;
+  }
 
+  .v-table .actions {
+    &.checkbox {
+      width: 2rem;
+      padding: 0 0 0 24px;
+    }
+  }
 </style>
