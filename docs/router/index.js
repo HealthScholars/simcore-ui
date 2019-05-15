@@ -26,6 +26,7 @@ import DocLoader from '../pages/components/Loader'
 import DocModal from '../pages/components/Modal'
 import DocOverlay from '../pages/components/Overlay'
 import DocPanel from '../pages/components/Panel'
+import DocPagination from '../pages/components/Pagination'
 import DocProgress from '../pages/components/Progress'
 import DocSelection from '../pages/components/Selection'
 import DocSummaryBlock from '../pages/components/SummaryBlock'
@@ -205,6 +206,14 @@ export default new Router({
           label: 'Panel',
           components: {
             details: DocPanel,
+          },
+        },
+        {
+          path: 'pagination',
+          name: 'pagination',
+          label: 'Pagination',
+          components: {
+            details: DocPagination,
           },
         },
         {

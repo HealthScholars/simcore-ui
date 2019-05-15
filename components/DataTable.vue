@@ -67,7 +67,6 @@
   export default {
     name: 'DataTable',
     props: {},
-
     data: () => ({
       search: '',
       pagination: {
