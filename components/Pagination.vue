@@ -1,6 +1,6 @@
 <template>
   <v-pagination
-    v-model="props.currentPage"
+    v-model="page"
     :length="totalPages"
     :dark="dark"
     :circle="circle"
@@ -10,8 +10,6 @@
 </template>
 
 <script>
-
-
   export default {
     name: 'Pagination',
     props: {

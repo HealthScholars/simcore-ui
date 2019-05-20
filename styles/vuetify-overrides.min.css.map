@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack:///./styles/styles/vuetify-overrides.scss"],"names":[],"mappings":"AAAA,KACE,cAAe","file":"../styles/vuetify-overrides.min.css","sourcesContent":["html {\n  font-size: 100%;\n}\n\n\n\n// WEBPACK FOOTER //\n// ./styles/styles/vuetify-overrides.scss"],"sourceRoot":""}
