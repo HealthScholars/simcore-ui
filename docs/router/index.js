@@ -37,6 +37,7 @@ import DocAutofinderDetails from '../pages/components/AutofinderDetails'
 import DocAutofinderDetailItem from '../pages/components/AutofinderDetailItem'
 import DocTimePicker from '../pages/components/TimePicker'
 import DocTooltip from '../pages/components/Tooltip'
+import DocPagination from '../pages/components/Pagination'
 
 // Docs: Styles
 import GuideIntro from '../pages/styles/GuideIntro'
@@ -300,6 +301,14 @@ export default new Router({
           label: 'Tooltip',
           components: {
             details: DocTooltip,
+          },
+        },
+        {
+          path: 'Pagination',
+          name: 'Pagination',
+          label: 'Pagination',
+          components: {
+            details: DocPagination,
           },
         },
       ],
