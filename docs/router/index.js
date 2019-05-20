@@ -18,6 +18,7 @@ import Availability from '../pages/components/AvailabilityCalendar'
 import RoomAvailability from '../pages/components/RoomAvailabilityCalendar'
 import DocDatalist from '../pages/components/Datalist'
 import DocDatepicker from '../pages/components/Datepicker'
+import DocDataTable from '../pages/components/DataTable'
 import DocFilterBy from '../pages/components/FilterBy'
 import DocForm from '../pages/components/Form'
 import DocIconText from '../pages/components/IconText'
@@ -25,6 +26,7 @@ import DocLoader from '../pages/components/Loader'
 import DocModal from '../pages/components/Modal'
 import DocOverlay from '../pages/components/Overlay'
 import DocPanel from '../pages/components/Panel'
+import DocPagination from '../pages/components/Pagination'
 import DocProgress from '../pages/components/Progress'
 import DocSelection from '../pages/components/Selection'
 import DocSummaryBlock from '../pages/components/SummaryBlock'
@@ -135,6 +137,14 @@ export default new Router({
           },
         },
         {
+          path: 'dataTable',
+          name: 'dataTable',
+          label: 'DataTable',
+          components: {
+            details: DocDataTable,
+          },
+        },
+        {
           path: 'datepicker',
           name: 'datepicker',
           label: 'Datepicker',
@@ -196,6 +206,14 @@ export default new Router({
           label: 'Panel',
           components: {
             details: DocPanel,
+          },
+        },
+        {
+          path: 'pagination',
+          name: 'pagination',
+          label: 'Pagination',
+          components: {
+            details: DocPagination,
           },
         },
         {

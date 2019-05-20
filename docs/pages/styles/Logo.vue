@@ -28,7 +28,6 @@
 
     <h2 class="library--section-title">{{ msg }}</h2>
 
-    <!--
     <demobox :open="true">
 
         <template slot="intro">
@@ -218,7 +217,6 @@
           </section>
         </template>
       </demobox>
-      -->
 
   </article>
 </template>
