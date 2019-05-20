@@ -8,15 +8,15 @@
         </template>
         <template slot="view">
 
-          <!-- <Pagination
-            :currentPage="this.currentPage"
-            :length="this.totalPages"
-          /> -->
-
-          <v-pagination
-            :length="pageItems"
-            dark
-          ></v-pagination>
+          <Pagination
+            :currentPage="3"
+            :totalPages="totalPages"
+            :dark="true"
+            :circle="true"
+            :prev-icon="prevIcon"
+            :next-icon="nextIcon"
+            @input-emit-page="emitPage()"
+          />
 
         </template>
         <template slot="html">
@@ -49,13 +49,21 @@ export default {
   },
   data() {
     return {
-      msg: 'Pagination',
-      page: 1
+      msg: 'Pagination'
     }
   },
   computed: {
-    pageItems() {
-      return this.length = 25
+    prevIcon() {
+      return 'mdi-menu-left'
+    },
+    nextIcon() {
+      return 'mdi-menu-right'
+    },
+    totalPages() {
+      return this.length = 15 // need to create mock data
+    },
+    emitPage(page) {
+      this.$emit('page', page)
     }
   }
 }

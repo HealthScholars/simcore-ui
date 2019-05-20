@@ -4,3 +4,13 @@
 module.exports = {
   transpileDependencies:[/node_modules[/\\\\]vuetify[/\\\\]/]
 }
+
+// const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
+
+module.exports = {
+  configureWebpack: {
+    plugins: [
+      new VuetifyLoaderPlugin()
+    ]
+  }
+}
