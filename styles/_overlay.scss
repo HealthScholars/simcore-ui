@@ -4,7 +4,8 @@
   will-change: transform;
 
   width: 100vw;
-  height: 100vh;
+  height: 100%;
+  overflow: scroll;
 
   top: 0;
   left: 0;
