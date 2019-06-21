@@ -1,6 +1,6 @@
 .sim-overlay {
   z-index: 2;
-  position: absolute;
+  position: fixed;
   will-change: transform;
 
   width: 100vw;
