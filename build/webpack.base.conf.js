@@ -10,11 +10,9 @@ function resolve (dir) {
 module.exports = {
   entry: {
     app: ['babel-polyfill','./docs/main.js'],
-    vuetify: './node_modules/vuetify/dist/vuetify.min.css',
     theme: './styles/theme.scss',
     animations: './styles/animations.scss',
     'form-elements': './styles/form-elements.scss',
-    'vuetify-overrides': './styles/vuetify-overrides.scss',
     'override-css-variables': './styles/override-css-variables.scss'
   },
   output: {
