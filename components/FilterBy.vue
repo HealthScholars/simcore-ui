@@ -2,12 +2,12 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-    <div v-if="filterDepartmentByAlphaNum" >
+    <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
       <ul class="list">
         <li
           v-for="item in filterList"
           :key="item.title">
-          <!-- <a href="#0" @click="filterDepartmentByAlphaNum">{{ item.title }}</a> -->
+          <a href="#0" @click="filterDepartmentByAlphaNum">{{ item.title }}</a>
         </li>
       </ul>
     </div>
@@ -92,7 +92,7 @@
             title: '2'
           },
           {
-            title: '3'
+            title: ''
           },
         ]
       }
@@ -119,6 +119,9 @@
           this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
         }
       },
+      filterDepartmentByAlphaNum() {
+        return true
+      }
     },
     watch: {
       selectedItems(newValue) {
