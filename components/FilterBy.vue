@@ -7,7 +7,7 @@
         <li
           v-for="item in filterList"
           :key="item.title">
-          <a href="#0" @click="filterDepartmentByAlphaNum">{{ item.title }}</a>
+          <a href="#0" @click="filterDepartment">{{ item.title }}</a>
         </li>
       </ul>
     </div>
@@ -66,7 +66,7 @@
         type: Number,
         default: 15,
       },
-      filterDepartmentByAlphaNum :{
+      filterDepartmentByAlphaNum:{
         type: Boolean
       },
     },
@@ -119,7 +119,7 @@
           this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
         }
       },
-      filterDepartmentByAlphaNum() {
+      filterDepartment() {
         return true
       }
     },
