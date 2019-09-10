@@ -61,9 +61,9 @@
         // default: 15,
       },
       filterDepartmentByAlphaNum :{
-        type: Boolean,
-
+        type: Boolean
       },
+    },
     data() {
       return {
         selectedItems: [],
@@ -101,6 +101,7 @@
     },
   }
 </script>
+
 
 <style lang="scss">
   @import '../styles/filter-by';
