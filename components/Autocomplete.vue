@@ -17,9 +17,9 @@
              @keydown.enter="select"
              @keydown.delete="onDelete"
       />
-      <span class="sim-autocomplete--search--item-count">
+      <!-- <span class="sim-autocomplete--search--item-count">
         {{ filteredOptionsCount }}
-      </span>
+      </span> -->
     </div>
     <div class="sim-autocomplete--items" v-show="isOpen">
       <transition-group appear name="list" tag="ul" mode="in-out">
