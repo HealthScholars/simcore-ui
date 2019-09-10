@@ -2,8 +2,14 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-    <div v-if="filterDepartmentByAlphaNum" >
-      "test"
+    <div v-if="filterDepartmentByAlphaNum" :class="filter filter--alpha">
+      <ul class="list">
+        <li
+          v-for="item in filterList"
+          :key="item.title">
+          <!-- <a href="#0" @click="filterDepartmentByAlphaNum">{{ item.title }}</a> -->
+        </li>
+      </ul>
     </div>
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
@@ -69,6 +75,26 @@
         selectedItems: [],
         items: [],
         isOpen: false,
+        filterList: [
+          {
+            title: 'All'
+          },
+          {
+            title: 'A'
+          },
+          {
+            title: 'B'
+          },
+          {
+            title: '1'
+          },
+          {
+            title: '2'
+          },
+          {
+            title: '3'
+          },
+        ]
       }
     },
     computed: {
