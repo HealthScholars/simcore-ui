@@ -5,8 +5,8 @@ import 'babel-polyfill'
 import Vue from 'vue'
 import App from './App'
 
-import Vuetify from 'vuetify'
-import '@mdi/font/css/materialdesignicons.css'
+// import Vuetify from 'vuetify'
+// import '@mdi/font/css/materialdesignicons.css'
 
 
 import VueHighlightJS from 'vue-highlightjs'
@@ -21,12 +21,12 @@ Vue.config.productionTip = false
 // helpers
 Vue.use(VueHighlightJS)
 
-Vue.use(Vuetify, {
-  iconfont: 'mdi',
-  theme: {
+// Vue.use(Vuetify, {
+//   iconfont: 'mdi',
+//   theme: {
 
-  }
-})
+//   }
+// })
 
 /* eslint-disable no-new, import/prefer-default-export */
 new Vue({
