@@ -58,7 +58,7 @@
       },
       autocompleteThreshold: {
         type: Number,
-        // default: 15,
+        default: 15,
       },
       filterDepartmentByAlphaNum :{
         type: Boolean
