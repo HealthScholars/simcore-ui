@@ -2,6 +2,9 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
+    <div v-if="filterDepartmentByAlphaNum" >
+      "test"
+    </div>
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
       <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
@@ -19,7 +22,7 @@
                        class="sim-filter--items sim-accordion--items"
                        @toggle="toggleSelection"
     ></sim-selection-set>
-
+  
   </div>
 </template>
 
@@ -55,9 +58,12 @@
       },
       autocompleteThreshold: {
         type: Number,
-        default: 15,
+        // default: 15,
       },
-    },
+      filterDepartmentByAlphaNum :{
+        type: Boolean,
+
+      },
     data() {
       return {
         selectedItems: [],
