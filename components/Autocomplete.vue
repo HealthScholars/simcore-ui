@@ -52,7 +52,7 @@
       },
       placeholder: {
         type: String,
-        default: 'search...',
+        default: 'find...',
       },
       shouldBeDisabled: {
         type: Boolean,
