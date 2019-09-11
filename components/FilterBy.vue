@@ -2,7 +2,11 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
+<<<<<<< HEAD
     <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
+=======
+    <div v-if="filterDepartment" class="filter filter--alpha">
+>>>>>>> master
       <ul class="list">
         <li
           v-for="item in filterList"
