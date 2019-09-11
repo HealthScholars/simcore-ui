@@ -3,7 +3,7 @@
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
     <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
-      <ul class="list">
+      <ul class="list flex-center">
         <li
           v-for="item in filterList"
           :key="item.title">
