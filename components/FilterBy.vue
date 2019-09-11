@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
-    <!-- <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-    <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
+    <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
+    <!-- <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
       <ul class="list">
         <li
           v-for="item in filterList"
