@@ -1,12 +1,8 @@
 <template lang="html">
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
-    <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-<<<<<<< HEAD
+    <!-- <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
     <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
-=======
-    <div v-if="filterDepartment" class="filter filter--alpha">
->>>>>>> master
       <ul class="list">
         <li
           v-for="item in filterList"
@@ -14,7 +10,7 @@
           <a href="#0" @click="filterDepartment">{{ item.title }}</a>
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
       <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
@@ -70,35 +66,35 @@
         type: Number,
         default: 15,
       },
-      filterDepartmentByAlphaNum:{
-        type: Boolean
-      },
+      // filterDepartmentByAlphaNum:{
+      //   type: Boolean
+      // },
     },
     data() {
       return {
         selectedItems: [],
         items: [],
         isOpen: false,
-        filterList: [
-          {
-            title: 'All'
-          },
-          {
-            title: 'A'
-          },
-          {
-            title: 'B'
-          },
-          {
-            title: '1'
-          },
-          {
-            title: '2'
-          },
-          {
-            title: ''
-          },
-        ]
+        // filterList: [
+        //   {
+        //     title: 'All'
+        //   },
+        //   {
+        //     title: 'A'
+        //   },
+        //   {
+        //     title: 'B'
+        //   },
+        //   {
+        //     title: '1'
+        //   },
+        //   {
+        //     title: '2'
+        //   },
+        //   {
+        //     title: ''
+        //   },
+        // ]
       }
     },
     computed: {
@@ -123,9 +119,9 @@
           this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
         }
       },
-      filterDepartment() {
-        return true
-      }
+      // filterDepartment() {
+      //   return true
+      // }
     },
     watch: {
       selectedItems(newValue) {
