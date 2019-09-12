@@ -2,17 +2,17 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-    <department-filter :list="departments" ></department-filter>  
     
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
-      <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
-        {{ systemEcho }}
-      </li>
-      <li slot="item" slot-scope="props" :key="props.item.id" class="no-wrap">
-        <SimSelection :item-id="props.item.id" :should-be-selected="false" @toggle="toggleSelection">
-          {{ props.item.name }}
-        </SimSelection>
-      </li>
+      <department-filter :items='list' ></department-filter>  
+        <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
+          {{ systemEcho }}
+        </li>
+        <li slot="item" slot-scope="props" :key="props.item.id" class="no-wrap">
+          <SimSelection :item-id="props.item.id" :should-be-selected="false" @toggle="toggleSelection">
+            {{ props.item.name }}
+          </SimSelection>
+        </li>
     </SimDatalist>
 
     <sim-selection-set v-if="this.shouldShowAutocomplete"
@@ -58,9 +58,9 @@
         type: Number,
         default: 15,
       },
-      // filterDepartmentByAlphaNum:{
-      //   type: Boolean
-      // },
+      filterDepartmentByAlphaNum:{
+        type: Boolean
+      },
     },
     data() {
       return {
@@ -111,9 +111,9 @@
           this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
         }
       },
-      // filterDepartment() {
-      //   return true
-      // }
+      filterDepartment() {
+        return true
+      }
     },
     watch: {
       selectedItems(newValue) {
