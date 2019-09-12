@@ -3,8 +3,9 @@
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
     
+    <department-filter :items='list' ></department-filter>  
+   
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
-      <department-filter :items='list' ></department-filter>  
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
         </li>
