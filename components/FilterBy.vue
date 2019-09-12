@@ -30,7 +30,6 @@
   import SimDatalist from './Datalist'
   import SimSelection from './Selection'
   import SimSelectionSet from './Filters/SelectionSet'
-  import DepartmentFilter from 'simcore-platform/laravel/resources/assets/js/components/AssignmentManager/DepartmentFilter.vue'
 
   export default {
     name: 'sim-filter-by',
@@ -39,7 +38,6 @@
       SimIconText,
       SimDatalist,
       SimSelection,
-      DepartmentFilter
     },
     props: {
       label: {
@@ -70,26 +68,26 @@
         selectedItems: [],
         items: [],
         isOpen: false,
-        // filterList: [
-        //   {
-        //     title: 'All'
-        //   },
-        //   {
-        //     title: 'A'
-        //   },
-        //   {
-        //     title: 'B'
-        //   },
-        //   {
-        //     title: '1'
-        //   },
-        //   {
-        //     title: '2'
-        //   },
-        //   {
-        //     title: ''
-        //   },
-        // ]
+        filterList: [
+          {
+            title: 'All'
+          },
+          {
+            title: 'A'
+          },
+          {
+            title: 'B'
+          },
+          {
+            title: '1'
+          },
+          {
+            title: '2'
+          },
+          {
+            title: ''
+          },
+        ]
       }
     },
     computed: {
