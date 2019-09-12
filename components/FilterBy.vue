@@ -30,6 +30,7 @@
   import SimDatalist from './Datalist'
   import SimSelection from './Selection'
   import SimSelectionSet from './Filters/SelectionSet'
+  import DepartmentFilter from 'simcore-platform/components/DepartmentFilter'
 
   export default {
     name: 'sim-filter-by',
@@ -38,6 +39,7 @@
       SimIconText,
       SimDatalist,
       SimSelection,
+      DepartmentFilter
     },
     props: {
       label: {
