@@ -30,7 +30,7 @@
   import SimDatalist from './Datalist'
   import SimSelection from './Selection'
   import SimSelectionSet from './Filters/SelectionSet'
-  import DepartmentFilter from 'simcore-platform/components/DepartmentFilter'
+  import DepartmentFilter from 'simcore-platform/laravel/resources/assets/js/components/AssignmentManager/DepartmentFilter.vue'
 
   export default {
     name: 'sim-filter-by',
