@@ -2,7 +2,7 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
     
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-    <div v-if="filterDepartmentByAlphaNum" :load="log(filterDepartmentByAlphaNum)" class="filter filter--alpha">
+    <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
       <ul class="list">
         <li
           v-for="item in filterList"
@@ -80,19 +80,37 @@
             title: 'All'
           },
           {
+            title: '#'
+          },
+          {
             title: 'A'
           },
           {
             title: 'B'
           },
           {
-            title: '1'
+            title: 'C'
           },
           {
-            title: '2'
+            title: 'D'
           },
           {
-            title: ''
+            title: 'E'
+          },
+          {
+            title: 'F'
+          },
+          {
+            title: 'G'
+          },
+          {
+            title: 'H'
+          },
+          {
+            title: 'I'
+          },
+          {
+            title: 'J'
           },
         ]
       }
@@ -118,9 +136,6 @@
         } else {
           this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
         }
-      },
-      log(item) {
-        console.log(item)
       },
       filterDepartment() {
         return true
