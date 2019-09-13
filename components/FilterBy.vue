@@ -112,6 +112,54 @@
           {
             title: 'J'
           },
+          {
+            title: 'K'
+          },
+          {
+            title: 'L'
+          },
+          {
+            title: 'M'
+          },
+          {
+            title: 'N'
+          },          
+          {
+            title: 'O'
+          },
+          {
+            title: 'P'
+          },
+          {
+            title: 'Q'
+          },
+          {
+            title: 'R'
+          },
+          {
+            title: 'S'
+          },
+          {
+            title: 'T'
+          },          
+          {
+            title: 'U'
+          },          
+          {
+            title: 'V'
+          },
+          {
+            title: 'W'
+          },
+          {
+            title: 'X'
+          },          
+          {
+            title: 'Y'
+          },
+          {
+            title: 'Z'
+          },
         ]
       }
     },
