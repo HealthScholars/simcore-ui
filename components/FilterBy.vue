@@ -2,15 +2,25 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
     
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-    <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
-      <ul class="list">
-        <li
-          v-for="item in filterList"
-          :key="item.title">
-          <a href="#0" @click="filterDepartment">{{ item.title }}</a>
-        </li>
-      </ul>
-    </div>
+      <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
+        <ul class="list">
+          <li
+            v-for="item in filterList"
+            :key="item.title">
+            <a href="#0" @click="filterDepartment">{{ item.title }}</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="filter flex-row flex-align-center sim-accordion--items">
+        <button :disabled="isFirstPage" @click="prevPage" class="link">
+          <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
+        </button>
+        <span class="nowrap">Page <b>{{ page }}</b> of {{ totalPages }}</span>
+        <button :disabled="isLastPage" @click="nextPage" class="link">
+          <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+        </button>
+      </div>
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
@@ -33,172 +43,172 @@
 </template>
 
 <script>
-  import SimIconText from './IconText'
-  import SimDatalist from './Datalist'
-  import SimSelection from './Selection'
-  import SimSelectionSet from './Filters/SelectionSet'
+import SimIconText from "./IconText";
+import SimDatalist from "./Datalist";
+import SimSelection from "./Selection";
+import SimSelectionSet from "./Filters/SelectionSet";
 
-  export default {
-    name: 'sim-filter-by',
-    components: {
-      SimSelectionSet,
-      SimIconText,
-      SimDatalist,
-      SimSelection,
+export default {
+  name: "sim-filter-by",
+  components: {
+    SimSelectionSet,
+    SimIconText,
+    SimDatalist,
+    SimSelection
+  },
+  props: {
+    label: {
+      type: String,
+      required: true
     },
-    props: {
-      label: {
-        type: String,
-        required: true,
-      },
-      type: {
-        type: String,
-        required: true,
-      },
-      list: {
-        type: Array,
-        required: true,
-      },
-      systemEcho: {
-        type: String,
-      },
-      autocompleteThreshold: {
-        type: Number,
-        default: 15,
-      },
-      filterDepartmentByAlphaNum :{
-        type: Boolean
-      },
+    type: {
+      type: String,
+      required: true
     },
-    data() {
-      return {
-        selectedItems: [],
-        items: [],
-        isOpen: false,
-        filterList: [
-          {
-            title: 'All'
-          },
-          {
-            title: '#'
-          },
-          {
-            title: 'A'
-          },
-          {
-            title: 'B'
-          },
-          {
-            title: 'C'
-          },
-          {
-            title: 'D'
-          },
-          {
-            title: 'E'
-          },
-          {
-            title: 'F'
-          },
-          {
-            title: 'G'
-          },
-          {
-            title: 'H'
-          },
-          {
-            title: 'I'
-          },
-          {
-            title: 'J'
-          },
-          {
-            title: 'K'
-          },
-          {
-            title: 'L'
-          },
-          {
-            title: 'M'
-          },
-          {
-            title: 'N'
-          },          
-          {
-            title: 'O'
-          },
-          {
-            title: 'P'
-          },
-          {
-            title: 'Q'
-          },
-          {
-            title: 'R'
-          },
-          {
-            title: 'S'
-          },
-          {
-            title: 'T'
-          },          
-          {
-            title: 'U'
-          },          
-          {
-            title: 'V'
-          },
-          {
-            title: 'W'
-          },
-          {
-            title: 'X'
-          },          
-          {
-            title: 'Y'
-          },
-          {
-            title: 'Z'
-          },
-        ]
-      }
+    list: {
+      type: Array,
+      required: true
     },
-    computed: {
-      shouldBeActive() {
-        return this.selectedItems.length > 0
-      },
-      showSystemEcho() {
-        return (this.systemEcho && this.systemEcho.length && !this.list.length)
-      },
-      shouldShowAutocomplete() {
-        return this.list.length >= this.autocompleteThreshold
-      },
+    systemEcho: {
+      type: String
     },
-    methods: {
-      toggleOpenList() {
-        this.isOpen = !this.isOpen
-      },
-      toggleSelection(id, isSelected) {
-        if (isSelected) {
-          this.selectedItems.push(id)
-        } else {
-          this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
+    autocompleteThreshold: {
+      type: Number,
+      default: 15
+    },
+    filterDepartmentByAlphaNum: {
+      type: Boolean
+    }
+  },
+  data() {
+    return {
+      selectedItems: [],
+      items: [],
+      isOpen: false,
+      filterList: [
+        {
+          title: "All"
+        },
+        {
+          title: "#"
+        },
+        {
+          title: "A"
+        },
+        {
+          title: "B"
+        },
+        {
+          title: "C"
+        },
+        {
+          title: "D"
+        },
+        {
+          title: "E"
+        },
+        {
+          title: "F"
+        },
+        {
+          title: "G"
+        },
+        {
+          title: "H"
+        },
+        {
+          title: "I"
+        },
+        {
+          title: "J"
+        },
+        {
+          title: "K"
+        },
+        {
+          title: "L"
+        },
+        {
+          title: "M"
+        },
+        {
+          title: "N"
+        },
+        {
+          title: "O"
+        },
+        {
+          title: "P"
+        },
+        {
+          title: "Q"
+        },
+        {
+          title: "R"
+        },
+        {
+          title: "S"
+        },
+        {
+          title: "T"
+        },
+        {
+          title: "U"
+        },
+        {
+          title: "V"
+        },
+        {
+          title: "W"
+        },
+        {
+          title: "X"
+        },
+        {
+          title: "Y"
+        },
+        {
+          title: "Z"
         }
-      },
-      filterDepartment() {
-        return true
+      ]
+    };
+  },
+  computed: {
+    shouldBeActive() {
+      return this.selectedItems.length > 0;
+    },
+    showSystemEcho() {
+      return this.systemEcho && this.systemEcho.length && !this.list.length;
+    },
+    shouldShowAutocomplete() {
+      return this.list.length >= this.autocompleteThreshold;
+    }
+  },
+  methods: {
+    toggleOpenList() {
+      this.isOpen = !this.isOpen;
+    },
+    toggleSelection(id, isSelected) {
+      if (isSelected) {
+        this.selectedItems.push(id);
+      } else {
+        this.selectedItems.splice(this.selectedItems.indexOf(id), 1);
       }
     },
-    watch: {
-      selectedItems(newValue) {
-        this.$emit('filter', this.type, newValue)
-      },
-    },
+    filterDepartment() {
+      return true;
+    }
+  },
+  watch: {
+    selectedItems(newValue) {
+      this.$emit("filter", this.type, newValue);
+    }
   }
+};
 </script>
 
 
 <style lang="scss">
-  @import '../styles/filter-by';
+@import "../styles/filter-by";
 </style>
 
