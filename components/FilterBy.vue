@@ -135,12 +135,4 @@
 <style lang="scss">
   @import '../styles/filter-by';
 </style>
-    <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha">
-      <ul class="list">
-        <li
-          v-for="item in filterList"
-          :key="item.title">
-          <a href="#0" @click="filterDepartmentByAlphaNum">{{ item.title }}</a>
-        </li>
-      </ul>
-    </div>
+
