@@ -119,7 +119,7 @@
           this.selectedItems.splice(this.selectedItems.indexOf(id), 1)
         }
       },
-      filterDepartmentByAlphaNum() {
+      filterDepartment() {
         return true
       }
     },
