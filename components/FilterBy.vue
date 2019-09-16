@@ -12,6 +12,13 @@
         </ul>
       </div>
 
+      <button @click="prevPage" class="link">
+            <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
+        </button>
+        <span class="nowrap"></span>
+        <button @click="nextPage" class="link">
+            <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+      </button>
 
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
@@ -30,14 +37,6 @@
                        class="sim-filter--items sim-accordion--items"
                        @toggle="toggleSelection"
     ></sim-selection-set>
-    
-    <button @click="prevPage" class="link">
-        <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
-    </button>
-      <span class="nowrap"></span>
-    <button @click="nextPage" class="link">
-        <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-    </button>
   </div>
 </template>
 
