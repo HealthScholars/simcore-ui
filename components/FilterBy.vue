@@ -3,7 +3,7 @@
 
     <section class="sim-accordion--label" @click="toggleOpenList"> 
       <div class="sim-filter--header">{{ label }}</div>
-        <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
+        <!-- <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
           <ul class="list">
             <li
               v-for="item in filterList"
@@ -11,7 +11,7 @@
               <a href="#0" @click="filterDepartment">{{ item.title }}</a>
             </li>
           </ul>
-        </div>
+        </div> -->
 
       <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header">
           <button @click="prevPage" class="link">
