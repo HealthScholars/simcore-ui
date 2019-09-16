@@ -87,6 +87,7 @@ export default {
       selectedItems: [],
       items: [],
       isOpen: false,
+      totalPages:1,
       filterList: [
         {
           title: "All"
@@ -199,7 +200,15 @@ export default {
     },
     filterDepartment() {
       return true;
-    }
+    },
+    nextPage () {
+    this.isLoading = true
+    this.pageRequest < this.totalPages ? this.pageRequest++ : this.totalPages
+    },
+    prevPage () {
+        this.isLoading = true
+        this.pageRequest > 1 ? this.pageRequest-- : 1
+    },
   },
   watch: {
     selectedItems(newValue) {
