@@ -13,7 +13,7 @@
         </ul>
       </div>
 
-      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header">
+      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header sim-accordion--label" @click="toggleOpenList"">
           <button @click="prevPage" class="link">
               <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
           </button>
@@ -23,7 +23,7 @@
           </button>
       </div>
   </section>
-  
+
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
