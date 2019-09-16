@@ -13,7 +13,7 @@
         </ul>
       </div>
 
-      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header sim-accordion--label" @click="toggleOpenList"">
+      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header sim-accordion--label" @click="toggleOpenList">
           <button @click="prevPage" class="link">
               <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
           </button>
