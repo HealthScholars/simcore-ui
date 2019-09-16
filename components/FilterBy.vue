@@ -1,7 +1,6 @@
 <template lang="html">
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
-  
-  <section>
+
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
       <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
         <ul class="list">
@@ -22,7 +21,6 @@
               <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
           </button>
       </div>
-  </section>
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
