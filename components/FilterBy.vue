@@ -1,17 +1,29 @@
 <template lang="html">
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
-    
-    <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-      <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
-        <ul class="list">
-          <li
-            v-for="item in filterList"
-            :key="item.title">
-            <a href="#0" @click="filterDepartment">{{ item.title }}</a>
-          </li>
-        </ul>
-      </div>
 
+    <section> 
+      <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
+        <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
+          <ul class="list">
+            <li
+              v-for="item in filterList"
+              :key="item.title">
+              <a href="#0" @click="filterDepartment">{{ item.title }}</a>
+            </li>
+          </ul>
+        </div>
+
+      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header sim-accordion--label" @click="toggleOpenList" >
+          <button @click="prevPage" class="link">
+              <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
+          </button>
+          <span class="nowrap"></span>
+          <button @click="nextPage" class="link">
+              <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+          </button>
+      </div>
+    </section>
+    
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
@@ -75,91 +87,92 @@ export default {
       selectedItems: [],
       items: [],
       isOpen: false,
+      totalPages: 1,
       filterList: [
-        {
-          title: "All"
-        },
-        {
-          title: "#"
-        },
-        {
-          title: "A"
-        },
-        {
-          title: "B"
-        },
-        {
-          title: "C"
-        },
-        {
-          title: "D"
-        },
-        {
-          title: "E"
-        },
-        {
-          title: "F"
-        },
-        {
-          title: "G"
-        },
-        {
-          title: "H"
-        },
-        {
-          title: "I"
-        },
-        {
-          title: "J"
-        },
-        {
-          title: "K"
-        },
-        {
-          title: "L"
-        },
-        {
-          title: "M"
-        },
-        {
-          title: "N"
-        },
-        {
-          title: "O"
-        },
-        {
-          title: "P"
-        },
-        {
-          title: "Q"
-        },
-        {
-          title: "R"
-        },
-        {
-          title: "S"
-        },
-        {
-          title: "T"
-        },
-        {
-          title: "U"
-        },
-        {
-          title: "V"
-        },
-        {
-          title: "W"
-        },
-        {
-          title: "X"
-        },
-        {
-          title: "Y"
-        },
-        {
-          title: "Z"
-        }
+        // {
+        //   title: "All"
+        // },
+        // {
+        //   title: "#"
+        // },
+        // {
+        //   title: "A"
+        // },
+        // {
+        //   title: "B"
+        // },
+        // {
+        //   title: "C"
+        // },
+        // {
+        //   title: "D"
+        // },
+        // {
+        //   title: "E"
+        // },
+        // {
+        //   title: "F"
+        // },
+        // {
+        //   title: "G"
+        // },
+        // {
+        //   title: "H"
+        // },
+        // {
+        //   title: "I"
+        // },
+        // {
+        //   title: "J"
+        // },
+        // {
+        //   title: "K"
+        // },
+        // {
+        //   title: "L"
+        // },
+        // {
+        //   title: "M"
+        // },
+        // {
+        //   title: "N"
+        // },
+        // {
+        //   title: "O"
+        // },
+        // {
+        //   title: "P"
+        // },
+        // {
+        //   title: "Q"
+        // },
+        // {
+        //   title: "R"
+        // },
+        // {
+        //   title: "S"
+        // },
+        // {
+        //   title: "T"
+        // },
+        // {
+        //   title: "U"
+        // },
+        // {
+        //   title: "V"
+        // },
+        // {
+        //   title: "W"
+        // },
+        // {
+        //   title: "X"
+        // },
+        // {
+        //   title: "Y"
+        // },
+        // {
+        //   title: "Z"
+        // }
       ]
     };
   },
@@ -187,6 +200,9 @@ export default {
     },
     filterDepartment() {
       return true;
+    },
+    alphaFilterList() {
+      Array.apply(undefined, Array(26)).map(function(x,y) { return String.fromCharCode(y + 65); }).join('');
     }
   },
   watch: {
