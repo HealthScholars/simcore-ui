@@ -1,8 +1,8 @@
 <template lang="html">
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
-    <section> 
-      <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
+    <section class="sim-accordion--label" @click="toggleOpenList"> 
+      <div class="sim-filter--header">{{ label }}</div>
         <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
           <ul class="list">
             <li
@@ -13,7 +13,7 @@
           </ul>
         </div>
 
-      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header sim-accordion--label" @click="toggleOpenList" >
+      <div v-if="filterDepartmentByAlphaNum"class="flex-row flex-align-center sim-filter--header">
           <button @click="prevPage" class="link">
               <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
           </button>
