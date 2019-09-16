@@ -29,18 +29,15 @@
                        :sourceItems="this.list"
                        class="sim-filter--items sim-accordion--items"
                        @toggle="toggleSelection"
-    >
+    ></sim-selection-set>
+    
     <button @click="prevPage" class="link">
-      <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
-      </button>
-      <span class="nowrap"></span>
-      <button @click="nextPage" class="link">
-          <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+        <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
     </button>
-    
-    
-    </sim-selection-set>
-  
+      <span class="nowrap"></span>
+    <button @click="nextPage" class="link">
+        <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+    </button>
   </div>
 </template>
 
