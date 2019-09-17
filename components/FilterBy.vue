@@ -11,15 +11,6 @@
           </li>
         </ul>
 
-      <button @click="prevPage" class="link">
-            <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
-        </button>
-        <span class="nowrap"></span>
-        <button @click="nextPage" class="link">
-            <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-      </button>
-    </div>
-
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
@@ -36,6 +27,15 @@
                        class="sim-filter--items sim-accordion--items"
                        @toggle="toggleSelection"
     ></sim-selection-set>
+
+      <button @click="prevPage" class="link">
+        <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
+      </button>
+        <span class="nowrap"></span>
+      <button @click="nextPage" class="link">
+        <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -82,7 +82,7 @@ export default {
       selectedItems: [],
       items: [],
       isOpen: false,
-      totalPages:1,
+      totalPages: 1,
       filterList: [
         {
           title: "All"
@@ -196,14 +196,14 @@ export default {
     filterDepartment() {
       return true;
     },
-    nextPage () {
-    this.isLoading = true
-    this.pageRequest < this.totalPages ? this.pageRequest++ : this.totalPages
+    nextPage() {
+      this.isLoading = true;
+      this.pageRequest < this.totalPages ? this.pageRequest++ : this.totalPages;
     },
-    prevPage () {
-        this.isLoading = true
-        this.pageRequest > 1 ? this.pageRequest-- : 1
-    },
+    prevPage() {
+      this.isLoading = true;
+      this.pageRequest > 1 ? this.pageRequest-- : 1;
+    }
   },
   watch: {
     selectedItems(newValue) {
