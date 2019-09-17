@@ -10,7 +10,7 @@
             <a href="#0" @click="filterDepartment">{{ item.title }}</a>
           </li>
         </ul>
-
+      </div>
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
@@ -35,7 +35,7 @@
       <button @click="nextPage" class="link">
         <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
       </button>
-    </div>
+
   </div>
 </template>
 
