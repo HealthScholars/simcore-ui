@@ -21,12 +21,12 @@
               <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
           </button>
 
-          <sim-selection-set v-if="this.shouldShowAutocomplete"
-                             :sourceItems="this.list"
-                             class="sim-filter--items sim-accordion--items"
-                             @toggle="toggleSelection"
+          <sim-selection-set
+                       :sourceItems="this.list"
+                       class="sim-filter--items sim-accordion--items"
+                       @toggle="toggleSelection"
           ></sim-selection-set>
-
+          
       </div>
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
@@ -38,7 +38,13 @@
             {{ props.item.name }}
           </SimSelection>
         </li>
-    </SimDatalist>    
+    </SimDatalist>
+
+    <sim-selection-set v-if="this.shouldShowAutocomplete"
+                       :sourceItems="this.list"
+                       class="sim-filter--items sim-accordion--items"
+                       @toggle="toggleSelection"
+    ></sim-selection-set>
 
   </div>
 </template>
