@@ -25,6 +25,7 @@
   }
 
   &.active {
+    
     .sim-filter--header {
       color: var(--active-color);
     }
@@ -52,8 +53,7 @@
 
   }
 
-  .sim-accordion--items,
-  .sim-filter--items {
+  .sim-accordion--items {
     max-height: 0;
     overflow: hidden;
     transition: var(--ms, 300ms) linear;
@@ -74,8 +74,7 @@
 
     }
 
-    .sim-accordion--items,
-    .sim-filter--items {
+    .sim-accordion--items {
       opacity: 1;
       max-height: 90vh;
       overflow: auto;

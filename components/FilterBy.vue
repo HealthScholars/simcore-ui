@@ -26,11 +26,11 @@
 
       <sim-selection-set v-if="this.shouldShowAutocomplete"
                         :sourceItems="this.list"
-                        class="sim-filter--items sim-accordion--items"
+                        class="sim-accordion--items"
                         @toggle="toggleSelection"
       ></sim-selection-set>
 
-      <div v-if="filterDepartmentByAlphaNum">
+      <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
           <button @click="prevPage" class="link">
               <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
           </button>
