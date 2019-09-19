@@ -2,22 +2,31 @@
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
-      <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
-        <ul class="list">
-          <li
-            v-for="item in filterList"
-            :key="item.title">
-            <a href="#0" @click="filterDepartment">{{ item.title }}</a>
-          </li>
-        </ul>
 
-        <button @click="prevPage" class="link">
+      <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
+
+          <ul class="list">
+            <li
+              v-for="item in filterList"
+              :key="item.title">
+              <a href="#0" @click="filterDepartment">{{ item.title }}</a>
+            </li>
+          </ul>
+
+          <button @click="prevPage" class="link">
               <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
           </button>
           <span class="nowrap"></span>
           <button @click="nextPage" class="link">
               <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-        </button>
+          </button>
+
+          <sim-selection-set v-if="this.shouldShowAutocomplete"
+                             :sourceItems="this.list"
+                             class="sim-filter--items sim-accordion--items"
+                             @toggle="toggleSelection"
+          ></sim-selection-set>
+
       </div>
 
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
@@ -29,13 +38,8 @@
             {{ props.item.name }}
           </SimSelection>
         </li>
-    </SimDatalist>
+    </SimDatalist>    
 
-    <sim-selection-set v-if="this.shouldShowAutocomplete"
-                       :sourceItems="this.list"
-                       class="sim-filter--items sim-accordion--items"
-                       @toggle="toggleSelection"
-    ></sim-selection-set>
   </div>
 </template>
 
@@ -195,6 +199,10 @@ export default {
     },
     filterDepartment() {
       return true;
+    },
+    alphaFilterList(){
+      Array.apply(undefined, Array(26)).map(function(x,y) { 
+        return String.fromCharCode(y + 65); }).join('');
     },
     nextPage() {
       this.isLoading = true;
