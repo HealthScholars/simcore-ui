@@ -48,7 +48,8 @@
       opacity: .35;
     }
 
-    + .sim-accordion--items {
+    + .sim-accordion--items,
+    + * {
       max-height: 0;
       overflow: hidden;
       transition: var(--ms, 300ms) linear;
@@ -61,12 +62,15 @@
   }
 
   &.open {
+
     .sim-accordion--label {
+
       &::before {
         transform: rotate(90deg);
       }
 
-      + .sim-accordion--items {
+      + .sim-accordion--items,
+      + * {
         opacity: 1;
         max-height: 90vh;
         overflow: auto;

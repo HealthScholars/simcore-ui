@@ -3,7 +3,7 @@
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
 
-      <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
+      <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items department-items">
 
           <ul class="list">
             <li
@@ -19,14 +19,7 @@
           <span class="nowrap"></span>
           <button @click="nextPage" class="link">
               <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-          </button>
-
-          <sim-selection-set v-show="this.shouldShowAutocomplete"
-                       :sourceItems="this.list"
-                       class="sim-filter--items sim-accordion--items"
-                       @toggle="toggleSelection"
-          ></sim-selection-set>
-          
+          </button>          
       </div>
 
       <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
