@@ -8,7 +8,7 @@
             <li
               v-for="item in filterList"
               :key="item">
-              <a href="#0" @click="getDepartments(item)">{{ item }}</a>
+              <a href="#0" v-on:click="getDepartments(item)">{{ item }}</a>
             </li>
           </ul>                             
       </div>
@@ -31,11 +31,11 @@
       ></sim-selection-set>
 
       <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
-          <button @click="prevPage" class="link">
+          <button @click="prevDepartmentPage" class="link">
               <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
           </button>
           <span class="nowrap"></span>
-          <button @click="nextPage" class="link">
+          <button @click="nextDepartmentPage" class="link">
               <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
           </button>
       </div>
