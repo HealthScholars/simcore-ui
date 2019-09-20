@@ -7,8 +7,8 @@
           <ul class="list">
             <li
               v-for="item in filterList"
-              :key="item.title">
-              <a href="#0" @click="filterDepartment">{{ item.title }}</a>
+              :key="item">
+              <a href="#0" @click="filterDepartment">{{ item }}</a>
             </li>
           </ul>                             
       </div>
@@ -88,97 +88,12 @@ export default {
       items: [],
       isOpen: false,
       totalPages: 1,
-      filterList: [
-        {
-          title: "All"
-        },
-        {
-          title: "#"
-        },
-        {
-          title: "A"
-        },
-        {
-          title: "B"
-        },
-        {
-          title: "C"
-        },
-        {
-          title: "D"
-        },
-        {
-          title: "E"
-        },
-        {
-          title: "F"
-        },
-        {
-          title: "G"
-        },
-        {
-          title: "H"
-        },
-        {
-          title: "I"
-        },
-        {
-          title: "J"
-        },
-        {
-          title: "K"
-        },
-        {
-          title: "L"
-        },
-        {
-          title: "M"
-        },
-        {
-          title: "N"
-        },
-        {
-          title: "O"
-        },
-        {
-          title: "P"
-        },
-        {
-          title: "Q"
-        },
-        {
-          title: "R"
-        },
-        {
-          title: "S"
-        },
-        {
-          title: "T"
-        },
-        {
-          title: "U"
-        },
-        {
-          title: "V"
-        },
-        {
-          title: "W"
-        },
-        {
-          title: "X"
-        },
-        {
-          title: "Y"
-        },
-        {
-          title: "Z"
-        }
-      ]
-    };
+      filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    }
   },
   computed: {
     shouldBeActive() {
-      return this.selectedItems.length > 0;
+      return this.selectedItems.length > 0
     },
     showSystemEcho() {
       return this.systemEcho && this.systemEcho.length && !this.list.length;
