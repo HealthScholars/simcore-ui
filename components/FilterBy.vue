@@ -8,7 +8,7 @@
             <li
               v-for="item in filterList"
               :key="item">
-              <a href="#0" @click="filterDepartment">{{ item }}</a>
+              <a href="#0" @click="getDepartments(item)">{{ item }}</a>
             </li>
           </ul>                             
       </div>
@@ -116,18 +116,18 @@ export default {
     filterDepartment() {
       return true;
     },
-    alphaFilterList(){
-      Array.apply(undefined, Array(26)).map(function(x,y) { 
-        return String.fromCharCode(y + 65); }).join('');
-    },
-    nextPage() {
+    nextDepartmentPage() {
       this.isLoading = true;
       this.pageRequest < this.totalPages ? this.pageRequest++ : this.totalPages;
     },
-    prevPage() {
+    prevDepartmentPage() {
       this.isLoading = true;
       this.pageRequest > 1 ? this.pageRequest-- : 1;
+    },
+    getDepartments(departmentLetter) {
+      console.log(departmentLetter)
     }
+
   },
   watch: {
     selectedItems(newValue) {
