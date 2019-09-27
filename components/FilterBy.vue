@@ -135,7 +135,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.paginatedDepartments)
+    console.log('anything')
   }
 };
 </script>
