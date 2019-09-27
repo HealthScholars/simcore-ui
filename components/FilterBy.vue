@@ -125,7 +125,7 @@ export default {
       this.pageRequest > 1 ? this.pageRequest-- : 1;
     },
     getDepartments(departmentLetter) {
-      console.log(departmentLetter)
+      console.log(departmentLetter, "hey")
     }
 
   },
