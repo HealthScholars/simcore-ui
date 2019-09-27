@@ -125,7 +125,7 @@ export default {
       this.pageRequest > 1 ? this.pageRequest-- : 1;
     },
     getDepartments(departmentLetter) {
-      console.log(departmentLetter, "hey")
+      console.log(departmentLetter)
     }
 
   },
@@ -135,7 +135,7 @@ export default {
     }
   },
   mounted() {
-    console.log('anything')
+    console.log(paginatedDepartments)
   }
 };
 </script>
