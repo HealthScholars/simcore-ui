@@ -1,6 +1,18 @@
 <template lang="html">
   <div class="sim-filter sim-accordion" :class="{ active: shouldBeActive, open: isOpen }">
 
+    <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
+
+    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items department-items">
+        <ul class="list">
+          <li
+            v-for="item in filterList"
+            :key="item">
+            <a href="#0" v-on:click="getDepartments(item)">{{ item }}</a>
+          </li>
+        </ul>                             
+    </div>
+
     <section class="sim-accordion--label" @click="toggleOpenList"> 
       <div class="sim-filter--header">{{ label }}</div>
         <div v-if="filterDepartmentByAlphaNum" class="filter filter--alpha sim-accordion--items">
@@ -36,12 +48,23 @@
     </SimDatalist>
 
     <sim-selection-set v-if="this.shouldShowAutocomplete"
-                       :sourceItems="this.list"
-                       class="sim-filter--items sim-accordion--items"
-                       @toggle="toggleSelection"
+                      :sourceItems="this.list"
+                      class="sim-accordion--items"
+                      @toggle="toggleSelection"
     ></sim-selection-set>
-  
+
+    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
+        <button @click="prevDepartmentPage" class="link">
+            <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
+        </button>
+        <span class="nowrap"></span>
+        <button @click="nextDepartmentPage" class="link">
+            <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+        </button>
+    </div>
+
   </div>
+  
 </template>
 
 <script>
@@ -88,97 +111,12 @@ export default {
       items: [],
       isOpen: false,
       totalPages: 1,
-      filterList: [
-        // {
-        //   title: "All"
-        // },
-        // {
-        //   title: "#"
-        // },
-        // {
-        //   title: "A"
-        // },
-        // {
-        //   title: "B"
-        // },
-        // {
-        //   title: "C"
-        // },
-        // {
-        //   title: "D"
-        // },
-        // {
-        //   title: "E"
-        // },
-        // {
-        //   title: "F"
-        // },
-        // {
-        //   title: "G"
-        // },
-        // {
-        //   title: "H"
-        // },
-        // {
-        //   title: "I"
-        // },
-        // {
-        //   title: "J"
-        // },
-        // {
-        //   title: "K"
-        // },
-        // {
-        //   title: "L"
-        // },
-        // {
-        //   title: "M"
-        // },
-        // {
-        //   title: "N"
-        // },
-        // {
-        //   title: "O"
-        // },
-        // {
-        //   title: "P"
-        // },
-        // {
-        //   title: "Q"
-        // },
-        // {
-        //   title: "R"
-        // },
-        // {
-        //   title: "S"
-        // },
-        // {
-        //   title: "T"
-        // },
-        // {
-        //   title: "U"
-        // },
-        // {
-        //   title: "V"
-        // },
-        // {
-        //   title: "W"
-        // },
-        // {
-        //   title: "X"
-        // },
-        // {
-        //   title: "Y"
-        // },
-        // {
-        //   title: "Z"
-        // }
-      ]
-    };
+      filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+    }
   },
   computed: {
     shouldBeActive() {
-      return this.selectedItems.length > 0;
+      return this.selectedItems.length > 0
     },
     showSystemEcho() {
       return this.systemEcho && this.systemEcho.length && !this.list.length;
@@ -201,20 +139,32 @@ export default {
     filterDepartment() {
       return true;
     },
-    alphaFilterList() {
-      Array.apply(undefined, Array(26)).map(function(x,y) { return String.fromCharCode(y + 65); }).join('');
+    nextDepartmentPage() {
+      this.isLoading = true;
+      this.pageRequest < this.totalPages ? this.pageRequest++ : this.totalPages;
+    },
+    prevDepartmentPage() {
+      this.isLoading = true;
+      this.pageRequest > 1 ? this.pageRequest-- : 1;
+    },
+    getDepartments(departmentLetter) {
+      console.log(departmentLetter, "hey")
     }
+
   },
   watch: {
     selectedItems(newValue) {
       this.$emit("filter", this.type, newValue);
     }
+  },
+  mounted() {
+    console.log('anything')
   }
 };
 </script>
 
 
 <style lang="scss">
-@import "../styles/filter-by";
+  @import "../styles/filter-by";
 </style>
 
