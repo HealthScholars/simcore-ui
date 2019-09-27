@@ -30,6 +30,15 @@
                       @toggle="toggleSelection"
     ></sim-selection-set>
 
+    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
+      <ul >
+        <li v-for="department in $store.getters.paginatedDepartments"
+          :key="department.id">
+          {{ department.name }}
+        </li>
+      </ul>
+    </div>
+
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
         <button @click="prevDepartmentPage" class="link">
             <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
