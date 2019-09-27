@@ -3,42 +3,42 @@
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
 
-      <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items department-items">
-          <ul class="list">
-            <li
-              v-for="item in filterList"
-              :key="item">
-              <a href="#0" v-on:click="getDepartments(item)">{{ item }}</a>
-            </li>
-          </ul>                             
-      </div>
-
-      <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
-          <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
-            {{ systemEcho }}
+    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items department-items">
+        <ul class="list">
+          <li
+            v-for="item in filterList"
+            :key="item">
+            <a href="#0" v-on:click="getDepartments(item)">{{ item }}</a>
           </li>
-          <li slot="item" slot-scope="props" :key="props.item.id" class="no-wrap">
-            <SimSelection :item-id="props.item.id" :should-be-selected="false" @toggle="toggleSelection">
-              {{ props.item.name }}
-            </SimSelection>
-          </li>
-      </SimDatalist>
+        </ul>                             
+    </div>
 
-      <sim-selection-set v-if="this.shouldShowAutocomplete"
-                        :sourceItems="this.list"
-                        class="sim-accordion--items"
-                        @toggle="toggleSelection"
-      ></sim-selection-set>
+    <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
+        <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
+          {{ systemEcho }}
+        </li>
+        <li slot="item" slot-scope="props" :key="props.item.id" class="no-wrap">
+          <SimSelection :item-id="props.item.id" :should-be-selected="false" @toggle="toggleSelection">
+            {{ props.item.name }}
+          </SimSelection>
+        </li>
+    </SimDatalist>
 
-      <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
-          <button @click="prevDepartmentPage" class="link">
-              <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
-          </button>
-          <span class="nowrap"></span>
-          <button @click="nextDepartmentPage" class="link">
-              <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-          </button>
-      </div>
+    <sim-selection-set v-if="this.shouldShowAutocomplete"
+                      :sourceItems="this.list"
+                      class="sim-accordion--items"
+                      @toggle="toggleSelection"
+    ></sim-selection-set>
+
+    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
+        <button @click="prevDepartmentPage" class="link">
+            <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
+        </button>
+        <span class="nowrap"></span>
+        <button @click="nextDepartmentPage" class="link">
+            <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
+        </button>
+    </div>
 
   </div>
   
@@ -133,6 +133,9 @@ export default {
     selectedItems(newValue) {
       this.$emit("filter", this.type, newValue);
     }
+  },
+  mounted() {
+    console.log(this.$store.paginatedDepartments)
   }
 };
 </script>
