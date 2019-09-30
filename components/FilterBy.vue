@@ -27,13 +27,12 @@
     <sim-selection-set v-if="this.shouldShowAutocomplete"
                       :sourceItems="this.list"
                       class="sim-accordion--items"
-                      @toggle="toggleSelection"
     ></sim-selection-set>
 
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
       <ul >
-        <li v-for="department in $store.getters.paginatedDepartments" :should-be-selected="false" @toggle="toggleSelection"
-          :key="department.id">
+        <li v-for="department in $store.getters.paginatedDepartments"
+          :key="id"
           {{ department.name }}
         </li>
       </ul>
