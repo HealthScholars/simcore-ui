@@ -27,6 +27,7 @@
     <sim-selection-set v-if="this.shouldShowAutocomplete"
                       :sourceItems="this.list"
                       class="sim-accordion--items"
+                      @toggle="toggleSelection"
     ></sim-selection-set>
 
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
