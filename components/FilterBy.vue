@@ -32,7 +32,7 @@
 
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
       <ul>
-        <li v-for="department in departments"
+        <li v-for="department in $store.getters.paginatedDepartments("F")"
           :key="department.id">
           {{ department.name }}
         </li>
@@ -58,8 +58,6 @@ import SimIconText from "./IconText";
 import SimDatalist from "./Datalist";
 import SimSelection from "./Selection";
 import SimSelectionSet from "./Filters/SelectionSet";
-import { mapGetters } from "vuex";
-import { mapState } from "vuex";
 
 export default {
   name: "sim-filter-by",
@@ -95,30 +93,24 @@ export default {
   },
   data() {
     return {
+      departments: [],
       selectedItems: [],
       items: [],
       isOpen: false,
       totalPages: 1,
-      filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"],
-      departments: this.$store.state.getters.paginatedDepartments,
+      filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     }
   },
   computed: {
     shouldBeActive() {
-      return this.selectedItems.length > 0;
+      return this.selectedItems.length > 0
     },
     showSystemEcho() {
       return this.systemEcho && this.systemEcho.length && !this.list.length;
     },
     shouldShowAutocomplete() {
       return this.list.length >= this.autocompleteThreshold;
-    },
-    // getDepartmentsByLetter() {
-    //   return this.$store.getters.paginatedDepartments;
-    // }
-    ...mapGetters([
-      "paginatedDepartments"
-    ])
+    }
   },
   methods: {
     toggleOpenList() {
@@ -145,7 +137,9 @@ export default {
     getDepartments(departmentLetter) {
       console.log(departmentLetter)
     },
-
+    getDepartmentsByLetter() {
+      return this.$store.getters.paginatedDepartments
+    }
 
   },
   watch: {
