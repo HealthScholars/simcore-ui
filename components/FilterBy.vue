@@ -138,7 +138,7 @@ export default {
       console.log(departmentLetter)
     },
     getDepartmentsByLetter() {
-      return this.$store.state.department
+      return this.$store.getters.paginatedDepartments
     }
 
   },
