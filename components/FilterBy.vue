@@ -137,7 +137,7 @@ export default {
       console.log(departmentLetter)
     },
     getDepartmentsByLetter() {
-      return this.$store.department
+      return this.$store.state.department
     }
 
   },
