@@ -93,6 +93,7 @@ export default {
   },
   data() {
     return {
+      departments: []
       selectedItems: [],
       items: [],
       isOpen: false,
@@ -136,9 +137,9 @@ export default {
     getDepartments(departmentLetter) {
       console.log(departmentLetter)
     },
-    getDepartmentsByLetter() {
-      return this.$store.state.department
-    }
+    // getDepartmentsByLetter() {
+    //   return this.$store.state.department
+    // }
 
   },
   watch: {
