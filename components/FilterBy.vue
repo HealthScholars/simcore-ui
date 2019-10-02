@@ -110,6 +110,9 @@ export default {
     },
     shouldShowAutocomplete() {
       return this.list.length >= this.autocompleteThreshold;
+    },
+    getDepartmentsByLetter() {
+      return this.$store.getters.paginatedDepartments;
     }
   },
   methods: {
@@ -137,9 +140,7 @@ export default {
     getDepartments(departmentLetter) {
       console.log(departmentLetter)
     },
-    getDepartmentsByLetter() {
-      return this.$store.getters.paginatedDepartments
-    }
+
 
   },
   watch: {
