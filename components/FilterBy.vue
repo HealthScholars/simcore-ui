@@ -58,7 +58,8 @@ import SimIconText from "./IconText";
 import SimDatalist from "./Datalist";
 import SimSelection from "./Selection";
 import SimSelectionSet from "./Filters/SelectionSet";
-import { mapGetters } from "vuex"
+import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   name: "sim-filter-by",
