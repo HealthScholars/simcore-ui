@@ -31,8 +31,8 @@
     ></sim-selection-set>
 
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
-      <ul >
-        <li v-for="department in $store.getters.paginatedDepartments"
+      <ul>
+        <li v-for="department in $store.getters.paginatedDepartments("F")"
           :key="department.id">
           {{ department.name }}
         </li>
