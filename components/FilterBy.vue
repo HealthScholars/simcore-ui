@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      departments: []
+      departments: [],
       selectedItems: [],
       items: [],
       isOpen: false,
