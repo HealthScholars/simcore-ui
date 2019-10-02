@@ -95,17 +95,17 @@ export default {
   },
   data() {
     return {
-      departments: this.$store.state.getters.paginatedDepartments,
       selectedItems: [],
       items: [],
       isOpen: false,
       totalPages: 1,
       filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+      departments: this.$store.state.getters.paginatedDepartments,
     }
   },
   computed: {
     shouldBeActive() {
-      return this.selectedItems.length > 0
+      return this.selectedItems.length > 0;
     },
     showSystemEcho() {
       return this.systemEcho && this.systemEcho.length && !this.list.length;
