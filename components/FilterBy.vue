@@ -135,6 +135,9 @@ export default {
     },
     getDepartments(departmentLetter) {
       console.log(departmentLetter)
+    },
+    getDepartmentsByLetter() {
+      return. $
     }
 
   },
