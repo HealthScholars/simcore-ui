@@ -95,7 +95,7 @@ export default {
   },
   data() {
     return {
-      departments: this.$store.state.paginatedDepartments,
+      departments: this.$store.state.getters.paginatedDepartments,
       selectedItems: [],
       items: [],
       isOpen: false,
