@@ -110,7 +110,10 @@ export default {
     },
     shouldShowAutocomplete() {
       return this.list.length >= this.autocompleteThreshold;
-    }
+    },
+    getDepartmentsByLetter() {
+      return this.$store.getters.paginatedDepartments;
+    }
   },
   methods: {
     toggleOpenList() {
