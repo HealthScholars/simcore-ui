@@ -58,6 +58,7 @@ import SimIconText from "./IconText";
 import SimDatalist from "./Datalist";
 import SimSelection from "./Selection";
 import SimSelectionSet from "./Filters/SelectionSet";
+import { mapGetters } from "vuex"
 
 export default {
   name: "sim-filter-by",
@@ -111,9 +112,12 @@ export default {
     shouldShowAutocomplete() {
       return this.list.length >= this.autocompleteThreshold;
     },
-    getDepartmentsByLetter() {
-      return this.$store.getters.paginatedDepartments;
-    }
+    // getDepartmentsByLetter() {
+    //   return this.$store.getters.paginatedDepartments;
+    // }
+    ...mapGetters([
+      "paginatedDepartments"
+    ])
   },
   methods: {
     toggleOpenList() {
