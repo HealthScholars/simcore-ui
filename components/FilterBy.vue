@@ -58,7 +58,6 @@ import SimIconText from "./IconText";
 import SimDatalist from "./Datalist";
 import SimSelection from "./Selection";
 import SimSelectionSet from "./Filters/SelectionSet";
-import { paginatedDepartments } from "./getters";
 
 export default {
   name: "sim-filter-by",
