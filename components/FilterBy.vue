@@ -149,7 +149,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.getters.paginatedDepartments(letter))
+    console.log(this.$store.getters.paginatedDepartments())
   }
 };
 </script>
