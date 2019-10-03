@@ -114,6 +114,7 @@ export default {
     },
     getDepartmentsByLetter() {
       return $store.getters.paginatedDepartments;
+      console.log(getDepartmentsByLetter)
     }
   },
   methods: {
