@@ -32,7 +32,7 @@
 
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
       <ul>
-        <li v-for="department in $store.getters.paginatedDepartments("F")"
+        <li v-for="department in $store.getters.paginatedDepartments"
           :key="department.id">
           {{ department.name }}
         </li>
@@ -112,7 +112,7 @@ export default {
       return this.list.length >= this.autocompleteThreshold;
     },
     getDepartmentsByLetter() {
-      return this.$store.state.getters.paginatedDepartments;
+      return $store.getters.paginatedDepartments;
     }
   },
   methods: {
