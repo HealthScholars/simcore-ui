@@ -114,7 +114,6 @@ export default {
     },
     getDepartmentsByLetter() {
       return $store.getters.paginatedDepartments;
-      console.log(getDepartmentsByLetter)
     }
   },
   methods: {
@@ -149,7 +148,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.getters.paginatedDepartments())
+    console.log(getDepartmentsByLetter)
   }
 };
 </script>
