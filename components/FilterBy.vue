@@ -113,7 +113,7 @@ export default {
       return this.list.length >= this.autocompleteThreshold;
     },
     getDepartmentsByLetter() {
-      return $store.getters.paginatedDepartments;
+      return this.$store.getters.paginatedDepartments;
     }
   },
   methods: {
