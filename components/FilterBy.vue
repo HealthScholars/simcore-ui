@@ -116,9 +116,9 @@ export default {
       return $store.getters.paginatedDepartments;
     }
   },
-  mounted() {
-    console.log(getDepartmentsByLetter)
-  },
+  // mounted() {
+  //   console.log(getDepartmentsByLetter)
+  // },
   methods: {
     toggleOpenList() {
       this.isOpen = !this.isOpen;
