@@ -152,7 +152,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.getters.paginatedDepartments)
+    console.log(this.$store.getters.paginatedDepartments())
   }
 };
 </script>
