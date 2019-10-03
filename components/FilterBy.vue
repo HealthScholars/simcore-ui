@@ -112,7 +112,7 @@ export default {
     shouldShowAutocomplete() {
       return this.list.length >= this.autocompleteThreshold;
     },
-    getDepartmentsByLetter(department) {
+    getDepartmentsByLetter() {
       return this.$store.getters.paginatedDepartments;
       console.log(getDepartmentsByLetter)
     }
