@@ -94,6 +94,7 @@ export default {
   data() {
     return {
       departments: [],
+      department: {},
       selectedItems: [],
       items: [],
       isOpen: false,
