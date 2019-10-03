@@ -32,7 +32,7 @@
 
     <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
       <ul>
-        <li v-for="department in getDepartmentsByLetter"
+        <li v-for="department in getDepartmentsByLetter(departments)"
           :key="department.id">
           {{ department.name }}
         </li>
