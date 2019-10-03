@@ -141,10 +141,6 @@ export default {
     getDepartments(departmentLetter) {
       console.log(departmentLetter)
     },
-    // getDepartmentsByLetter() {
-    //   return this.$store.getters.paginatedDepartments
-    // }
-
   },
   watch: {
     selectedItems(newValue) {
@@ -152,7 +148,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$store.getters.paginatedDepartments())
+    console.log(this.$store.getters.paginatedDepartments(letter))
   }
 };
 </script>
