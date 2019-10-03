@@ -116,6 +116,9 @@ export default {
       return $store.getters.paginatedDepartments;
     }
   },
+  mounted() {
+    console.log(getDepartmentsByLetter)
+  }
   methods: {
     toggleOpenList() {
       this.isOpen = !this.isOpen;
@@ -146,9 +149,6 @@ export default {
     selectedItems(newValue) {
       this.$emit("filter", this.type, newValue);
     }
-  },
-  mounted() {
-    console.log(getDepartmentsByLetter)
   }
 };
 </script>
