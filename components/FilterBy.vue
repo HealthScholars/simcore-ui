@@ -117,7 +117,7 @@ export default {
     }
   },
   mounted() {
-    console.log(getDepartmentsByLetter)
+    console.log(this.$store.getters.paginatedDepartments)
   },
   methods: {
     toggleOpenList() {
