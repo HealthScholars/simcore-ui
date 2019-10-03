@@ -118,7 +118,7 @@ export default {
   },
   mounted() {
     console.log(getDepartmentsByLetter)
-  }
+  },
   methods: {
     toggleOpenList() {
       this.isOpen = !this.isOpen;
