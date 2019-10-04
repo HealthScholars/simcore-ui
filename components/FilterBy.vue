@@ -3,16 +3,6 @@
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
 
-    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items department-items">
-        <ul class="list">
-          <li
-            v-for="item in filterList"
-            :key="item">
-            <a href="#0" v-on:click="getDepartments(item)">{{ item }}</a>
-          </li>
-        </ul>                             
-    </div>
-
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
@@ -30,27 +20,8 @@
                       @toggle="toggleSelection"
     ></sim-selection-set>
 
-    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items paginatedList">
-      <ul>
-        <li v-for="department in getDepartmentsByLetter('C')"
-          :key="department.id">
-          {{ department.name }}
-        </li>
-      </ul>
-    </div>
-
-    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
-        <button @click="prevDepartmentPage" class="link">
-            <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
-        </button>
-        <span class="nowrap"></span>
-        <button @click="nextDepartmentPage" class="link">
-            <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-        </button>
-    </div>
-
   </div>
-  
+
 </template>
 
 <script>
