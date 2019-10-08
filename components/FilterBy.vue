@@ -58,19 +58,13 @@ export default {
       type: Number,
       default: 15
     },
-    filterDepartmentByAlphaNum: {
-      type: Boolean
-    }
   },
   data() {
     return {
-      departments: [],
-      department: {},
       selectedItems: [],
       items: [],
       isOpen: false,
       totalPages: 1,
-      filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     }
   },
   computed: {
