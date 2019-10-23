@@ -1,5 +1,5 @@
 <template lang="html">
-  <button class="sim-bulkcheck" :class="{active: checkAll}" @click="toggleState">
+  <button class="sim-bulkcheck" :class="{active: checkAll}" @click="toggleState" data-test-id="bulk-check">
     <SimIconText :icon="`${icon} fa-fw`"></SimIconText>
     <SimIconText :icon="`${icon} fa-fw`"></SimIconText>
     <SimIconText :icon="`${icon} fa-fw`" :text="text"></SimIconText>
