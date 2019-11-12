@@ -5,6 +5,7 @@
         <SimIconText icon="fa-search"></SimIconText>
       </span>
       <input type="search" v-model="keyword"
+            data-testid="searchInput"
              class="sim-autocomplete--search--input"
              :placeholder="placeholder"
              :disabled="isDisabled"
