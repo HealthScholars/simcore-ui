@@ -3,22 +3,12 @@
 
     <div class="sim-filter--header sim-accordion--label" @click="toggleOpenList">{{ label }}</div>
 
-    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items department-items">
-        <ul class="list">
-          <li
-            v-for="item in filterList"
-            :key="item">
-            <a href="#0" v-on:click="getDepartments(item)">{{ item }}</a>
-          </li>
-        </ul>                             
-    </div>
-
     <SimDatalist v-if="!this.shouldShowAutocomplete" :items="list" :animate="true" class="sim-filter--items sim-accordion--items">
         <li slot="static-before" key="static-before" class="static system-echo FIXME-generic-classes" v-if="showSystemEcho">
           {{ systemEcho }}
         </li>
         <li slot="item" slot-scope="props" :key="props.item.id" class="no-wrap">
-          <SimSelection :item-id="props.item.id" :should-be-selected="false" @toggle="toggleSelection">
+          <SimSelection :item-id="props.item.id" :should-be-selected="false" data-testid="filterResults" @toggle="toggleSelection">
             {{ props.item.name }}
           </SimSelection>
         </li>
@@ -30,18 +20,8 @@
                       @toggle="toggleSelection"
     ></sim-selection-set>
 
-    <div v-if="filterDepartmentByAlphaNum" class="sim-accordion--items">
-        <button @click="prevDepartmentPage" class="link">
-            <SimIconText data-testid="previousButton" icon="fa-arrow-left fa-fw"></SimIconText>
-        </button>
-        <span class="nowrap"></span>
-        <button @click="nextDepartmentPage" class="link">
-            <SimIconText data-testid="nextButton" icon="fa-arrow-right fa-fw"></SimIconText>
-        </button>
-    </div>
-
   </div>
-  
+
 </template>
 
 <script>
@@ -78,9 +58,6 @@ export default {
       type: Number,
       default: 15
     },
-    filterDepartmentByAlphaNum: {
-      type: Boolean
-    }
   },
   data() {
     return {
@@ -88,7 +65,6 @@ export default {
       items: [],
       isOpen: false,
       totalPages: 1,
-      filterList: ["All", "#", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
     }
   },
   computed: {
@@ -100,7 +76,7 @@ export default {
     },
     shouldShowAutocomplete() {
       return this.list.length >= this.autocompleteThreshold;
-    }
+    },
   },
   methods: {
     toggleOpenList() {
@@ -113,29 +89,11 @@ export default {
         this.selectedItems.splice(this.selectedItems.indexOf(id), 1);
       }
     },
-    filterDepartment() {
-      return true;
-    },
-    nextDepartmentPage() {
-      this.isLoading = true;
-      this.pageRequest < this.totalPages ? this.pageRequest++ : this.totalPages;
-    },
-    prevDepartmentPage() {
-      this.isLoading = true;
-      this.pageRequest > 1 ? this.pageRequest-- : 1;
-    },
-    getDepartments(departmentLetter) {
-      console.log(departmentLetter, "hey")
-    }
-
   },
   watch: {
     selectedItems(newValue) {
       this.$emit("filter", this.type, newValue);
     }
-  },
-  mounted() {
-    console.log('anything')
   }
 };
 </script>

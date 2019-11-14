@@ -1,7 +1,7 @@
 <template lang="html">
   <span class="sim-selection" :class="{selected: selected}">
     <label :class="{disabled: shouldBeDisabled}">
-      <input type="checkbox" :disabled="shouldBeDisabled" :checked="selected" @change="toggleSelection" data-test-id="selection-checkbox" />
+      <input data-testid="itemSelectedList" type="checkbox" :disabled="shouldBeDisabled" :checked="selected" @change="toggleSelection" />
       <span><slot></slot></span>
     </label>
   </span>
