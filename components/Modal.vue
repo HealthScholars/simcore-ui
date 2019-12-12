@@ -5,7 +5,7 @@
       class="sim-modal__mask"
       @click="clickMask"
       ></div>
-    <div class="sim-modal__wrapper">
+    <div class="sim-modal__wrapper" data-test-id="sim-modal">
       <slot></slot>
       <div
         v-if="shouldShowDismiss"
@@ -19,46 +19,50 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      shouldBeOpen: {
-        type: Boolean,
-        default: false,
-      },
-      dismissTo: {
-        type: String,
-        default: '',
-      },
-      shouldShowDismiss: {
-        type: Boolean,
-        default: true,
-      },
-      shouldShowMask: {
-        type: Boolean,
-        default: true,
-      },
-      canClickMask: {
-        type: Boolean,
-        default: true,
-      },
+export default {
+  props: {
+    shouldBeOpen: {
+      type: Boolean,
+      default: false
     },
-    methods: {
-      dismiss() {
-        if (this.$router && this.dismissTo && typeof this.dismissTo === 'string') {
-          this.$router.push(this.dismissTo)
-        } else {
-          this.$root.closeModal()
-        }
-      },
-      clickMask() {
-        if (this.canClickMask) {
-          this.dismiss()
-        }
-      },
+    dismissTo: {
+      type: String,
+      default: ""
     },
+    shouldShowDismiss: {
+      type: Boolean,
+      default: true
+    },
+    shouldShowMask: {
+      type: Boolean,
+      default: true
+    },
+    canClickMask: {
+      type: Boolean,
+      default: true
+    }
+  },
+  methods: {
+    dismiss() {
+      if (
+        this.$router &&
+        this.dismissTo &&
+        typeof this.dismissTo === "string"
+      ) {
+        this.$router.push(this.dismissTo);
+      } else {
+        this.$root.closeModal();
+      }
+    },
+    clickMask() {
+      if (this.canClickMask) {
+        this.dismiss();
+      }
+    }
   }
+};
 </script>
 
 <style lang="scss">
-  @import '../styles/modal';
+@import "../styles/modal";
 </style>
