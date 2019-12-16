@@ -28,6 +28,10 @@
           @toggleExpandedWeek="toggleExpandedWeek"
           @expandWeek="expandWeek"
         />
+        <SidebarInstructor
+          :availabilities="selectedRoomAvailabilities"
+          @updateAvailabilities="updateAvailabilities"
+        />
     </div>
   </div>
 </template>
@@ -74,6 +78,11 @@ export default {
     },
     selectedRoomAvailabilities() {
       return this.roomAvailabilities[this.roomId]
+    },
+    selectedDateAvailabilities() {
+      // const selectedDate = this.selectedDate.format('YYYY-MM-DD')
+      // return this.user.availabilities[selectedDate] || []
+      return 'working'
     },
     dateService() {
       return this.$store.state.services.date
