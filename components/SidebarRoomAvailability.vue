@@ -1,16 +1,22 @@
 <template>
-  <aside class="sim-calendar--aside sim-calendar--day-control-panel">
-    <div class="sim-calendar--aside--body sim-calendar--aside--body--room-scheduling">
-    <div class="sim-calendar--aside--header">
-      <p class="mb-0"><strong>Start:</strong> <span>Monday 11th</span>
-      <br><strong>End:</strong> <span>Friday 29th</span></p>
-      <button>Repeat <IconText
-        icon="fa-refresh fa-lg pl-2"
-        class="sim-timepicker--next-day"
-        @click.native="loadNextDay"
-      /></button>
-    </div>
+  <aside class="sim-calendar--aside sim-calendar--aside--room-scheduling sim-calendar--day-control-panel">
 
+    <div class="sim-calendar--aside--body">
+      <div class="sim-calendar--aside--header">
+      <div class="details">
+        <p class="mb-0"><strong>Start:</strong> <span>Monday 11th</span>
+        <br><strong>End:</strong> <span>Friday 29th</span></p>
+      </div>
+      <div class="controls">
+          <span v-for="item in items">
+            <SimSelection
+              :item="item"
+              :selected-items="selectedItems"
+              >{{ item.name }}
+              </SimSelection>
+          </span>
+        </div>
+    </div>
       <TimePicker
         :availabilities="availabilities"
         @updateAvailabilities="updateAvailabilities"
@@ -21,16 +27,29 @@
 
 <script>
   import TimePicker from './TimePicker'
-  import IconText from './IconText'
+  import SimSelection from './Selection'
 
   export default {
     components: {
       TimePicker,
-      IconText,
+      SimSelection,
     },
     props: {
       availabilities: Array,
       rooms: Array,
+      repeatSchedule: false,
+    },
+    data() {
+      return {
+        items: [
+          {
+            id: 1,
+            name: 'repeat',
+            disabled: false,
+          }
+        ],
+        selectedItems: [],
+      }
     },
     methods: {
       updateAvailabilities(date, availabilities) {
@@ -41,10 +60,31 @@
 </script>
 
 <style lang="scss">
-  .sim-calendar--aside--body {
+  .sim-calendar--aside {
 
     &--room-scheduling {
-      flex-direction: column;
+
+      .sim-calendar--aside--header {
+        border-bottom: 1px solid var(--fog);
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: .5rem;
+        padding: .5em 0rem 1em 0;
+      }
+
+      .sim-calendar--aside--body {
+        // background: var(--light);
+        // color: var(--dark);
+        flex-direction: column;
+      }
+
+      .sim-timepicker {
+        flex: 1;
+      }
+
+      .sim-selection input {
+        margin: 0 .5rem 0 0;
+      }
     }
   }
 </style>
