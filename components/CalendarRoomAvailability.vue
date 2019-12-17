@@ -1,5 +1,5 @@
 <template>
-  <div class="sim-calendar" :class="componentClasses">
+  <div class="sim-calendar sim-calendar--room-scheduling" :class="componentClasses">
     <IconEventDuration/>
     <IconInstructor/>
     <IconCheckbox/>
@@ -28,8 +28,8 @@
           @toggleExpandedWeek="toggleExpandedWeek"
           @expandWeek="expandWeek"
         />
-        <SidebarInstructor
-          :availabilities="selectedRoomAvailabilities"
+        <SidebarRoomAvailability
+          :availabilities="this.rooms"
           @updateAvailabilities="updateAvailabilities"
         />
     </div>
@@ -44,7 +44,7 @@ import IconControl from './IconControl'
 
 import CalendarHeader from './CalendarHeader'
 import CalendarBodyRoomAvailability from './CalendarBodyRoomAvailability'
-import SidebarInstructor from './SidebarInstructor'
+import SidebarRoomAvailability from './SidebarRoomAvailability'
 
 import { flow, map, get, extend, keys, values, groupBy, mapValues, reduce, flatten } from 'lodash/fp'
 import { expandAvailability } from '../utilities/expand-availability'
@@ -57,7 +57,7 @@ export default {
     IconControl,
     CalendarHeader,
     CalendarBodyRoomAvailability,
-    SidebarInstructor,
+    SidebarRoomAvailability,
   },
   props: {
     rooms: Array,
@@ -80,9 +80,8 @@ export default {
       return this.roomAvailabilities[this.roomId]
     },
     selectedDateAvailabilities() {
-      // const selectedDate = this.selectedDate.format('YYYY-MM-DD')
-      // return this.user.availabilities[selectedDate] || []
-      return 'working'
+      const selectedDate = this.selectedDate.format('YYYY-MM-DD')
+      return this.user.availabilities[selectedDate] || []
     },
     dateService() {
       return this.$store.state.services.date
@@ -278,6 +277,13 @@ export default {
       }
     }
   }
+
+  &--room-scheduling {
+    max-height: 65vh;
+    max-width: 120rem;
+    margin: 0 auto;
+  }
+
 }
 
 </style>
