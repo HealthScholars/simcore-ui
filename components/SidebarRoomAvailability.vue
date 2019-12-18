@@ -7,15 +7,11 @@
         <p class="mb-0"><strong>Start:</strong> <span>Monday 11th</span>
         <br><strong>End:</strong> <span>Friday 29th</span></p>
       </div>
-      <div class="controls">
-          <span v-for="item in items">
-            <SimSelection
-              :item="item"
-              :selected-items="selectedItems"
-              >{{ item.name }}
-              </SimSelection>
-          </span>
-        </div>
+      <div class="actions">
+          <SimSelection @toggle="repeatEvent">repeat</SimSelection>
+          <div v-if="repeatSelected" class="controls">controls</div>
+      </div>
+
     </div>
       <TimePicker
         :availabilities="availabilities"
@@ -37,30 +33,31 @@
     props: {
       availabilities: Array,
       rooms: Array,
-      repeatSchedule: false,
     },
     data() {
       return {
-        items: [
-          {
-            id: 1,
-            name: 'repeat',
-            disabled: false,
-          }
-        ],
-        selectedItems: [],
+        repeatSelected: false
       }
     },
     methods: {
       updateAvailabilities(date, availabilities) {
         this.$emit('updateAvailabilities', date, availabilities)
       },
+      repeatEvent() {
+        this.repeatSelected = !this.repeatSelected
+      }
     },
   }
 </script>
 
 <style lang="scss">
+
+  .sim-calendar--grid--header {
+    height: 40px;
+  }
+
   .sim-calendar--aside {
+    padding-top: 40px;
 
     &--room-scheduling {
 
@@ -75,6 +72,7 @@
       .sim-calendar--aside--body {
         // background: var(--light);
         // color: var(--dark);
+        border-radius: 0px;
         flex-direction: column;
       }
 

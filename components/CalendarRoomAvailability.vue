@@ -29,7 +29,7 @@
           @expandWeek="expandWeek"
         />
         <SidebarRoomAvailability
-          :availabilities="this.rooms"
+          :availabilities="selectedRoomAvailabilities"
           @updateAvailabilities="updateAvailabilities"
         />
     </div>
