@@ -19,7 +19,7 @@
     "lint": "eslint --ext .js,.vue components"
   },
   "dependencies": {
-    "axios": "^0.17.1",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "camelize": "^1.0.0",
     "date-fns": "^1.30.1",
